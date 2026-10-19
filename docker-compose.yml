@@ -1,4 +1,4 @@
-# Spuštění celé aplikace i s databází:   docker compose up -d --build
+# Spuštění celé aplikace i s databází:   docker compose up -d --build   → http://localhost:3001/admin
 # Jen databáze pro vývoj (npm run dev):    docker compose up -d db
 services:
   db:
@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-bse-dev-heslo}
       POSTGRES_DB: ${POSTGRES_DB:-bse_erp}
     ports:
-      - '127.0.0.1:5432:5432' # jen z tohoto počítače, ne ze sítě
+      - '127.0.0.1:5433:5432' # jen z tohoto počítače; 5433, aby nekolidovala s jinými projekty
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./docker/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql:ro
@@ -27,9 +27,9 @@ services:
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER:-bse}:${POSTGRES_PASSWORD:-bse-dev-heslo}@db:5432/${POSTGRES_DB:-bse_erp}
       PAYLOAD_SECRET: ${PAYLOAD_SECRET:?Nastavte PAYLOAD_SECRET v souboru .env}
-      SERVER_URL: ${SERVER_URL:-http://localhost:3000}
+      SERVER_URL: ${SERVER_URL:-http://localhost:3001}
     ports:
-      - '3000:3000'
+      - '3001:3000' # 3001 – port 3000 může používat jiný projekt (web spolku)
     volumes:
       - uploads:/app/uploads
 

@@ -13,7 +13,7 @@ cp .env.example .env          # a doplňte PAYLOAD_SECRET (dlouhý náhodný ře
 docker compose up -d --build
 ```
 
-Administrace poběží na http://localhost:3000/admin – první založený účet je automaticky administrátor.
+Administrace poběží na http://localhost:3001/admin – první založený účet je automaticky administrátor.
 
 ### Varianta B – vývoj (změny v kódu se projeví hned)
 
@@ -21,7 +21,7 @@ Administrace poběží na http://localhost:3000/admin – první založený úč
 cp .env.example .env          # doplňte PAYLOAD_SECRET
 docker compose up -d db       # jen databáze
 npm install
-npm run dev                   # http://localhost:3000/admin
+npm run dev                   # http://localhost:3001/admin
 npm run seed                  # volitelně: ukázková data (4 OM, 3 zákazníci, 2 smlouvy)
 ```
 
