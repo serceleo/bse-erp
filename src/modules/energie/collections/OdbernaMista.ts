@@ -773,7 +773,6 @@ export const OdbernaMista: CollectionConfig = {
     defaultColumns: [
       'interniCislo',
       'komodita',
-      'typOdberu',
       'obchodniModel',
       'souborOM',
       'zakaznik',

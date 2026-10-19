@@ -115,14 +115,7 @@ export const Zakaznici: CollectionConfig = {
               on: 'zakaznik',
               defaultLimit: 50,
               admin: {
-                defaultColumns: [
-                  'interniCislo',
-                  'komodita',
-                  'typOdberu',
-                  'kod',
-                  'adresaText',
-                  'stav',
-                ],
+                defaultColumns: ['interniCislo', 'komodita', 'kod', 'adresaText', 'stav'],
               },
             },
             {

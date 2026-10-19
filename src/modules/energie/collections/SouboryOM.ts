@@ -51,7 +51,7 @@ export const SouboryOM: CollectionConfig = {
       on: 'souborOM',
       defaultLimit: 100,
       admin: {
-        defaultColumns: ['interniCislo', 'komodita', 'typOdberu', 'zakaznik', 'kod', 'adresaText'],
+        defaultColumns: ['interniCislo', 'komodita', 'zakaznik', 'kod', 'adresaText'],
       },
     },
     ...auditFields,

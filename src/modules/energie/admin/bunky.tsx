@@ -6,6 +6,8 @@
 import type { DefaultCellComponentProps } from 'payload'
 import React from 'react'
 
+import { labelPro, vsechnyTypyOdberu } from '../ciselniky'
+
 const popisek = (field: DefaultCellComponentProps['field'], hodnota: string): string => {
   if (!('options' in field) || !Array.isArray(field.options)) return hodnota
   const o = field.options.find((x) => (typeof x === 'string' ? x : x.value) === hodnota)
@@ -28,13 +30,27 @@ const Plamen = () => (
   </svg>
 )
 
-/** Komodita jako ikona: oranžový blesk = elektřina, modrý plamínek = plyn. */
-export const KomoditaBunka: React.FC<DefaultCellComponentProps> = ({ cellData, field }) => {
+/**
+ * Komodita jako ikona (oranžový blesk = elektřina, modrý plamínek = plyn) a vedle ní
+ * zkratka typu odběru z téhož řádku – např. blesk + „VN“. Celý popis je v bublině.
+ */
+export const KomoditaBunka: React.FC<DefaultCellComponentProps> = ({
+  cellData,
+  field,
+  rowData,
+}) => {
   if (cellData !== 'EE' && cellData !== 'ZP') return null
-  const nazev = popisek(field, cellData)
+  const typOdberu = typeof rowData?.typOdberu === 'string' ? rowData.typOdberu : ''
+  const popisOdberu = typOdberu ? labelPro(vsechnyTypyOdberu, typOdberu) : ''
+  const nazev = [popisek(field, cellData), popisOdberu].filter(Boolean).join(' – ')
   return (
-    <span title={nazev} aria-label={nazev} role="img" style={{ display: 'inline-flex' }}>
+    <span
+      title={nazev}
+      aria-label={nazev}
+      style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4em', whiteSpace: 'nowrap' }}
+    >
       {cellData === 'EE' ? <Blesk /> : <Plamen />}
+      {typOdberu && <span aria-hidden="true">{typOdberu}</span>}
     </span>
   )
 }
