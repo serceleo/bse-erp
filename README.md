@@ -62,7 +62,7 @@ tests/                      unit a integrační testy
 **Detail OM** – záložky:
 
 1. **Základní údaje** – totéž co v seznamu + poznámka.
-2. **Spotřeba a technické údaje** – odhad spotřeby (ročně, nebo po měsících s automatickým součtem), typ měření, periodicita odečtu, distributor; podle varianty navíc parametry **NN** (jistič, fáze, sazba), **VN** (napěťová hladina, rezervovaná kapacita/příkon, trafostanice), **plyn SO/VO** (denní kapacita) a **výrobna** (FVE apod.).
+2. **Spotřeba a technické údaje** – odhad spotřeby (ročně, nebo po měsících s automatickým součtem), typ měření, periodicita odečtu, distributor; podle varianty navíc parametry **NN** (jistič, fáze, sazba), **VN** (napěťová hladina, rezervovaný příkon, trafostanice), **plyn SO/VO** (denní kapacita) a **výrobna** (FVE apod.).
 3. **Smlouvy a dokumenty** – smlouva o dodávce, související smlouvy, další dokumenty (soubory).
 4. **Obchodní podmínky** – nakoupená období (od–do, nákupní a prodejní cena, **marže se dopočítá**, stálá platba, od koho nakoupeno), stav dodatku a termín jeho uzavření. **Vidí jen role Obchod a Administrátor.**
 

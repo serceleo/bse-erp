@@ -180,10 +180,10 @@ describe('Varianty dle typu odběru', () => {
       zakladOM({
         kod: ean(20),
         typOdberu: 'VN',
-        parametryVN: { napetovaHladina: '22', rezervovanaKapacitaKw: 400 },
+        parametryVN: { napetovaHladina: '22', rezervovanyPrikonKw: 400 },
       }),
     )
-    expect(om.parametryVN?.rezervovanaKapacitaKw).toBe(400)
+    expect(om.parametryVN?.rezervovanyPrikonKw).toBe(400)
 
     const nn = await payload.update({
       collection: 'odberna-mista',
@@ -192,7 +192,7 @@ describe('Varianty dle typu odběru', () => {
       user: admin,
       overrideAccess: false,
     })
-    expect(nn.parametryVN?.rezervovanaKapacitaKw ?? null).toBeNull()
+    expect(nn.parametryVN?.rezervovanyPrikonKw ?? null).toBeNull()
   })
 })
 

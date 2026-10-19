@@ -223,7 +223,6 @@ export interface OdbernaMista {
   };
   parametryVN?: {
     napetovaHladina?: ('6' | '10' | '22' | '35') | null;
-    rezervovanaKapacitaKw?: number | null;
     rezervovanyPrikonKw?: number | null;
     mereniNaStrane?: ('VN' | 'NN') | null;
     trafostanice?: string | null;
@@ -611,7 +610,6 @@ export interface OdbernaMistaSelect<T extends boolean = true> {
     | T
     | {
         napetovaHladina?: T;
-        rezervovanaKapacitaKw?: T;
         rezervovanyPrikonKw?: T;
         mereniNaStrane?: T;
         trafostanice?: T;

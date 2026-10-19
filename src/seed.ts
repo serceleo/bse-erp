@@ -144,7 +144,6 @@ const run = async () => {
       mereni: { typMereni: 'A', periodicitaOdectu: 'mesicni', distributor: 'cez-distribuce' },
       parametryVN: {
         napetovaHladina: '22',
-        rezervovanaKapacitaKw: 450,
         rezervovanyPrikonKw: 630,
         mereniNaStrane: 'VN',
         trafostanice: 'TS VS 9298 Na Lapači',
