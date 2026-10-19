@@ -58,6 +58,7 @@ type Data = Record<string, any>
 
 const BUNKA_KOMODITA = '/modules/energie/admin/bunky#KomoditaBunka'
 const BUNKA_ZKRATKA = '/modules/energie/admin/bunky#ZkratkaBunka'
+const BUNKA_STAV = '/modules/energie/admin/bunky#StavBunka'
 
 const datumDen = { date: { pickerAppearance: 'dayOnly', displayFormat: 'd. M. yyyy' } } as const
 const zaokrouhli = (n: number, mista = 2) => Math.round(n * 10 ** mista) / 10 ** mista
@@ -218,7 +219,7 @@ const zakladniUdaje: Field[] = [
       },
       {
         name: 'obchodniModel',
-        label: 'Typ obchodního modelu',
+        label: 'Model',
         type: 'select',
         required: true,
         options: obchodniModelOptions,
@@ -835,7 +836,7 @@ export const OdbernaMista: CollectionConfig = {
       required: true,
       defaultValue: 'pripravovane',
       options: stavOMOptions,
-      admin: { position: 'sidebar' },
+      admin: { position: 'sidebar', components: { Cell: BUNKA_STAV } },
     },
     {
       name: 'zahajeniDodavky',

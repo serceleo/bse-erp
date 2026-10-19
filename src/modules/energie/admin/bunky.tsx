@@ -49,3 +49,56 @@ export const ZkratkaBunka: React.FC<DefaultCellComponentProps> = ({ cellData, fi
     </span>
   )
 }
+
+const formatDatum = (v: unknown): string | null => {
+  if (!v) return null
+  const d = new Date(v as string)
+  return Number.isNaN(d.getTime()) ? null : d.toLocaleDateString('cs-CZ')
+}
+
+const IKONY_STAVU: Record<string, React.ReactNode> = {
+  // Zelená fajfka – dodávka běží
+  aktivni: (
+    <path
+      d="M5 12.5l4.5 4.5L19 7.5"
+      fill="none"
+      stroke="#1F9D55"
+      strokeWidth="3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  ),
+  // Žluté kolečko – mezistav (smlouva je, dodávka teprve začne)
+  pripravovane: <circle cx="12" cy="12" r="7" fill="#F2C200" />,
+  // Červený křížek – dodávka neběží
+  ukoncene: (
+    <path
+      d="M7 7l10 10M17 7L7 17"
+      fill="none"
+      stroke="#D93025"
+      strokeWidth="3"
+      strokeLinecap="round"
+    />
+  ),
+}
+
+/** Stav OM jako ikona; v bublině název stavu a případně datum zahájení / ukončení dodávky. */
+export const StavBunka: React.FC<DefaultCellComponentProps> = ({ cellData, field, rowData }) => {
+  if (typeof cellData !== 'string' || !(cellData in IKONY_STAVU)) return null
+  const od = formatDatum(rowData?.zahajeniDodavky)
+  const do_ = formatDatum(rowData?.ukonceniDodavky)
+  const doplnek =
+    cellData === 'pripravovane' && od
+      ? ` – dodávka od ${od}`
+      : cellData === 'ukoncene' && do_
+        ? ` – ukončeno ${do_}`
+        : ''
+  const nazev = popisek(field, cellData) + doplnek
+  return (
+    <span title={nazev} aria-label={nazev} role="img" style={{ display: 'inline-flex' }}>
+      <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+        {IKONY_STAVU[cellData]}
+      </svg>
+    </span>
+  )
+}
