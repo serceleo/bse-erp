@@ -1,0 +1,38 @@
+# Spuštění celé aplikace i s databází:   docker compose up -d --build
+# Jen databáze pro vývoj (npm run dev):    docker compose up -d db
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-bse}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-bse-dev-heslo}
+      POSTGRES_DB: ${POSTGRES_DB:-bse_erp}
+    ports:
+      - '127.0.0.1:5432:5432' # jen z tohoto počítače, ne ze sítě
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-bse}']
+      interval: 5s
+      retries: 10
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-bse}:${POSTGRES_PASSWORD:-bse-dev-heslo}@db:5432/${POSTGRES_DB:-bse_erp}
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET:?Nastavte PAYLOAD_SECRET v souboru .env}
+      SERVER_URL: ${SERVER_URL:-http://localhost:3000}
+    ports:
+      - '3000:3000'
+    volumes:
+      - uploads:/app/uploads
+
+volumes:
+  pgdata:
+  uploads:
