@@ -110,6 +110,7 @@ describe('Číslování a odvozené hodnoty', () => {
     expect(om.kod).toBe(kod)
     expect(om.adresaText).toBe('Hlavní 375, Zubří, 756 54')
     expect(om.oznaceni).toBe(`${om.interniCislo} – Hlavní 375, Zubří, 756 54`)
+    expect(om.typ).toBe('Z')
     expect(om.zalozil).toBeTruthy()
   })
 
@@ -122,6 +123,21 @@ describe('Číslování a odvozené hodnoty', () => {
       }),
     )
     expect(om.odhadSpotreby?.rocniMwh).toBe(32)
+  })
+
+  it('sloučený typ: Z / V a přípona -S u spotřebitele', async () => {
+    const om = await vytvorOM(
+      zakladOM({ kod: ean(6), typZakaznika: 'virtualni', spotrebitel: 'ano' }),
+    )
+    expect(om.typ).toBe('V-S')
+    const zmena = await payload.update({
+      collection: 'odberna-mista',
+      id: om.id,
+      data: { typZakaznika: 'bezny' },
+      user: admin,
+      overrideAccess: false,
+    })
+    expect(zmena.typ).toBe('Z-S')
   })
 })
 

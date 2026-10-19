@@ -106,6 +106,19 @@ export const typZakaznikaOptions: OptionObject[] = [
   { label: 'Virtuální', value: 'virtualni' },
 ]
 
+/** Sloučený typ OM pro seznam – kombinace typu zákazníka a spotřebitele. */
+export const typOMOptions: OptionObject[] = [
+  { label: 'Z – zákazník', value: 'Z' },
+  { label: 'V – virtuální zákazník', value: 'V' },
+  { label: 'Z-S – zákazník, spotřebitel', value: 'Z-S' },
+  { label: 'V-S – virtuální zákazník, spotřebitel', value: 'V-S' },
+]
+
+export const typOM = (typZakaznika: unknown, spotrebitel: unknown): string | null => {
+  if (typZakaznika !== 'bezny' && typZakaznika !== 'virtualni') return null
+  return `${typZakaznika === 'virtualni' ? 'V' : 'Z'}${spotrebitel === 'ano' ? '-S' : ''}`
+}
+
 export const anoNeOptions: OptionObject[] = [
   { label: 'ANO', value: 'ano' },
   { label: 'NE', value: 'ne' },

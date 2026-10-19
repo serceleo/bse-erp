@@ -38,6 +38,8 @@ import {
   typCenyOptions,
   typyMereni,
   typyOdberu,
+  typOM,
+  typOMOptions,
   typZakaznikaOptions,
   vsechnyTypyMereni,
   vsechnyTypyOdberu,
@@ -53,6 +55,9 @@ import { pridelInterniCislo } from '../lib/ciselneRady'
 // Data hooků Payloadu jsou netypovaná (mohou být i částečná) – typujeme volně záměrně.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Data = Record<string, any>
+
+const BUNKA_KOMODITA = '/modules/energie/admin/bunky#KomoditaBunka'
+const BUNKA_ZKRATKA = '/modules/energie/admin/bunky#ZkratkaBunka'
 
 const datumDen = { date: { pickerAppearance: 'dayOnly', displayFormat: 'd. M. yyyy' } } as const
 const zaokrouhli = (n: number, mista = 2) => Math.round(n * 10 ** mista) / 10 ** mista
@@ -106,6 +111,7 @@ const odvozeneHodnoty: CollectionBeforeChangeHook = async ({
   if (typeof data.kod === 'string') data.kod = normalizujKod(data.kod)
 
   data.adresaText = adresaNaRadek(d.adresa as Adresa)
+  data.typ = typOM(d.typZakaznika, d.spotrebitel)
   data.oznaceni = [data.interniCislo, data.adresaText || data.kod || d.kod]
     .filter(Boolean)
     .join(' – ')
@@ -193,7 +199,11 @@ const zakladniUdaje: Field[] = [
         options: komodityOptions,
         // Komoditu nelze po založení změnit – určuje číselnou řadu interního čísla.
         access: { update: () => false },
-        admin: { width: '25%', description: 'Po uložení nelze změnit.' },
+        admin: {
+          width: '25%',
+          description: 'Po uložení nelze změnit.',
+          components: { Cell: BUNKA_KOMODITA },
+        },
       },
       {
         name: 'typOdberu',
@@ -204,7 +214,7 @@ const zakladniUdaje: Field[] = [
         options: vsechnyTypyOdberu,
         filterOptions: moznostiProKomoditu(typyOdberu),
         validate: validujProKomoditu(typyOdberu, true),
-        admin: { width: '25%' },
+        admin: { width: '25%', components: { Cell: BUNKA_ZKRATKA } },
       },
       {
         name: 'obchodniModel',
@@ -766,8 +776,7 @@ export const OdbernaMista: CollectionConfig = {
       'obchodniModel',
       'souborOM',
       'zakaznik',
-      'typZakaznika',
-      'spotrebitel',
+      'typ',
       'kod',
       'adresaText',
       'stav',
@@ -792,7 +801,7 @@ export const OdbernaMista: CollectionConfig = {
     // ── Postranní panel ──
     {
       name: 'interniCislo',
-      label: 'Interní číslo OM',
+      label: 'Číslo OM',
       type: 'text',
       unique: true,
       index: true,
@@ -803,6 +812,22 @@ export const OdbernaMista: CollectionConfig = {
       },
     },
     { name: 'oznaceni', type: 'text', admin: { hidden: true } },
+    {
+      // Sloučený údaj pro seznam: Z / V (běžný / virtuální zákazník), přípona -S = spotřebitel.
+      // Odvozuje server z polí typZakaznika a spotrebitel, která zůstávají zdrojem pravdy.
+      name: 'typ',
+      label: 'Typ',
+      type: 'select',
+      enumName: 'om_typ',
+      index: true,
+      options: typOMOptions,
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        description: 'Odvozeno z typu zákazníka a spotřebitele.',
+        components: { Cell: BUNKA_ZKRATKA },
+      },
+    },
     {
       name: 'stav',
       label: 'Stav',
