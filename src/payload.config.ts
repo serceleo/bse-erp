@@ -27,6 +27,13 @@ export default buildConfig({
   i18n: {
     supportedLanguages: { cs },
     fallbackLanguage: 'cs',
+    translations: {
+      cs: {
+        // Prázdná buňka v tabulkách má zůstat prázdná (výchozí text je „<Žádný …>“).
+        // Mezera, ne '' – prázdný překlad by Payload nahradil názvem klíče.
+        general: { noLabel: ' ' },
+      },
+    },
   },
   collections: [...energieModul.collections, Dokumenty, Users],
   editor: lexicalEditor(),

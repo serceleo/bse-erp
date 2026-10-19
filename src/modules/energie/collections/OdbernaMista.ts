@@ -219,7 +219,7 @@ const zakladniUdaje: Field[] = [
       },
       {
         name: 'obchodniModel',
-        label: 'Model',
+        label: 'Model BSE',
         type: 'select',
         required: true,
         options: obchodniModelOptions,
