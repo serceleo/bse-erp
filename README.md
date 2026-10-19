@@ -6,14 +6,14 @@ První modul: **Energie – evidence odběrných míst (OM)** elektřiny a plynu
 
 ## Spuštění
 
-### Varianta A – vše v Dockeru (nejjednodušší, Windows + Docker Desktop)
+### Varianta A – vše v Dockeru (Windows + Docker Desktop)
 
-```bash
-cp .env.example .env          # a doplňte PAYLOAD_SECRET (dlouhý náhodný řetězec)
-docker compose up -d --build
-```
+1. Spusťte Docker Desktop.
+2. Pokud ve složce chybí soubor `.env`, zkopírujte `.env.example` na `.env` a doplňte `PAYLOAD_SECRET` (dlouhý náhodný řetězec).
+3. Dvakrát klikněte na **`spustit.cmd`** – sestaví a spustí aplikaci i databázi a otevře prohlížeč.
 
-Administrace poběží na http://localhost:3001/admin – první založený účet je automaticky administrátor.
+Administrace běží na http://localhost:3001/admin – první založený účet je automaticky administrátor.
+Zastavení: **`zastavit.cmd`** (data zůstávají). Totéž ručně: `docker compose up -d --build` / `docker compose stop`.
 
 ### Varianta B – vývoj (změny v kódu se projeví hned)
 
