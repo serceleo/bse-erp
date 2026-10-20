@@ -193,10 +193,11 @@ export const napetovaHladinaOptions: OptionObject[] = [
   { label: '35 kV', value: '35' },
 ]
 
+/** Popisky jen zkratkou (FVE, KGJ…) – v seznamech i formulářích. */
 export const druhVyrobnyOptions: OptionObject[] = [
-  { label: 'FVE – fotovoltaická elektrárna', value: 'fve' },
-  { label: 'KGJ – kogenerační jednotka', value: 'kgj' },
-  { label: 'MVE – malá vodní elektrárna', value: 'mve' },
+  { label: 'FVE', value: 'fve' },
+  { label: 'KGJ', value: 'kgj' },
+  { label: 'MVE', value: 'mve' },
   { label: 'Jiná', value: 'jina' },
 ]
 
