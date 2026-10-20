@@ -27,6 +27,15 @@ export const typyOdberu: Record<Komodita, OptionObject[]> = {
   ],
 }
 
+/**
+ * U plynu se typ odběru určuje z roční spotřeby (kategorie zákazníků na trhu s plynem):
+ * MO do 630 MWh/rok včetně, SO nad 630 do 4 200 MWh/rok včetně, VO nad 4 200 MWh/rok.
+ */
+export const HRANICE_PLYN_MWH = { MO: 630, SO: 4200 } as const
+
+export const typOdberuPlynuDleSpotreby = (rocniMwh: number): 'MO' | 'SO' | 'VO' =>
+  rocniMwh <= HRANICE_PLYN_MWH.MO ? 'MO' : rocniMwh <= HRANICE_PLYN_MWH.SO ? 'SO' : 'VO'
+
 /** Typ měření dle vyhlášky o pravidlech trhu – rovněž závisí na komoditě. */
 export const typyMereni: Record<Komodita, OptionObject[]> = {
   EE: [

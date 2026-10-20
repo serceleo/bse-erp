@@ -38,6 +38,8 @@ import {
   typCenyOptions,
   typyMereni,
   typyOdberu,
+  HRANICE_PLYN_MWH,
+  typOdberuPlynuDleSpotreby,
   typOM,
   typOMOptions,
   typZakaznikaOptions,
@@ -63,6 +65,24 @@ const BUNKA_STAV = '/modules/energie/admin/bunky#StavBunka'
 const datumDen = { date: { pickerAppearance: 'dayOnly', displayFormat: 'd. M. yyyy' } } as const
 const zaokrouhli = (n: number, mista = 2) => Math.round(n * 10 ** mista) / 10 ** mista
 const jeKomodita = (v: unknown): v is Komodita => KOMODITY.includes(v as Komodita)
+
+/** Roční spotřeba z odhadu – při měsíčním režimu součet měsíců, jinak zadaná roční hodnota. */
+const rocniSpotreba = (odhad: Data | null | undefined): number | null => {
+  if (!odhad) return null
+  if (odhad.rezim === 'mesicni') {
+    const mesice = (odhad.mesicni ?? {}) as Record<string, number | null>
+    const hodnoty = MESICE.map(([klic]) => mesice[klic]).filter(
+      (v): v is number => typeof v === 'number',
+    )
+    return hodnoty.length
+      ? zaokrouhli(
+          hodnoty.reduce((a, b) => a + b, 0),
+          3,
+        )
+      : null
+  }
+  return typeof odhad.rocniMwh === 'number' ? odhad.rocniMwh : null
+}
 
 /** Podmínky zobrazení variantních údajů – na jednom místě, používají je pole i hook. */
 const varianta = {
@@ -108,6 +128,13 @@ const odvozeneHodnoty: CollectionBeforeChangeHook = async ({
   }
 
   const d: Data = { ...(originalDoc ?? {}), ...data }
+  d.odhadSpotreby = { ...(originalDoc?.odhadSpotreby ?? {}), ...(data.odhadSpotreby ?? {}) }
+
+  // Plyn: typ odběru (MO/SO/VO) určuje roční spotřeba, pokud je známá.
+  const rocni = rocniSpotreba(d.odhadSpotreby)
+  if (d.komodita === 'ZP' && rocni !== null) {
+    data.typOdberu = d.typOdberu = typOdberuPlynuDleSpotreby(rocni)
+  }
 
   if (typeof data.kod === 'string') data.kod = normalizujKod(data.kod)
 
@@ -159,19 +186,8 @@ const spoctiMarzi: FieldHook = ({ siblingData }) => {
   return typeof n === 'number' && typeof p === 'number' ? zaokrouhli(p - n) : null
 }
 
-const spoctiRocniSpotrebu: FieldHook = ({ siblingData, value }) => {
-  if (siblingData?.rezim !== 'mesicni') return value
-  const mesice = (siblingData.mesicni ?? {}) as Record<string, number | null>
-  const hodnoty = MESICE.map(([klic]) => mesice[klic]).filter(
-    (v): v is number => typeof v === 'number',
-  )
-  return hodnoty.length
-    ? zaokrouhli(
-        hodnoty.reduce((a, b) => a + b, 0),
-        3,
-      )
-    : null
-}
+const spoctiRocniSpotrebu: FieldHook = ({ siblingData, value }) =>
+  siblingData?.rezim === 'mesicni' ? rocniSpotreba(siblingData) : value
 
 /** Upozornění (počítané při čtení) – kolik zbývá do konce nakoupeného období. */
 const upozorneniNaKonecNakupu: FieldHook = ({ siblingData }) => {
@@ -210,12 +226,21 @@ const zakladniUdaje: Field[] = [
         name: 'typOdberu',
         label: 'Typ odběru',
         type: 'select',
-        required: true,
         index: true,
         options: vsechnyTypyOdberu,
         filterOptions: moznostiProKomoditu(typyOdberu),
-        validate: validujProKomoditu(typyOdberu, true),
-        admin: { width: '25%', components: { Cell: BUNKA_ZKRATKA } },
+        // Povinný – kromě plynu se známou spotřebou, kde ho určí server sám (viz odvozeneHodnoty).
+        validate: (value: unknown, args: { data: Partial<Data> }) => {
+          const plynSeSpotrebou =
+            args.data?.komodita === 'ZP' && rocniSpotreba(args.data?.odhadSpotreby) !== null
+          if (plynSeSpotrebou) return true
+          return validujProKomoditu(typyOdberu, true)(value, args)
+        },
+        admin: {
+          width: '25%',
+          description: `Plyn: určí se z roční spotřeby (MO do ${HRANICE_PLYN_MWH.MO} MWh, SO do ${HRANICE_PLYN_MWH.SO.toLocaleString('cs-CZ')} MWh, VO nad).`,
+          components: { Cell: BUNKA_ZKRATKA },
+        },
       },
       {
         name: 'obchodniModel',

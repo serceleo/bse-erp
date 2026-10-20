@@ -141,6 +141,55 @@ describe('Číslování a odvozené hodnoty', () => {
   })
 })
 
+describe('Plyn: typ odběru podle roční spotřeby', () => {
+  it('MO do 630 MWh včetně, SO do 4 200 MWh včetně, VO nad', async () => {
+    const pripady: [number, string][] = [
+      [18, 'MO'],
+      [630, 'MO'],
+      [630.001, 'SO'],
+      [4200, 'SO'],
+      [4200.5, 'VO'],
+    ]
+    for (const [i, [mwh, ocekavany]] of pripady.entries()) {
+      const om = await vytvorOM(
+        zakladOM({
+          komodita: 'ZP',
+          typOdberu: undefined,
+          kod: eic(100 + i),
+          odhadSpotreby: { rezim: 'rocni', rocniMwh: mwh },
+        }),
+      )
+      expect(om.typOdberu, `${mwh} MWh`).toBe(ocekavany)
+    }
+  })
+
+  it('přebije ručně zvolený typ a počítá i z měsíčního odhadu', async () => {
+    const om = await vytvorOM(
+      zakladOM({
+        komodita: 'ZP',
+        typOdberu: 'VO',
+        kod: eic(112),
+        odhadSpotreby: { rezim: 'mesicni', mesicni: { leden: 400, unor: 300 } },
+      }),
+    )
+    expect(om.typOdberu).toBe('SO')
+    const mensi = await payload.update({
+      collection: 'odberna-mista',
+      id: om.id,
+      data: { odhadSpotreby: { rezim: 'rocni', rocniMwh: 100 } },
+      user: admin,
+      overrideAccess: false,
+    })
+    expect(mensi.typOdberu).toBe('MO')
+  })
+
+  it('bez odhadu spotřeby je typ odběru povinný', async () => {
+    await expect(
+      vytvorOM(zakladOM({ komodita: 'ZP', typOdberu: undefined, kod: eic(111) })),
+    ).rejects.toThrow(/Typ odběru/)
+  })
+})
+
 describe('Validace', () => {
   it('odmítne typ odběru, který nepatří ke komoditě', async () => {
     await expect(vytvorOM(zakladOM({ kod: ean(10), typOdberu: 'SO' }))).rejects.toThrow(
