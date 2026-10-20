@@ -6,6 +6,7 @@
 import type { DefaultCellComponentProps } from 'payload'
 import React from 'react'
 
+import { adresaNaRadek, type Adresa } from '../../../shared/fields/adresa'
 import { labelPro, vsechnyTypyOdberu } from '../ciselniky'
 
 const popisek = (field: DefaultCellComponentProps['field'], hodnota: string): string => {
@@ -117,4 +118,15 @@ export const StavBunka: React.FC<DefaultCellComponentProps> = ({ cellData, field
       </svg>
     </span>
   )
+}
+
+/** Adresa v přehledu bez PSČ; celá adresa (s PSČ) je v bublině. */
+export const AdresaBunka: React.FC<DefaultCellComponentProps> = ({ cellData, rowData }) => {
+  const plna = typeof cellData === 'string' ? cellData : ''
+  const adresa = rowData?.adresa as Adresa | undefined
+  const kratka = adresa
+    ? adresaNaRadek(adresa, { psc: false })
+    : plna.replace(/,\s*\d{3}\s?\d{2}(?=,|$)/, '')
+  if (!kratka) return null
+  return <span title={plna || kratka}>{kratka}</span>
 }

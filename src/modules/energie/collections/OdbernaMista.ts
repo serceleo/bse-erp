@@ -61,6 +61,7 @@ type Data = Record<string, any>
 const BUNKA_KOMODITA = '/modules/energie/admin/bunky#KomoditaBunka'
 const BUNKA_ZKRATKA = '/modules/energie/admin/bunky#ZkratkaBunka'
 const BUNKA_STAV = '/modules/energie/admin/bunky#StavBunka'
+const BUNKA_ADRESA = '/modules/energie/admin/bunky#AdresaBunka'
 
 const datumDen = { date: { pickerAppearance: 'dayOnly', displayFormat: 'd. M. yyyy' } } as const
 const zaokrouhli = (n: number, mista = 2) => Math.round(n * 10 ** mista) / 10 ** mista
@@ -325,7 +326,8 @@ const zakladniUdaje: Field[] = [
     label: 'Adresa',
     type: 'text',
     index: true,
-    admin: { hidden: true },
+    // Uložená adresa je úplná (vč. PSČ – vyhledávání, označení OM); v přehledech se zobrazí bez PSČ.
+    admin: { hidden: true, components: { Cell: BUNKA_ADRESA } },
   },
   { name: 'poznamka', label: 'Poznámka', type: 'textarea' },
 ]

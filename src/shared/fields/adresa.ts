@@ -16,11 +16,12 @@ export type Adresa = {
 /**
  * Složí adresu do jednoho řádku, např. „Hlavní 375/12, Zubří, 756 54“.
  * Pokud chybí obec (typicky trafostanice, výrobna), použije parcelu.
+ * `psc: false` vynechá PSČ (kompaktní zobrazení v přehledech).
  */
-export const adresaNaRadek = (a?: Adresa | null): string => {
+export const adresaNaRadek = (a?: Adresa | null, { psc: sPsc = true } = {}): string => {
   if (!a) return ''
   const cislo = [a.cisloPopisne, a.cisloOrientacni].filter(Boolean).join('/')
-  const psc = a.psc ? a.psc.replace(/^(\d{3})\s?(\d{2})$/, '$1 $2') : ''
+  const psc = sPsc && a.psc ? a.psc.replace(/^(\d{3})\s?(\d{2})$/, '$1 $2') : ''
   const parcela = a.parcelniCislo
     ? `parc. č. ${a.parcelniCislo}${a.katastralniUzemi ? `, k. ú. ${a.katastralniUzemi}` : ''}`
     : ''

@@ -67,6 +67,20 @@ describe('Adresa na jeden řádek', () => {
       }),
     ).toBe('Hlavní 375/12, Zubří, 756 54')
   })
+  it('bez PSČ pro přehledy', () => {
+    expect(
+      adresaNaRadek(
+        { ulice: 'Lesní', cisloPopisne: '2330', obec: 'Rožnov pod Radhoštěm', psc: '75661' },
+        { psc: false },
+      ),
+    ).toBe('Lesní 2330, Rožnov pod Radhoštěm')
+    expect(
+      adresaNaRadek(
+        { obec: 'Bystřička', psc: '75624', parcelniCislo: '239/3', katastralniUzemi: 'Bystřička' },
+        { psc: false },
+      ),
+    ).toBe('Bystřička, parc. č. 239/3, k. ú. Bystřička')
+  })
   it('obec bez ulic', () => {
     expect(adresaNaRadek({ cisloPopisne: '375', obec: 'Zubří', psc: '756 54' })).toBe(
       'Zubří 375, 756 54',
