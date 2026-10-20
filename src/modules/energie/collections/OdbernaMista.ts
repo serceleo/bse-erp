@@ -69,19 +69,22 @@ const jeKomodita = (v: unknown): v is Komodita => KOMODITY.includes(v as Komodit
 /** Roční spotřeba z odhadu – při měsíčním režimu součet měsíců, jinak zadaná roční hodnota. */
 const rocniSpotreba = (odhad: Data | null | undefined): number | null => {
   if (!odhad) return null
-  if (odhad.rezim === 'mesicni') {
-    const mesice = (odhad.mesicni ?? {}) as Record<string, number | null>
-    const hodnoty = MESICE.map(([klic]) => mesice[klic]).filter(
-      (v): v is number => typeof v === 'number',
-    )
-    return hodnoty.length
-      ? zaokrouhli(
-          hodnoty.reduce((a, b) => a + b, 0),
-          3,
-        )
-      : null
-  }
-  return typeof odhad.rocniMwh === 'number' ? odhad.rocniMwh : null
+  const zadana = typeof odhad.rocniMwh === 'number' ? odhad.rocniMwh : null
+  if (odhad.rezim !== 'mesicni') return zadana
+  const mesice = (odhad.mesicni ?? {}) as Record<string, number | null>
+  const hodnoty = MESICE.map(([klic]) => mesice[klic]).filter(
+    (v): v is number => typeof v === 'number',
+  )
+  const soucet = hodnoty.length
+    ? zaokrouhli(
+        hodnoty.reduce((a, b) => a + b, 0),
+        3,
+      )
+    : null
+  // Úplný profil (všech 12 měsíců) určuje roční spotřebu sám. U neúplného profilu
+  // (např. nové OM s historií jen za pár měsíců) platí ručně zadaný roční odhad.
+  if (hodnoty.length === MESICE.length) return soucet
+  return zadana ?? soucet
 }
 
 /** Podmínky zobrazení variantních údajů – na jednom místě, používají je pole i hook. */
@@ -187,16 +190,19 @@ const spoctiMarzi: FieldHook = ({ siblingData }) => {
 }
 
 const spoctiRocniSpotrebu: FieldHook = ({ siblingData, value }) =>
-  siblingData?.rezim === 'mesicni' ? rocniSpotreba(siblingData) : value
+  siblingData?.rezim === 'mesicni' ? rocniSpotreba({ ...siblingData, rocniMwh: value }) : value
 
 /** Upozornění (počítané při čtení) – kolik zbývá do konce nakoupeného období. */
 const upozorneniNaKonecNakupu: FieldHook = ({ siblingData }) => {
+  const zpravy: string[] = []
+  if (!siblingData?.zakaznik) zpravy.push('Chybí zákazník – doplňte smluvního partnera.')
   const konec = siblingData?.nakoupenoDo ? new Date(siblingData.nakoupenoDo) : null
-  if (!konec || siblingData?.stav === 'ukoncene') return null
-  const dni = Math.ceil((konec.getTime() - Date.now()) / 86_400_000)
-  if (dni < 0) return `Nákup skončil před ${-dni} dny – zajistit pokrytí!`
-  if (dni <= 60) return `Nákup končí za ${dni} dní – zkontrolovat dodatek.`
-  return null
+  if (konec && siblingData?.stav !== 'ukoncene') {
+    const dni = Math.ceil((konec.getTime() - Date.now()) / 86_400_000)
+    if (dni < 0) zpravy.push(`Nákup skončil před ${-dni} dny – zajistit pokrytí!`)
+    else if (dni <= 60) zpravy.push(`Nákup končí za ${dni} dní – zkontrolovat dodatek.`)
+  }
+  return zpravy.length ? zpravy.join(' ') : null
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -269,7 +275,8 @@ const zakladniUdaje: Field[] = [
         label: 'Zákazník (smluvní partner)',
         type: 'relationship',
         relationTo: 'zakaznici',
-        required: true,
+        // Nepovinný: OM převzaté od distributora se zakládají dřív, než je známý smluvní partner.
+        // Chybějící zákazník se hlásí v postranním panelu (pole Upozornění).
         index: true,
         admin: { width: '40%' },
       },
@@ -358,7 +365,8 @@ const spotrebaAMereni: Field[] = [
             admin: {
               width: '30%',
               step: 0.001,
-              description: 'Při zadání po měsících se dopočítá jako jejich součet.',
+              description:
+                'Při zadání všech 12 měsíců se dopočítá jako jejich součet; u neúplného profilu zadejte roční odhad ručně.',
             },
           },
         ],

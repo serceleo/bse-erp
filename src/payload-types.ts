@@ -173,7 +173,7 @@ export interface OdbernaMista {
   typOdberu?: ('NN' | 'VN' | 'MO' | 'SO' | 'VO') | null
   obchodniModel: 'zakaznik' | 'obchodnik'
   typZakaznika: 'bezny' | 'virtualni'
-  zakaznik: number | Zakaznici
+  zakaznik?: (number | null) | Zakaznici
   souborOM?: (number | null) | SouboryOm
   spotrebitel: 'ano' | 'ne'
   /**
@@ -198,7 +198,7 @@ export interface OdbernaMista {
   odhadSpotreby: {
     rezim: 'rocni' | 'mesicni'
     /**
-     * Při zadání po měsících se dopočítá jako jejich součet.
+     * Při zadání všech 12 měsíců se dopočítá jako jejich součet; u neúplného profilu zadejte roční odhad ručně.
      */
     rocniMwh?: number | null
     mesicni?: {

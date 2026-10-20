@@ -190,6 +190,47 @@ describe('Plyn: typ odběru podle roční spotřeby', () => {
   })
 })
 
+describe('Odhad spotřeby a chybějící zákazník', () => {
+  it('neúplný měsíční profil zachová ručně zadaný roční odhad', async () => {
+    const om = await vytvorOM(
+      zakladOM({
+        kod: ean(40),
+        odhadSpotreby: { rezim: 'mesicni', rocniMwh: 300, mesicni: { listopad: 28, prosinec: 21 } },
+      }),
+    )
+    expect(om.odhadSpotreby?.rocniMwh).toBe(300)
+  })
+
+  it('úplný měsíční profil přepíše roční odhad součtem', async () => {
+    const mesicni = Object.fromEntries(
+      [
+        'leden',
+        'unor',
+        'brezen',
+        'duben',
+        'kveten',
+        'cerven',
+        'cervenec',
+        'srpen',
+        'zari',
+        'rijen',
+        'listopad',
+        'prosinec',
+      ].map((m) => [m, 10]),
+    )
+    const om = await vytvorOM(
+      zakladOM({ kod: ean(41), odhadSpotreby: { rezim: 'mesicni', rocniMwh: 999, mesicni } }),
+    )
+    expect(om.odhadSpotreby?.rocniMwh).toBe(120)
+  })
+
+  it('OM lze založit bez zákazníka a upozorní na to', async () => {
+    const om = await vytvorOM(zakladOM({ kod: ean(42), zakaznik: undefined }))
+    expect(om.zakaznik ?? null).toBeNull()
+    expect(om.upozorneni).toMatch(/Chybí zákazník/)
+  })
+})
+
 describe('Validace', () => {
   it('odmítne typ odběru, který nepatří ke komoditě', async () => {
     await expect(vytvorOM(zakladOM({ kod: ean(10), typOdberu: 'SO' }))).rejects.toThrow(
