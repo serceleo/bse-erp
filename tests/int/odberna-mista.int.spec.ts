@@ -231,6 +231,34 @@ describe('Odhad spotřeby a chybějící zákazník', () => {
   })
 })
 
+describe('Hledání podle zákazníka', () => {
+  it('OM nese název a IČO zákazníka a po přejmenování zákazníka se aktualizuje', async () => {
+    const z = await payload.create({
+      collection: 'zakaznici',
+      data: { nazev: 'Hledaná firma s.r.o.', typSubjektu: 'po', ico: '26463318' },
+      user: admin,
+      overrideAccess: false,
+    })
+    const om = await vytvorOM(zakladOM({ kod: ean(50), zakaznik: z.id }))
+    expect(om.zakaznikText).toBe('Hledaná firma s.r.o. (IČO 26463318)')
+
+    await payload.update({
+      collection: 'zakaznici',
+      id: z.id,
+      data: { nazev: 'Přejmenovaná a.s.' },
+      user: admin,
+      overrideAccess: false,
+    })
+    const nalez = await payload.find({
+      collection: 'odberna-mista',
+      where: { zakaznikText: { like: 'přejmenovaná' } },
+      user: admin,
+      overrideAccess: false,
+    })
+    expect(nalez.docs.map((d) => d.id)).toContain(om.id)
+  })
+})
+
 describe('Validace', () => {
   it('odmítne typ odběru, který nepatří ke komoditě', async () => {
     await expect(vytvorOM(zakladOM({ kod: ean(10), typOdberu: 'SO' }))).rejects.toThrow(

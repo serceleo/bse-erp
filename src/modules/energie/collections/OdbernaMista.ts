@@ -144,6 +144,7 @@ const odvozeneHodnoty: CollectionBeforeChangeHook = async ({
 
   data.adresaText = adresaNaRadek(d.adresa as Adresa)
   data.typ = typOM(d.typZakaznika, d.spotrebitel)
+  data.zakaznikText = await zakaznikProHledani(req, d.zakaznik)
   data.oznaceni = [data.interniCislo, data.adresaText || data.kod || d.kod]
     .filter(Boolean)
     .join(' – ')
@@ -174,6 +175,23 @@ const odvozeneHodnoty: CollectionBeforeChangeHook = async ({
   }
 
   return data
+}
+
+/**
+ * Text pro fulltextové hledání OM podle zákazníka („Název (IČO 12345678)“).
+ * Vždy se načítá z databáze – klient ho nemůže podvrhnout. Při změně zákazníka ho
+ * u jeho OM přepočítá hook v kolekci Zákazníci.
+ */
+export const zakaznikProHledani = async (
+  req: Parameters<CollectionBeforeChangeHook>[0]['req'],
+  zakaznik: unknown,
+): Promise<string | null> => {
+  const id = zakaznik && typeof zakaznik === 'object' ? (zakaznik as { id: unknown }).id : zakaznik
+  if (id === null || id === undefined || id === '') return null
+  const z = await req.payload
+    .findByID({ collection: 'zakaznici', id: id as number, depth: 0, overrideAccess: true, req })
+    .catch(() => null)
+  return z ? [z.nazev, z.ico ? `(IČO ${z.ico})` : ''].filter(Boolean).join(' ') : null
 }
 
 /** Prázdné hodnoty variantní skupiny (definice skupin jsou níže v `spotrebaAMereni`). */
@@ -816,7 +834,7 @@ export const OdbernaMista: CollectionConfig = {
       'adresaText',
       'stav',
     ],
-    listSearchableFields: ['interniCislo', 'kod', 'adresaText'],
+    listSearchableFields: ['interniCislo', 'kod', 'adresaText', 'zakaznikText'],
     group: 'Energie',
     pagination: { defaultLimit: 50 },
   },
@@ -847,6 +865,8 @@ export const OdbernaMista: CollectionConfig = {
       },
     },
     { name: 'oznaceni', type: 'text', admin: { hidden: true } },
+    // Název a IČO zákazníka pro vyhledávání v přehledu (odvozeno serverem).
+    { name: 'zakaznikText', label: 'Zákazník', type: 'text', index: true, admin: { hidden: true } },
     {
       // Sloučený údaj pro seznam: Z / V (běžný / virtuální zákazník), přípona -S = spotřebitel.
       // Odvozuje server z polí typZakaznika a spotrebitel, která zůstávají zdrojem pravdy.
