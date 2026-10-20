@@ -31,9 +31,13 @@ const Plamen = () => (
   </svg>
 )
 
+/** Zkratky druhů výroben pro přehled („VN + FVE“). */
+const ZKRATKY_VYROBEN: Record<string, string> = { fve: 'FVE', kgj: 'KGJ', jina: 'výrobna' }
+
 /**
  * Komodita jako ikona (oranžový blesk = elektřina, modrý plamínek = plyn) a vedle ní
- * zkratka typu odběru z téhož řádku – např. blesk + „VN“. Celý popis je v bublině.
+ * zkratka typu odběru z téhož řádku, případně připojená výrobna – např. blesk + „VN + FVE“.
+ * Celý popis je v bublině.
  */
 export const KomoditaBunka: React.FC<DefaultCellComponentProps> = ({
   cellData,
@@ -43,7 +47,19 @@ export const KomoditaBunka: React.FC<DefaultCellComponentProps> = ({
   if (cellData !== 'EE' && cellData !== 'ZP') return null
   const typOdberu = typeof rowData?.typOdberu === 'string' ? rowData.typOdberu : ''
   const popisOdberu = typOdberu ? labelPro(vsechnyTypyOdberu, typOdberu) : ''
-  const nazev = [popisek(field, cellData), popisOdberu].filter(Boolean).join(' – ')
+  const vyrobna = rowData?.vyrobna as { maVyrobnu?: boolean; druh?: string | null } | undefined
+  const zkratkaVyrobny =
+    cellData === 'EE' && vyrobna?.maVyrobnu
+      ? (ZKRATKY_VYROBEN[vyrobna.druh ?? ''] ?? 'výrobna')
+      : ''
+  const text = [typOdberu, zkratkaVyrobny].filter(Boolean).join(' + ')
+  const nazev = [
+    popisek(field, cellData),
+    popisOdberu,
+    zkratkaVyrobny && `s výrobnou (${zkratkaVyrobny})`,
+  ]
+    .filter(Boolean)
+    .join(' – ')
   return (
     <span
       title={nazev}
@@ -51,7 +67,7 @@ export const KomoditaBunka: React.FC<DefaultCellComponentProps> = ({
       style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4em', whiteSpace: 'nowrap' }}
     >
       {cellData === 'EE' ? <Blesk /> : <Plamen />}
-      {typOdberu && <span aria-hidden="true">{typOdberu}</span>}
+      {text && <span aria-hidden="true">{text}</span>}
     </span>
   )
 }

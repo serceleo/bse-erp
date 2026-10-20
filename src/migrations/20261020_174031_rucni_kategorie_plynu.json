@@ -118,12 +118,8 @@
           "name": "odberna_mista_obchod_cenova_obdobi_parent_id_fk",
           "tableFrom": "odberna_mista_obchod_cenova_obdobi",
           "tableTo": "odberna_mista",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -839,12 +835,8 @@
           "name": "odberna_mista_zalozil_id_users_id_fk",
           "tableFrom": "odberna_mista",
           "tableTo": "users",
-          "columnsFrom": [
-            "zalozil_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["zalozil_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -852,12 +844,8 @@
           "name": "odberna_mista_upravil_id_users_id_fk",
           "tableFrom": "odberna_mista",
           "tableTo": "users",
-          "columnsFrom": [
-            "upravil_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["upravil_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -865,12 +853,8 @@
           "name": "odberna_mista_zakaznik_id_zakaznici_id_fk",
           "tableFrom": "odberna_mista",
           "tableTo": "zakaznici",
-          "columnsFrom": [
-            "zakaznik_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["zakaznik_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -878,12 +862,8 @@
           "name": "odberna_mista_soubor_o_m_id_soubory_om_id_fk",
           "tableFrom": "odberna_mista",
           "tableTo": "soubory_om",
-          "columnsFrom": [
-            "soubor_o_m_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["soubor_o_m_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -891,12 +871,8 @@
           "name": "odberna_mista_smlouva_o_dodavce_id_smlouvy_id_fk",
           "tableFrom": "odberna_mista",
           "tableTo": "smlouvy",
-          "columnsFrom": [
-            "smlouva_o_dodavce_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["smlouva_o_dodavce_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -1030,12 +1006,8 @@
           "name": "odberna_mista_rels_parent_fk",
           "tableFrom": "odberna_mista_rels",
           "tableTo": "odberna_mista",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1043,12 +1015,8 @@
           "name": "odberna_mista_rels_smlouvy_fk",
           "tableFrom": "odberna_mista_rels",
           "tableTo": "smlouvy",
-          "columnsFrom": [
-            "smlouvy_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["smlouvy_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1056,12 +1024,8 @@
           "name": "odberna_mista_rels_dokumenty_fk",
           "tableFrom": "odberna_mista_rels",
           "tableTo": "dokumenty",
-          "columnsFrom": [
-            "dokumenty_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["dokumenty_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1194,12 +1158,8 @@
           "name": "_odberna_mista_v_version_obchod_cenova_obdobi_parent_id_fk",
           "tableFrom": "_odberna_mista_v_version_obchod_cenova_obdobi",
           "tableTo": "_odberna_mista_v",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1978,12 +1938,8 @@
           "name": "_odberna_mista_v_parent_id_odberna_mista_id_fk",
           "tableFrom": "_odberna_mista_v",
           "tableTo": "odberna_mista",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -1991,12 +1947,8 @@
           "name": "_odberna_mista_v_version_zalozil_id_users_id_fk",
           "tableFrom": "_odberna_mista_v",
           "tableTo": "users",
-          "columnsFrom": [
-            "version_zalozil_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["version_zalozil_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -2004,12 +1956,8 @@
           "name": "_odberna_mista_v_version_upravil_id_users_id_fk",
           "tableFrom": "_odberna_mista_v",
           "tableTo": "users",
-          "columnsFrom": [
-            "version_upravil_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["version_upravil_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -2017,12 +1965,8 @@
           "name": "_odberna_mista_v_version_zakaznik_id_zakaznici_id_fk",
           "tableFrom": "_odberna_mista_v",
           "tableTo": "zakaznici",
-          "columnsFrom": [
-            "version_zakaznik_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["version_zakaznik_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -2030,12 +1974,8 @@
           "name": "_odberna_mista_v_version_soubor_o_m_id_soubory_om_id_fk",
           "tableFrom": "_odberna_mista_v",
           "tableTo": "soubory_om",
-          "columnsFrom": [
-            "version_soubor_o_m_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["version_soubor_o_m_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -2043,12 +1983,8 @@
           "name": "_odberna_mista_v_version_smlouva_o_dodavce_id_smlouvy_id_fk",
           "tableFrom": "_odberna_mista_v",
           "tableTo": "smlouvy",
-          "columnsFrom": [
-            "version_smlouva_o_dodavce_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["version_smlouva_o_dodavce_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -2182,12 +2118,8 @@
           "name": "_odberna_mista_v_rels_parent_fk",
           "tableFrom": "_odberna_mista_v_rels",
           "tableTo": "_odberna_mista_v",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -2195,12 +2127,8 @@
           "name": "_odberna_mista_v_rels_smlouvy_fk",
           "tableFrom": "_odberna_mista_v_rels",
           "tableTo": "smlouvy",
-          "columnsFrom": [
-            "smlouvy_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["smlouvy_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -2208,12 +2136,8 @@
           "name": "_odberna_mista_v_rels_dokumenty_fk",
           "tableFrom": "_odberna_mista_v_rels",
           "tableTo": "dokumenty",
-          "columnsFrom": [
-            "dokumenty_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["dokumenty_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2441,12 +2365,8 @@
           "name": "zakaznici_zalozil_id_users_id_fk",
           "tableFrom": "zakaznici",
           "tableTo": "users",
-          "columnsFrom": [
-            "zalozil_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["zalozil_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -2454,12 +2374,8 @@
           "name": "zakaznici_upravil_id_users_id_fk",
           "tableFrom": "zakaznici",
           "tableTo": "users",
-          "columnsFrom": [
-            "upravil_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["upravil_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -2750,12 +2666,8 @@
           "name": "_zakaznici_v_parent_id_zakaznici_id_fk",
           "tableFrom": "_zakaznici_v",
           "tableTo": "zakaznici",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -2763,12 +2675,8 @@
           "name": "_zakaznici_v_version_zalozil_id_users_id_fk",
           "tableFrom": "_zakaznici_v",
           "tableTo": "users",
-          "columnsFrom": [
-            "version_zalozil_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["version_zalozil_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -2776,12 +2684,8 @@
           "name": "_zakaznici_v_version_upravil_id_users_id_fk",
           "tableFrom": "_zakaznici_v",
           "tableTo": "users",
-          "columnsFrom": [
-            "version_upravil_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["version_upravil_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -2950,12 +2854,8 @@
           "name": "soubory_om_vlastnik_arealu_id_zakaznici_id_fk",
           "tableFrom": "soubory_om",
           "tableTo": "zakaznici",
-          "columnsFrom": [
-            "vlastnik_arealu_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["vlastnik_arealu_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -2963,12 +2863,8 @@
           "name": "soubory_om_zalozil_id_users_id_fk",
           "tableFrom": "soubory_om",
           "tableTo": "users",
-          "columnsFrom": [
-            "zalozil_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["zalozil_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -2976,12 +2872,8 @@
           "name": "soubory_om_upravil_id_users_id_fk",
           "tableFrom": "soubory_om",
           "tableTo": "users",
-          "columnsFrom": [
-            "upravil_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["upravil_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -3091,12 +2983,8 @@
           "name": "smlouvy_dodatky_soubor_id_dokumenty_id_fk",
           "tableFrom": "smlouvy_dodatky",
           "tableTo": "dokumenty",
-          "columnsFrom": [
-            "soubor_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["soubor_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -3104,12 +2992,8 @@
           "name": "smlouvy_dodatky_parent_id_fk",
           "tableFrom": "smlouvy_dodatky",
           "tableTo": "smlouvy",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -3351,12 +3235,8 @@
           "name": "smlouvy_zakaznik_id_zakaznici_id_fk",
           "tableFrom": "smlouvy",
           "tableTo": "zakaznici",
-          "columnsFrom": [
-            "zakaznik_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["zakaznik_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -3364,12 +3244,8 @@
           "name": "smlouvy_soubor_id_dokumenty_id_fk",
           "tableFrom": "smlouvy",
           "tableTo": "dokumenty",
-          "columnsFrom": [
-            "soubor_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["soubor_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -3377,12 +3253,8 @@
           "name": "smlouvy_zalozil_id_users_id_fk",
           "tableFrom": "smlouvy",
           "tableTo": "users",
-          "columnsFrom": [
-            "zalozil_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["zalozil_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -3390,12 +3262,8 @@
           "name": "smlouvy_upravil_id_users_id_fk",
           "tableFrom": "smlouvy",
           "tableTo": "users",
-          "columnsFrom": [
-            "upravil_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["upravil_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -3511,12 +3379,8 @@
           "name": "_smlouvy_v_version_dodatky_soubor_id_dokumenty_id_fk",
           "tableFrom": "_smlouvy_v_version_dodatky",
           "tableTo": "dokumenty",
-          "columnsFrom": [
-            "soubor_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["soubor_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -3524,12 +3388,8 @@
           "name": "_smlouvy_v_version_dodatky_parent_id_fk",
           "tableFrom": "_smlouvy_v_version_dodatky",
           "tableTo": "_smlouvy_v",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -3834,12 +3694,8 @@
           "name": "_smlouvy_v_parent_id_smlouvy_id_fk",
           "tableFrom": "_smlouvy_v",
           "tableTo": "smlouvy",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -3847,12 +3703,8 @@
           "name": "_smlouvy_v_version_zakaznik_id_zakaznici_id_fk",
           "tableFrom": "_smlouvy_v",
           "tableTo": "zakaznici",
-          "columnsFrom": [
-            "version_zakaznik_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["version_zakaznik_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -3860,12 +3712,8 @@
           "name": "_smlouvy_v_version_soubor_id_dokumenty_id_fk",
           "tableFrom": "_smlouvy_v",
           "tableTo": "dokumenty",
-          "columnsFrom": [
-            "version_soubor_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["version_soubor_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -3873,12 +3721,8 @@
           "name": "_smlouvy_v_version_zalozil_id_users_id_fk",
           "tableFrom": "_smlouvy_v",
           "tableTo": "users",
-          "columnsFrom": [
-            "version_zalozil_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["version_zalozil_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -3886,12 +3730,8 @@
           "name": "_smlouvy_v_version_upravil_id_users_id_fk",
           "tableFrom": "_smlouvy_v",
           "tableTo": "users",
-          "columnsFrom": [
-            "version_upravil_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["version_upravil_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -4094,12 +3934,8 @@
           "name": "dokumenty_zalozil_id_users_id_fk",
           "tableFrom": "dokumenty",
           "tableTo": "users",
-          "columnsFrom": [
-            "zalozil_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["zalozil_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -4107,12 +3943,8 @@
           "name": "dokumenty_upravil_id_users_id_fk",
           "tableFrom": "dokumenty",
           "tableTo": "users",
-          "columnsFrom": [
-            "upravil_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["upravil_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -4190,12 +4022,8 @@
           "name": "users_roles_parent_fk",
           "tableFrom": "users_roles",
           "tableTo": "users",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -4278,12 +4106,8 @@
           "name": "users_sessions_parent_id_fk",
           "tableFrom": "users_sessions",
           "tableTo": "users",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -4767,12 +4591,8 @@
           "name": "payload_locked_documents_rels_parent_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "payload_locked_documents",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -4780,12 +4600,8 @@
           "name": "payload_locked_documents_rels_odberna_mista_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "odberna_mista",
-          "columnsFrom": [
-            "odberna_mista_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["odberna_mista_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -4793,12 +4609,8 @@
           "name": "payload_locked_documents_rels_zakaznici_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "zakaznici",
-          "columnsFrom": [
-            "zakaznici_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["zakaznici_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -4806,12 +4618,8 @@
           "name": "payload_locked_documents_rels_soubory_om_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "soubory_om",
-          "columnsFrom": [
-            "soubory_om_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["soubory_om_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -4819,12 +4627,8 @@
           "name": "payload_locked_documents_rels_smlouvy_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "smlouvy",
-          "columnsFrom": [
-            "smlouvy_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["smlouvy_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -4832,12 +4636,8 @@
           "name": "payload_locked_documents_rels_dokumenty_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "dokumenty",
-          "columnsFrom": [
-            "dokumenty_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["dokumenty_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -4845,12 +4645,8 @@
           "name": "payload_locked_documents_rels_users_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "users",
-          "columnsFrom": [
-            "users_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["users_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -5054,12 +4850,8 @@
           "name": "payload_preferences_rels_parent_fk",
           "tableFrom": "payload_preferences_rels",
           "tableTo": "payload_preferences",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -5067,12 +4859,8 @@
           "name": "payload_preferences_rels_users_fk",
           "tableFrom": "payload_preferences_rels",
           "tableTo": "users",
-          "columnsFrom": [
-            "users_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["users_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -5164,102 +4952,57 @@
     "public.om_typ_ceny": {
       "name": "om_typ_ceny",
       "schema": "public",
-      "values": [
-        "fixni",
-        "spot",
-        "indexovana"
-      ]
+      "values": ["fixni", "spot", "indexovana"]
     },
     "public.om_typ": {
       "name": "om_typ",
       "schema": "public",
-      "values": [
-        "Z",
-        "V",
-        "Z-S",
-        "V-S"
-      ]
+      "values": ["Z", "V", "Z-S", "V-S"]
     },
     "public.enum_odberna_mista_stav": {
       "name": "enum_odberna_mista_stav",
       "schema": "public",
-      "values": [
-        "pripravovane",
-        "aktivni",
-        "ukoncene"
-      ]
+      "values": ["pripravovane", "aktivni", "ukoncene"]
     },
     "public.enum_odberna_mista_komodita": {
       "name": "enum_odberna_mista_komodita",
       "schema": "public",
-      "values": [
-        "EE",
-        "ZP"
-      ]
+      "values": ["EE", "ZP"]
     },
     "public.enum_odberna_mista_typ_odberu": {
       "name": "enum_odberna_mista_typ_odberu",
       "schema": "public",
-      "values": [
-        "NN",
-        "VN",
-        "MO",
-        "SO",
-        "VO"
-      ]
+      "values": ["NN", "VN", "MO", "SO", "VO"]
     },
     "public.enum_odberna_mista_obchodni_model": {
       "name": "enum_odberna_mista_obchodni_model",
       "schema": "public",
-      "values": [
-        "zakaznik",
-        "obchodnik"
-      ]
+      "values": ["zakaznik", "obchodnik"]
     },
     "public.enum_odberna_mista_typ_zakaznika": {
       "name": "enum_odberna_mista_typ_zakaznika",
       "schema": "public",
-      "values": [
-        "bezny",
-        "virtualni"
-      ]
+      "values": ["bezny", "virtualni"]
     },
     "public.enum_odberna_mista_spotrebitel": {
       "name": "enum_odberna_mista_spotrebitel",
       "schema": "public",
-      "values": [
-        "ano",
-        "ne"
-      ]
+      "values": ["ano", "ne"]
     },
     "public.om_odhad_rezim": {
       "name": "om_odhad_rezim",
       "schema": "public",
-      "values": [
-        "rocni",
-        "mesicni"
-      ]
+      "values": ["rocni", "mesicni"]
     },
     "public.om_typ_mereni": {
       "name": "om_typ_mereni",
       "schema": "public",
-      "values": [
-        "A",
-        "B",
-        "C",
-        "S",
-        "CM"
-      ]
+      "values": ["A", "B", "C", "S", "CM"]
     },
     "public.om_periodicita": {
       "name": "om_periodicita",
       "schema": "public",
-      "values": [
-        "mesicni",
-        "ctvrtletni",
-        "pololetni",
-        "rocni"
-      ]
+      "values": ["mesicni", "ctvrtletni", "pololetni", "rocni"]
     },
     "public.om_distributor": {
       "name": "om_distributor",
@@ -5278,135 +5021,77 @@
     "public.om_pocet_fazi": {
       "name": "om_pocet_fazi",
       "schema": "public",
-      "values": [
-        "1",
-        "3"
-      ]
+      "values": ["1", "3"]
     },
     "public.om_napeti": {
       "name": "om_napeti",
       "schema": "public",
-      "values": [
-        "6",
-        "10",
-        "22",
-        "35"
-      ]
+      "values": ["6", "10", "22", "35"]
     },
     "public.om_mereni_strana": {
       "name": "om_mereni_strana",
       "schema": "public",
-      "values": [
-        "VN",
-        "NN"
-      ]
+      "values": ["VN", "NN"]
     },
     "public.om_vlastnik_ts": {
       "name": "om_vlastnik_ts",
       "schema": "public",
-      "values": [
-        "zakaznik",
-        "distributor",
-        "my",
-        "jiny"
-      ]
+      "values": ["zakaznik", "distributor", "my", "jiny"]
     },
     "public.om_typ_kapacity": {
       "name": "om_typ_kapacity",
       "schema": "public",
-      "values": [
-        "pevna",
-        "klouzava"
-      ]
+      "values": ["pevna", "klouzava"]
     },
     "public.om_druh_vyrobny": {
       "name": "om_druh_vyrobny",
       "schema": "public",
-      "values": [
-        "fve",
-        "kgj",
-        "jina"
-      ]
+      "values": ["fve", "kgj", "jina"]
     },
     "public.om_stav_dodatku": {
       "name": "om_stav_dodatku",
       "schema": "public",
-      "values": [
-        "nepotreba",
-        "pripravit",
-        "jednani",
-        "podepsan"
-      ]
+      "values": ["nepotreba", "pripravit", "jednani", "podepsan"]
     },
     "public.enum__odberna_mista_v_version_stav": {
       "name": "enum__odberna_mista_v_version_stav",
       "schema": "public",
-      "values": [
-        "pripravovane",
-        "aktivni",
-        "ukoncene"
-      ]
+      "values": ["pripravovane", "aktivni", "ukoncene"]
     },
     "public.enum__odberna_mista_v_version_komodita": {
       "name": "enum__odberna_mista_v_version_komodita",
       "schema": "public",
-      "values": [
-        "EE",
-        "ZP"
-      ]
+      "values": ["EE", "ZP"]
     },
     "public.enum__odberna_mista_v_version_typ_odberu": {
       "name": "enum__odberna_mista_v_version_typ_odberu",
       "schema": "public",
-      "values": [
-        "NN",
-        "VN",
-        "MO",
-        "SO",
-        "VO"
-      ]
+      "values": ["NN", "VN", "MO", "SO", "VO"]
     },
     "public.enum__odberna_mista_v_version_obchodni_model": {
       "name": "enum__odberna_mista_v_version_obchodni_model",
       "schema": "public",
-      "values": [
-        "zakaznik",
-        "obchodnik"
-      ]
+      "values": ["zakaznik", "obchodnik"]
     },
     "public.enum__odberna_mista_v_version_typ_zakaznika": {
       "name": "enum__odberna_mista_v_version_typ_zakaznika",
       "schema": "public",
-      "values": [
-        "bezny",
-        "virtualni"
-      ]
+      "values": ["bezny", "virtualni"]
     },
     "public.enum__odberna_mista_v_version_spotrebitel": {
       "name": "enum__odberna_mista_v_version_spotrebitel",
       "schema": "public",
-      "values": [
-        "ano",
-        "ne"
-      ]
+      "values": ["ano", "ne"]
     },
     "public.enum_zakaznici_typ_subjektu": {
       "name": "enum_zakaznici_typ_subjektu",
       "schema": "public",
-      "values": [
-        "po",
-        "fop",
-        "fo"
-      ]
+      "values": ["po", "fop", "fo"]
     },
     "public.enum__zakaznici_v_version_typ_subjektu": {
       "name": "enum__zakaznici_v_version_typ_subjektu",
       "schema": "public",
-      "values": [
-        "po",
-        "fop",
-        "fo"
-      ]
+      "values": ["po", "fop", "fo"]
     },
     "public.enum_smlouvy_typ": {
       "name": "enum_smlouvy_typ",
@@ -5425,19 +5110,12 @@
     "public.enum_smlouvy_komodita": {
       "name": "enum_smlouvy_komodita",
       "schema": "public",
-      "values": [
-        "EE",
-        "ZP"
-      ]
+      "values": ["EE", "ZP"]
     },
     "public.enum_smlouvy_stav": {
       "name": "enum_smlouvy_stav",
       "schema": "public",
-      "values": [
-        "koncept",
-        "platna",
-        "ukoncena"
-      ]
+      "values": ["koncept", "platna", "ukoncena"]
     },
     "public.enum__smlouvy_v_version_typ": {
       "name": "enum__smlouvy_v_version_typ",
@@ -5456,42 +5134,22 @@
     "public.enum__smlouvy_v_version_komodita": {
       "name": "enum__smlouvy_v_version_komodita",
       "schema": "public",
-      "values": [
-        "EE",
-        "ZP"
-      ]
+      "values": ["EE", "ZP"]
     },
     "public.enum__smlouvy_v_version_stav": {
       "name": "enum__smlouvy_v_version_stav",
       "schema": "public",
-      "values": [
-        "koncept",
-        "platna",
-        "ukoncena"
-      ]
+      "values": ["koncept", "platna", "ukoncena"]
     },
     "public.enum_dokumenty_typ": {
       "name": "enum_dokumenty_typ",
       "schema": "public",
-      "values": [
-        "smlouva",
-        "dodatek",
-        "plna-moc",
-        "revize",
-        "technicka",
-        "korespondence",
-        "jiny"
-      ]
+      "values": ["smlouva", "dodatek", "plna-moc", "revize", "technicka", "korespondence", "jiny"]
     },
     "public.enum_users_roles": {
       "name": "enum_users_roles",
       "schema": "public",
-      "values": [
-        "admin",
-        "obchod",
-        "operativa",
-        "cteni"
-      ]
+      "values": ["admin", "obchod", "operativa", "cteni"]
     }
   },
   "schemas": {},
