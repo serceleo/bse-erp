@@ -913,7 +913,9 @@ export const OdbernaMista: CollectionConfig = {
         {
           label: 'Výrobna (FVE)',
           description: 'Výrobny připojené k tomuto OM. Spravují se v evidenci Výrobny (FVE).',
-          admin: { condition: (d) => varianta.jeEE(d) },
+          // Záložka se ukazuje jen OM s připojenou výrobnou (souhrn `vyrobny` udržuje server).
+          // Novou výrobnu lze k OM přiřadit v evidenci Výrobny (FVE).
+          admin: { condition: (d) => varianta.jeEE(d) && Boolean(d?.vyrobny) },
           fields: [
             {
               name: 'vyrobnyOM',
