@@ -7,6 +7,7 @@ import * as migration_20261020_173143_hledani_podle_zakaznika from './20261020_1
 import * as migration_20261020_174031_rucni_kategorie_plynu from './20261020_174031_rucni_kategorie_plynu';
 import * as migration_20261020_184500_evidence_vyroben from './20261020_184500_evidence_vyroben';
 import * as migration_20261020_185133_vyrobny_edc_zadost from './20261020_185133_vyrobny_edc_zadost';
+import * as migration_20261020_204414_vyrobny_spotrebni_ean from './20261020_204414_vyrobny_spotrebni_ean';
 
 export const migrations = [
   {
@@ -52,6 +53,11 @@ export const migrations = [
   {
     up: migration_20261020_185133_vyrobny_edc_zadost.up,
     down: migration_20261020_185133_vyrobny_edc_zadost.down,
-    name: '20261020_185133_vyrobny_edc_zadost'
+    name: '20261020_185133_vyrobny_edc_zadost',
+  },
+  {
+    up: migration_20261020_204414_vyrobny_spotrebni_ean.up,
+    down: migration_20261020_204414_vyrobny_spotrebni_ean.down,
+    name: '20261020_204414_vyrobny_spotrebni_ean'
   },
 ];

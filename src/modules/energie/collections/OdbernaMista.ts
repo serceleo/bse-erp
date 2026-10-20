@@ -1,4 +1,5 @@
 import type {
+  CollectionAfterChangeHook,
   CollectionBeforeChangeHook,
   CollectionConfig,
   Field,
@@ -116,6 +117,38 @@ const validujProKomoditu =
  * označení pro výběry, konec nakoupeného období. Při update pracujeme se sloučenými daty,
  * protože API smí poslat jen část dokumentu.
  */
+/**
+ * Změní-li se kód OM (EAN), přepočtou se připojené výrobny – nesou si spotřební EAN
+ * svého OM pro přehled a hledání (pole `eanOdberu`, dopočítává ho hook výrobny).
+ */
+const aktualizujVyrobny: CollectionAfterChangeHook = async ({
+  doc,
+  previousDoc,
+  operation,
+  req,
+}) => {
+  if (operation !== 'update' || previousDoc?.kod === doc.kod) return doc
+  const vyrobny = await req.payload.find({
+    collection: 'vyrobny',
+    where: { odberneMisto: { equals: doc.id } },
+    depth: 0,
+    pagination: false,
+    overrideAccess: true,
+    req,
+  })
+  for (const v of vyrobny.docs) {
+    await req.payload.update({
+      collection: 'vyrobny',
+      id: v.id,
+      data: {},
+      depth: 0,
+      overrideAccess: true,
+      req,
+    })
+  }
+  return doc
+}
+
 const odvozeneHodnoty: CollectionBeforeChangeHook = async ({
   context,
   data,
@@ -824,6 +857,7 @@ export const OdbernaMista: CollectionConfig = {
   versions: { maxPerDoc: 100 },
   hooks: {
     beforeChange: [auditHook, odvozeneHodnoty],
+    afterChange: [aktualizujVyrobny],
   },
   indexes: [{ fields: ['komodita', 'stav'] }],
   fields: [

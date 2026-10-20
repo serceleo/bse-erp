@@ -317,6 +317,32 @@ describe('Výrobny (FVE)', () => {
     expect(omPo.vyrobny ?? null).toBeNull()
   })
 
+  it('výrobna nese spotřební EAN svého OM – nejde podvrhnout a sleduje změnu kódu OM', async () => {
+    const om = await vytvorOM(zakladOM({ kod: ean(64) }))
+    const v = await payload.create({
+      collection: 'vyrobny',
+      data: { odberneMisto: om.id, druh: 'fve', stav: 'provoz', eanOdberu: ean(99) },
+      user: admin,
+      overrideAccess: false,
+    })
+    expect(v.eanOdberu).toBe(ean(64))
+
+    await payload.update({
+      collection: 'odberna-mista',
+      id: om.id,
+      data: { kod: ean(65) },
+      user: admin,
+      overrideAccess: false,
+    })
+    const po = await payload.findByID({
+      collection: 'vyrobny',
+      id: v.id,
+      user: admin,
+      overrideAccess: false,
+    })
+    expect(po.eanOdberu).toBe(ean(65))
+  })
+
   it('souhrn výroben nejde podvrhnout přes API OM', async () => {
     const om = await vytvorOM(zakladOM({ kod: ean(62), vyrobny: 'FVE' }))
     expect(om.vyrobny ?? null).toBeNull()

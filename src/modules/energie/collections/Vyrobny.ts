@@ -28,19 +28,22 @@ const datumDen = { date: { pickerAppearance: 'dayOnly', displayFormat: 'd. M. yy
 const idZ = (v: unknown) =>
   (v && typeof v === 'object' ? (v as { id: unknown }).id : v) as number | null | undefined
 
-/** Označení výrobny: vlastní název, jinak „FVE – Pivovarská 30, Rožnov pod Radhoštěm“. */
-const oznaceniVyrobny: CollectionBeforeChangeHook = async ({ data, originalDoc, req }) => {
+/**
+ * Odvozené hodnoty z OM: označení výrobny (vlastní název, jinak „FVE – Pivovarská 30,
+ * Rožnov pod Radhoštěm“) a spotřební EAN OM. Klientem zaslané hodnoty se přepisují.
+ */
+const odvozeneZOM: CollectionBeforeChangeHook = async ({ data, originalDoc, req }) => {
   const d = { ...(originalDoc ?? {}), ...data }
   if (typeof data.ean === 'string') data.ean = normalizujKod(data.ean)
-  let adresa = ''
   const omId = idZ(d.odberneMisto)
-  if (omId) {
-    const om = await req.payload
-      .findByID({ collection: 'odberna-mista', id: omId, depth: 0, overrideAccess: true, req })
-      .catch(() => null)
-    adresa = om ? adresaNaRadek(om.adresa as Adresa, { psc: false }) : ''
-  }
+  const om = omId
+    ? await req.payload
+        .findByID({ collection: 'odberna-mista', id: omId, depth: 0, overrideAccess: true, req })
+        .catch(() => null)
+    : null
+  const adresa = om ? adresaNaRadek(om.adresa as Adresa, { psc: false }) : ''
   data.oznaceni = d.nazev?.trim() || [zkratkaVyrobny(d.druh), adresa].filter(Boolean).join(' – ')
+  data.eanOdberu = om?.kod ?? null
   return data
 }
 
@@ -103,11 +106,13 @@ export const Vyrobny: CollectionConfig = {
       'oznaceni',
       'druh',
       'odberneMisto',
+      'eanOdberu',
+      'ean',
       'instalovanyVykonKwp',
       'vykupPretoku',
       'stav',
     ],
-    listSearchableFields: ['oznaceni', 'ean', 'licenceEru'],
+    listSearchableFields: ['oznaceni', 'ean', 'eanOdberu', 'licenceEru'],
     group: 'Energie',
   },
   access: {
@@ -118,7 +123,7 @@ export const Vyrobny: CollectionConfig = {
   },
   versions: { maxPerDoc: 50 },
   hooks: {
-    beforeChange: [auditHook, oznaceniVyrobny],
+    beforeChange: [auditHook, odvozeneZOM],
     afterChange: [poZmene],
     afterDelete: [poSmazani],
   },
@@ -178,22 +183,33 @@ export const Vyrobny: CollectionConfig = {
       type: 'row',
       fields: [
         {
-          name: 'nazev',
-          label: 'Vlastní název',
+          name: 'eanOdberu',
+          label: 'Spotřební EAN (OM)',
           type: 'text',
-          admin: { width: '50%', description: 'Nepovinné – jinak se použije druh a adresa OM.' },
+          index: true,
+          admin: {
+            width: '50%',
+            readOnly: true,
+            description: 'EAN odběru přiřazeného OM – doplní se automaticky.',
+          },
         },
         {
           name: 'ean',
-          label: 'EAN výrobny',
+          label: 'Výrobní EAN',
           type: 'text',
           unique: true,
           index: true,
-          admin: { width: '50%', description: 'Výrobní EAN (18 číslic), odlišný od EAN odběru.' },
+          admin: { width: '50%', description: 'EAN výroby (18 číslic), odlišný od EAN odběru.' },
           validate: (value: string | null | undefined) =>
             !value || jePlatnyEAN18(value) || 'Neplatný EAN (18 číslic, nesedí kontrolní číslice).',
         },
       ],
+    },
+    {
+      name: 'nazev',
+      label: 'Vlastní název',
+      type: 'text',
+      admin: { description: 'Nepovinné – jinak se použije druh a adresa OM.' },
     },
     {
       type: 'row',

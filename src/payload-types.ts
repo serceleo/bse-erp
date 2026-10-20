@@ -474,13 +474,17 @@ export interface Vyrobny {
   druh: 'fve' | 'kgj' | 'mve' | 'jina';
   kategorie?: ('1' | '2') | null;
   /**
+   * EAN odběru přiřazeného OM – doplní se automaticky.
+   */
+  eanOdberu?: string | null;
+  /**
+   * EAN výroby (18 číslic), odlišný od EAN odběru.
+   */
+  ean?: string | null;
+  /**
    * Nepovinné – jinak se použije druh a adresa OM.
    */
   nazev?: string | null;
-  /**
-   * Výrobní EAN (18 číslic), odlišný od EAN odběru.
-   */
-  ean?: string | null;
   instalovanyVykonKwp?: number | null;
   rezervovanyVykonKw?: number | null;
   vykonStridacuKw?: number | null;
@@ -738,8 +742,9 @@ export interface VyrobnySelect<T extends boolean = true> {
   odberneMisto?: T;
   druh?: T;
   kategorie?: T;
-  nazev?: T;
+  eanOdberu?: T;
   ean?: T;
+  nazev?: T;
   instalovanyVykonKwp?: T;
   rezervovanyVykonKw?: T;
   vykonStridacuKw?: T;
