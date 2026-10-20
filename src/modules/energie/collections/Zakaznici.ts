@@ -28,10 +28,16 @@ export const Zakaznici: CollectionConfig = {
   hooks: {
     beforeChange: [auditHook],
     afterChange: [
-      // Při změně názvu či IČO přepočítáme vyhledávací text u OM tohoto zákazníka.
+      // Při změně názvu, IČO či typu subjektu přepočítáme u OM tohoto zákazníka
+      // vyhledávací text a příznak spotřebitele (dopočítá je hook OM).
       async ({ doc, previousDoc, operation, req }) => {
         if (operation !== 'update') return doc
-        if (doc.nazev === previousDoc?.nazev && doc.ico === previousDoc?.ico) return doc
+        if (
+          doc.nazev === previousDoc?.nazev &&
+          doc.ico === previousDoc?.ico &&
+          doc.typSubjektu === previousDoc?.typSubjektu
+        )
+          return doc
         const text = [doc.nazev, doc.ico ? `(IČO ${doc.ico})` : ''].filter(Boolean).join(' ')
         const om = await req.payload.find({
           collection: 'odberna-mista',
@@ -42,8 +48,9 @@ export const Zakaznici: CollectionConfig = {
           overrideAccess: true,
           req,
         })
+        const zmenaTypu = doc.typSubjektu !== previousDoc?.typSubjektu
         for (const o of om.docs) {
-          if (o.zakaznikText !== text) {
+          if (zmenaTypu || o.zakaznikText !== text) {
             await req.payload.update({
               collection: 'odberna-mista',
               id: o.id,

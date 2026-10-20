@@ -27,6 +27,7 @@ import {
   anoNeOptions,
   distributori,
   jeHodnotaProKomoditu,
+  jeSpotrebitel,
   KOMODITY,
   komodityOptions,
   MESICE,
@@ -179,8 +180,16 @@ const odvozeneHodnoty: CollectionBeforeChangeHook = async ({
   if (typeof data.kod === 'string') data.kod = normalizujKod(data.kod)
 
   data.adresaText = adresaNaRadek(d.adresa as Adresa)
+  const zakaznik = await nactiZakaznika(req, d.zakaznik)
+  data.zakaznikText = zakaznik?.text ?? null
+  // Spotřebitel: FO či podnikající FO na NN (elektřina) nebo MO (plyn) – pokud je zákazník
+  // přiřazen a uživatel nezvolil ruční určení. Bez zákazníka zůstává zadaná hodnota.
+  if (zakaznik && !d.spotrebitelRucne) {
+    data.spotrebitel = d.spotrebitel = jeSpotrebitel(zakaznik.typSubjektu, d.typOdberu)
+      ? 'ano'
+      : 'ne'
+  }
   data.typ = typOM(d.typZakaznika, d.spotrebitel)
-  data.zakaznikText = await zakaznikProHledani(req, d.zakaznik)
   data.oznaceni = [data.interniCislo, data.adresaText || data.kod || d.kod]
     .filter(Boolean)
     .join(' – ')
@@ -219,20 +228,25 @@ const odvozeneHodnoty: CollectionBeforeChangeHook = async ({
 }
 
 /**
- * Text pro fulltextové hledání OM podle zákazníka („Název (IČO 12345678)“).
- * Vždy se načítá z databáze – klient ho nemůže podvrhnout. Při změně zákazníka ho
- * u jeho OM přepočítá hook v kolekci Zákazníci.
+ * Údaje zákazníka, ze kterých OM odvozuje hodnoty: text pro fulltextové hledání
+ * („Název (IČO 12345678)“) a typ subjektu (pro určení spotřebitele). Vždy se načítají
+ * z databáze – klient je nemůže podvrhnout. Při změně zákazníka je u jeho OM přepočítá
+ * hook v kolekci Zákazníci.
  */
-export const zakaznikProHledani = async (
+export const nactiZakaznika = async (
   req: Parameters<CollectionBeforeChangeHook>[0]['req'],
   zakaznik: unknown,
-): Promise<string | null> => {
+): Promise<{ text: string; typSubjektu: string | null } | null> => {
   const id = zakaznik && typeof zakaznik === 'object' ? (zakaznik as { id: unknown }).id : zakaznik
   if (id === null || id === undefined || id === '') return null
   const z = await req.payload
     .findByID({ collection: 'zakaznici', id: id as number, depth: 0, overrideAccess: true, req })
     .catch(() => null)
-  return z ? [z.nazev, z.ico ? `(IČO ${z.ico})` : ''].filter(Boolean).join(' ') : null
+  if (!z) return null
+  return {
+    text: [z.nazev, z.ico ? `(IČO ${z.ico})` : ''].filter(Boolean).join(' '),
+    typSubjektu: z.typSubjektu ?? null,
+  }
 }
 
 /** Prázdné hodnoty variantní skupiny (definice skupin jsou níže v `spotrebaAMereni`). */
@@ -369,9 +383,23 @@ const zakladniUdaje: Field[] = [
         required: true,
         defaultValue: 'ne',
         options: anoNeOptions,
-        admin: { width: '25%' },
+        admin: {
+          width: '25%',
+          description:
+            'Určí se automaticky: ANO u fyzické osoby (i podnikající) na NN nebo MO, jinak NE – není-li zaškrtnuto ruční určení.',
+        },
       },
     ],
+  },
+  {
+    name: 'spotrebitelRucne',
+    label: 'Spotřebitele určit ručně',
+    type: 'checkbox',
+    defaultValue: false,
+    admin: {
+      description:
+        'Zaškrtněte, pokud se příznak spotřebitele nemá řídit zákazníkem a typem odběru.',
+    },
   },
   {
     name: 'kod',

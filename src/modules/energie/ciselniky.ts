@@ -128,6 +128,13 @@ export const typOM = (typZakaznika: unknown, spotrebitel: unknown): string | nul
   return `${typZakaznika === 'virtualni' ? 'V' : 'Z'}${spotrebitel === 'ano' ? '-S' : ''}`
 }
 
+/**
+ * Spotřebitel (pro typ OM „…-S“): zákazník je fyzická osoba – nepodnikající i podnikající –
+ * a OM je v kategorii NN (elektřina) nebo MO (plyn).
+ */
+export const jeSpotrebitel = (typSubjektu: unknown, typOdberu: unknown): boolean =>
+  (typSubjektu === 'fo' || typSubjektu === 'fop') && (typOdberu === 'NN' || typOdberu === 'MO')
+
 export const anoNeOptions: OptionObject[] = [
   { label: 'ANO', value: 'ano' },
   { label: 'NE', value: 'ne' },

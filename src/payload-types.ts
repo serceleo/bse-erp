@@ -185,7 +185,14 @@ export interface OdbernaMista {
   typZakaznika: 'bezny' | 'virtualni';
   zakaznik?: (number | null) | Zakaznici;
   souborOM?: (number | null) | SouboryOm;
+  /**
+   * Určí se automaticky: ANO u fyzické osoby (i podnikající) na NN nebo MO, jinak NE – není-li zaškrtnuto ruční určení.
+   */
   spotrebitel: 'ano' | 'ne';
+  /**
+   * Zaškrtněte, pokud se příznak spotřebitele nemá řídit zákazníkem a typem odběru.
+   */
+  spotrebitelRucne?: boolean | null;
   /**
    * Elektřina: EAN – 18 číslic (859182400…). Plyn: EIC – 16 znaků (27ZG…). Mezery se odstraní.
    */
@@ -628,6 +635,7 @@ export interface OdbernaMistaSelect<T extends boolean = true> {
   zakaznik?: T;
   souborOM?: T;
   spotrebitel?: T;
+  spotrebitelRucne?: T;
   kod?: T;
   adresa?:
     | T

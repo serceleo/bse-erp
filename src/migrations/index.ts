@@ -9,6 +9,7 @@ import * as migration_20261020_184500_evidence_vyroben from './20261020_184500_e
 import * as migration_20261020_185133_vyrobny_edc_zadost from './20261020_185133_vyrobny_edc_zadost';
 import * as migration_20261020_204414_vyrobny_spotrebni_ean from './20261020_204414_vyrobny_spotrebni_ean';
 import * as migration_20261020_210703_vykup_pretoku_pp from './20261020_210703_vykup_pretoku_pp';
+import * as migration_20261020_211105_spotrebitel_automaticky from './20261020_211105_spotrebitel_automaticky';
 
 export const migrations = [
   {
@@ -64,6 +65,11 @@ export const migrations = [
   {
     up: migration_20261020_210703_vykup_pretoku_pp.up,
     down: migration_20261020_210703_vykup_pretoku_pp.down,
-    name: '20261020_210703_vykup_pretoku_pp'
+    name: '20261020_210703_vykup_pretoku_pp',
+  },
+  {
+    up: migration_20261020_211105_spotrebitel_automaticky.up,
+    down: migration_20261020_211105_spotrebitel_automaticky.down,
+    name: '20261020_211105_spotrebitel_automaticky'
   },
 ];

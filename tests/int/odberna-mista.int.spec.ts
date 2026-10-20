@@ -127,7 +127,12 @@ describe('Číslování a odvozené hodnoty', () => {
 
   it('sloučený typ: Z / V a přípona -S u spotřebitele', async () => {
     const om = await vytvorOM(
-      zakladOM({ kod: ean(6), typZakaznika: 'virtualni', spotrebitel: 'ano' }),
+      zakladOM({
+        kod: ean(6),
+        typZakaznika: 'virtualni',
+        spotrebitel: 'ano',
+        spotrebitelRucne: true,
+      }),
     )
     expect(om.typ).toBe('V-S')
     const zmena = await payload.update({
@@ -138,6 +143,66 @@ describe('Číslování a odvozené hodnoty', () => {
       overrideAccess: false,
     })
     expect(zmena.typ).toBe('Z-S')
+  })
+
+  it('spotřebitel automaticky: FO / podnikající FO na NN či MO, jinak ne', async () => {
+    const zakaznikTypu = async (typSubjektu: 'po' | 'fo' | 'fop', ico?: string) =>
+      (
+        await payload.create({
+          collection: 'zakaznici',
+          data: { nazev: `Zákazník ${typSubjektu}`, typSubjektu, ico },
+          overrideAccess: true,
+        })
+      ).id
+    const fo = await zakaznikTypu('fo')
+    const fop = await zakaznikTypu('fop', '25596641')
+
+    const nnFo = await vytvorOM(zakladOM({ kod: ean(70), zakaznik: fo, spotrebitel: 'ne' }))
+    expect([nnFo.spotrebitel, nnFo.typ]).toEqual(['ano', 'Z-S'])
+    const vnFop = await vytvorOM(
+      zakladOM({ kod: ean(71), zakaznik: fop, typOdberu: 'VN', spotrebitel: 'ano' }),
+    )
+    expect([vnFop.spotrebitel, vnFop.typ]).toEqual(['ne', 'Z'])
+    const moFop = await vytvorOM(
+      zakladOM({
+        kod: eic(70),
+        komodita: 'ZP',
+        typOdberu: 'MO',
+        zakaznik: fop,
+        odhadSpotreby: { rezim: 'rocni', rocniMwh: 40 },
+      }),
+    )
+    expect(moFop.typ).toBe('Z-S')
+    // Právnická osoba spotřebitelem není, i když to klient pošle.
+    const nnPo = await vytvorOM(zakladOM({ kod: ean(72), spotrebitel: 'ano' }))
+    expect(nnPo.typ).toBe('Z')
+    // Ruční určení má přednost.
+    const rucne = await vytvorOM(
+      zakladOM({ kod: ean(73), zakaznik: fo, spotrebitel: 'ne', spotrebitelRucne: true }),
+    )
+    expect(rucne.typ).toBe('Z')
+  })
+
+  it('změna typu subjektu zákazníka se promítne do jeho OM', async () => {
+    const z = await payload.create({
+      collection: 'zakaznici',
+      data: { nazev: 'Měnící se zákazník', typSubjektu: 'po', ico: '27774813' },
+      overrideAccess: true,
+    })
+    const om = await vytvorOM(zakladOM({ kod: ean(74), zakaznik: z.id }))
+    expect(om.typ).toBe('Z')
+    await payload.update({
+      collection: 'zakaznici',
+      id: z.id,
+      data: { typSubjektu: 'fop' },
+      overrideAccess: true,
+    })
+    const po = await payload.findByID({
+      collection: 'odberna-mista',
+      id: om.id,
+      overrideAccess: true,
+    })
+    expect([po.spotrebitel, po.typ]).toEqual(['ano', 'Z-S'])
   })
 })
 
