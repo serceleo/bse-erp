@@ -1,11 +1,12 @@
-import * as migration_20261019_215955_init from './20261019_215955_init'
-import * as migration_20261019_225828_zruseni_rezervovane_kapacity from './20261019_225828_zruseni_rezervovane_kapacity'
-import * as migration_20261019_230934_sloucene_typy_om from './20261019_230934_sloucene_typy_om'
-import * as migration_20261020_001810_typ_odberu_plynu_dle_spotreby from './20261020_001810_typ_odberu_plynu_dle_spotreby'
-import * as migration_20261020_124428_zakaznik_nepovinny from './20261020_124428_zakaznik_nepovinny'
-import * as migration_20261020_173143_hledani_podle_zakaznika from './20261020_173143_hledani_podle_zakaznika'
-import * as migration_20261020_174031_rucni_kategorie_plynu from './20261020_174031_rucni_kategorie_plynu'
-import * as migration_20261020_184500_evidence_vyroben from './20261020_184500_evidence_vyroben'
+import * as migration_20261019_215955_init from './20261019_215955_init';
+import * as migration_20261019_225828_zruseni_rezervovane_kapacity from './20261019_225828_zruseni_rezervovane_kapacity';
+import * as migration_20261019_230934_sloucene_typy_om from './20261019_230934_sloucene_typy_om';
+import * as migration_20261020_001810_typ_odberu_plynu_dle_spotreby from './20261020_001810_typ_odberu_plynu_dle_spotreby';
+import * as migration_20261020_124428_zakaznik_nepovinny from './20261020_124428_zakaznik_nepovinny';
+import * as migration_20261020_173143_hledani_podle_zakaznika from './20261020_173143_hledani_podle_zakaznika';
+import * as migration_20261020_174031_rucni_kategorie_plynu from './20261020_174031_rucni_kategorie_plynu';
+import * as migration_20261020_184500_evidence_vyroben from './20261020_184500_evidence_vyroben';
+import * as migration_20261020_185133_vyrobny_edc_zadost from './20261020_185133_vyrobny_edc_zadost';
 
 export const migrations = [
   {
@@ -48,4 +49,9 @@ export const migrations = [
     down: migration_20261020_184500_evidence_vyroben.down,
     name: '20261020_184500_evidence_vyroben',
   },
-]
+  {
+    up: migration_20261020_185133_vyrobny_edc_zadost.up,
+    down: migration_20261020_185133_vyrobny_edc_zadost.down,
+    name: '20261020_185133_vyrobny_edc_zadost'
+  },
+];

@@ -489,6 +489,15 @@ export interface Vyrobny {
   licenceEru?: string | null;
   rezimPretoku?: ('pretoky' | 'bez-pretoku') | null;
   vykupPretoku?: ('bse' | 'jiny' | 'zadny') | null;
+  typMereni?: ('A' | 'B' | 'C' | 'S') | null;
+  edcAkumulace?: boolean | null;
+  edcFlexibilita?: boolean | null;
+  zadostOPripojeni?: {
+    cislo?: string | null;
+    druh?: string | null;
+    datum?: string | null;
+    stav?: string | null;
+  };
   vykupujici?: string | null;
   vykupniCena?: number | null;
   dokumenty?: (number | Dokumenty)[] | null;
@@ -739,6 +748,17 @@ export interface VyrobnySelect<T extends boolean = true> {
   licenceEru?: T;
   rezimPretoku?: T;
   vykupPretoku?: T;
+  typMereni?: T;
+  edcAkumulace?: T;
+  edcFlexibilita?: T;
+  zadostOPripojeni?:
+    | T
+    | {
+        cislo?: T;
+        druh?: T;
+        datum?: T;
+        stav?: T;
+      };
   vykupujici?: T;
   vykupniCena?: T;
   dokumenty?: T;

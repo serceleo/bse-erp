@@ -19,6 +19,7 @@ import {
   kategorieVyrobnyOptions,
   rezimPretokuOptions,
   stavVyrobnyOptions,
+  typyMereni,
   vykupPretokuOptions,
   zkratkaVyrobny,
 } from '../ciselniky'
@@ -253,6 +254,49 @@ export const Vyrobny: CollectionConfig = {
           enumName: 'vyr_vykup',
           options: vykupPretokuOptions,
           admin: { width: '25%' },
+        },
+      ],
+    },
+    {
+      type: 'row',
+      fields: [
+        {
+          name: 'typMereni',
+          label: 'Typ měření výroby',
+          type: 'select',
+          enumName: 'vyr_typ_mereni',
+          options: typyMereni.EE,
+          admin: { width: '25%' },
+        },
+        {
+          name: 'edcAkumulace',
+          label: 'Registrováno v EDC – akumulace',
+          type: 'checkbox',
+          defaultValue: false,
+          admin: { width: '25%' },
+        },
+        {
+          name: 'edcFlexibilita',
+          label: 'Registrováno v EDC – flexibilita',
+          type: 'checkbox',
+          defaultValue: false,
+          admin: { width: '25%' },
+        },
+      ],
+    },
+    {
+      name: 'zadostOPripojeni',
+      label: 'Žádost o připojení výrobny (PDS)',
+      type: 'group',
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            { name: 'cislo', label: 'Číslo žádosti', type: 'text', admin: { width: '25%' } },
+            { name: 'druh', label: 'Druh žádosti', type: 'text', admin: { width: '35%' } },
+            { name: 'datum', label: 'Podána', type: 'date', admin: { width: '20%', ...datumDen } },
+            { name: 'stav', label: 'Stav', type: 'text', admin: { width: '20%' } },
+          ],
         },
       ],
     },
