@@ -280,6 +280,79 @@ describe('Hledání podle zákazníka', () => {
   })
 })
 
+describe('Výrobny (FVE)', () => {
+  it('výrobna se promítne do souhrnu OM a po smazání zmizí', async () => {
+    const om = await vytvorOM(zakladOM({ kod: ean(60) }))
+    expect(om.vyrobny ?? null).toBeNull()
+
+    const v = await payload.create({
+      collection: 'vyrobny',
+      data: {
+        odberneMisto: om.id,
+        druh: 'fve',
+        stav: 'provoz',
+        ean: ean(61),
+        instalovanyVykonKwp: 99,
+      },
+      user: admin,
+      overrideAccess: false,
+    })
+    expect(v.oznaceni).toBe('FVE – Hlavní 375, Zubří')
+    let omPo = await payload.findByID({
+      collection: 'odberna-mista',
+      id: om.id,
+      user: admin,
+      overrideAccess: false,
+    })
+    expect(omPo.vyrobny).toBe('FVE')
+    expect(omPo.vyrobnyOM?.docs?.length).toBe(1)
+
+    await payload.delete({ collection: 'vyrobny', id: v.id, user: admin, overrideAccess: false })
+    omPo = await payload.findByID({
+      collection: 'odberna-mista',
+      id: om.id,
+      user: admin,
+      overrideAccess: false,
+    })
+    expect(omPo.vyrobny ?? null).toBeNull()
+  })
+
+  it('souhrn výroben nejde podvrhnout přes API OM', async () => {
+    const om = await vytvorOM(zakladOM({ kod: ean(62), vyrobny: 'FVE' }))
+    expect(om.vyrobny ?? null).toBeNull()
+  })
+
+  it('výkupní cenu nevidí role bez přístupu k cenám', async () => {
+    const om = await vytvorOM(zakladOM({ kod: ean(63) }))
+    const v = await payload.create({
+      collection: 'vyrobny',
+      data: {
+        odberneMisto: om.id,
+        druh: 'fve',
+        stav: 'provoz',
+        vykupPretoku: 'bse',
+        vykupniCena: 1500,
+      },
+      user: admin,
+      overrideAccess: false,
+    })
+    const proCtenare = await payload.findByID({
+      collection: 'vyrobny',
+      id: v.id,
+      user: ctenar,
+      overrideAccess: false,
+    })
+    expect(proCtenare.vykupniCena).toBeUndefined()
+    const proObchod = await payload.findByID({
+      collection: 'vyrobny',
+      id: v.id,
+      user: obchodnik,
+      overrideAccess: false,
+    })
+    expect(proObchod.vykupniCena).toBe(1500)
+  })
+})
+
 describe('Validace', () => {
   it('odmítne typ odběru, který nepatří ke komoditě', async () => {
     await expect(vytvorOM(zakladOM({ kod: ean(10), typOdberu: 'SO' }))).rejects.toThrow(

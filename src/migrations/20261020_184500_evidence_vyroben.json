@@ -1,0 +1,6065 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.odberna_mista_obchod_cenova_obdobi": {
+      "name": "odberna_mista_obchod_cenova_obdobi",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "od": {
+          "name": "od",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "do": {
+          "name": "do",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "typ_ceny": {
+          "name": "typ_ceny",
+          "type": "om_typ_ceny",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'fixni'"
+        },
+        "dodavatel_nakupu": {
+          "name": "dodavatel_nakupu",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nakupni_cena": {
+          "name": "nakupni_cena",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "prodejni_cena": {
+          "name": "prodejni_cena",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "marze": {
+          "name": "marze",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stala_platba": {
+          "name": "stala_platba",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "poznamka": {
+          "name": "poznamka",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "odberna_mista_obchod_cenova_obdobi_order_idx": {
+          "name": "odberna_mista_obchod_cenova_obdobi_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_obchod_cenova_obdobi_parent_id_idx": {
+          "name": "odberna_mista_obchod_cenova_obdobi_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "odberna_mista_obchod_cenova_obdobi_parent_id_fk": {
+          "name": "odberna_mista_obchod_cenova_obdobi_parent_id_fk",
+          "tableFrom": "odberna_mista_obchod_cenova_obdobi",
+          "tableTo": "odberna_mista",
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.odberna_mista": {
+      "name": "odberna_mista",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "interni_cislo": {
+          "name": "interni_cislo",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "oznaceni": {
+          "name": "oznaceni",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "vyrobny": {
+          "name": "vyrobny",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "zakaznik_text": {
+          "name": "zakaznik_text",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "typ": {
+          "name": "typ",
+          "type": "om_typ",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stav": {
+          "name": "stav",
+          "type": "enum_odberna_mista_stav",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pripravovane'"
+        },
+        "zahajeni_dodavky": {
+          "name": "zahajeni_dodavky",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ukonceni_dodavky": {
+          "name": "ukonceni_dodavky",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nakoupeno_do": {
+          "name": "nakoupeno_do",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "zalozil_id": {
+          "name": "zalozil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "upravil_id": {
+          "name": "upravil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "komodita": {
+          "name": "komodita",
+          "type": "enum_odberna_mista_komodita",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "typ_odberu": {
+          "name": "typ_odberu",
+          "type": "enum_odberna_mista_typ_odberu",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "typ_odberu_rucne": {
+          "name": "typ_odberu_rucne",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "obchodni_model": {
+          "name": "obchodni_model",
+          "type": "enum_odberna_mista_obchodni_model",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "typ_zakaznika": {
+          "name": "typ_zakaznika",
+          "type": "enum_odberna_mista_typ_zakaznika",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'bezny'"
+        },
+        "zakaznik_id": {
+          "name": "zakaznik_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "soubor_o_m_id": {
+          "name": "soubor_o_m_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "spotrebitel": {
+          "name": "spotrebitel",
+          "type": "enum_odberna_mista_spotrebitel",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'ne'"
+        },
+        "kod": {
+          "name": "kod",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "adresa_ulice": {
+          "name": "adresa_ulice",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adresa_cislo_popisne": {
+          "name": "adresa_cislo_popisne",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adresa_cislo_orientacni": {
+          "name": "adresa_cislo_orientacni",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adresa_obec": {
+          "name": "adresa_obec",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adresa_cast_obce": {
+          "name": "adresa_cast_obce",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adresa_psc": {
+          "name": "adresa_psc",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adresa_katastralni_uzemi": {
+          "name": "adresa_katastralni_uzemi",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adresa_parcelni_cislo": {
+          "name": "adresa_parcelni_cislo",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adresa_text": {
+          "name": "adresa_text",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "poznamka": {
+          "name": "poznamka",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "odhad_spotreby_rezim": {
+          "name": "odhad_spotreby_rezim",
+          "type": "om_odhad_rezim",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'rocni'"
+        },
+        "odhad_spotreby_rocni_mwh": {
+          "name": "odhad_spotreby_rocni_mwh",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "odhad_spotreby_mesicni_leden": {
+          "name": "odhad_spotreby_mesicni_leden",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "odhad_spotreby_mesicni_unor": {
+          "name": "odhad_spotreby_mesicni_unor",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "odhad_spotreby_mesicni_brezen": {
+          "name": "odhad_spotreby_mesicni_brezen",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "odhad_spotreby_mesicni_duben": {
+          "name": "odhad_spotreby_mesicni_duben",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "odhad_spotreby_mesicni_kveten": {
+          "name": "odhad_spotreby_mesicni_kveten",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "odhad_spotreby_mesicni_cerven": {
+          "name": "odhad_spotreby_mesicni_cerven",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "odhad_spotreby_mesicni_cervenec": {
+          "name": "odhad_spotreby_mesicni_cervenec",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "odhad_spotreby_mesicni_srpen": {
+          "name": "odhad_spotreby_mesicni_srpen",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "odhad_spotreby_mesicni_zari": {
+          "name": "odhad_spotreby_mesicni_zari",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "odhad_spotreby_mesicni_rijen": {
+          "name": "odhad_spotreby_mesicni_rijen",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "odhad_spotreby_mesicni_listopad": {
+          "name": "odhad_spotreby_mesicni_listopad",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "odhad_spotreby_mesicni_prosinec": {
+          "name": "odhad_spotreby_mesicni_prosinec",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mereni_typ_mereni": {
+          "name": "mereni_typ_mereni",
+          "type": "om_typ_mereni",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mereni_periodicita_odectu": {
+          "name": "mereni_periodicita_odectu",
+          "type": "om_periodicita",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mereni_cislo_meridla": {
+          "name": "mereni_cislo_meridla",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mereni_distributor": {
+          "name": "mereni_distributor",
+          "type": "om_distributor",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mereni_nazev_l_d_s": {
+          "name": "mereni_nazev_l_d_s",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parametry_n_n_hlavni_jistic": {
+          "name": "parametry_n_n_hlavni_jistic",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parametry_n_n_pocet_fazi": {
+          "name": "parametry_n_n_pocet_fazi",
+          "type": "om_pocet_fazi",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parametry_n_n_distribucni_sazba": {
+          "name": "parametry_n_n_distribucni_sazba",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parametry_v_n_napetova_hladina": {
+          "name": "parametry_v_n_napetova_hladina",
+          "type": "om_napeti",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parametry_v_n_rezervovany_prikon_kw": {
+          "name": "parametry_v_n_rezervovany_prikon_kw",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parametry_v_n_mereni_na_strane": {
+          "name": "parametry_v_n_mereni_na_strane",
+          "type": "om_mereni_strana",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parametry_v_n_trafostanice": {
+          "name": "parametry_v_n_trafostanice",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parametry_v_n_vlastnik_trafostanice": {
+          "name": "parametry_v_n_vlastnik_trafostanice",
+          "type": "om_vlastnik_ts",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parametry_plyn_denni_kapacita_m3": {
+          "name": "parametry_plyn_denni_kapacita_m3",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parametry_plyn_typ_kapacity": {
+          "name": "parametry_plyn_typ_kapacity",
+          "type": "om_typ_kapacity",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "smlouva_o_dodavce_id": {
+          "name": "smlouva_o_dodavce_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "obchod_dodatek_stav": {
+          "name": "obchod_dodatek_stav",
+          "type": "om_stav_dodatku",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'nepotreba'"
+        },
+        "obchod_dodatek_termin": {
+          "name": "obchod_dodatek_termin",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "obchod_dodatek_poznamka": {
+          "name": "obchod_dodatek_poznamka",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "obchod_poznamka": {
+          "name": "obchod_poznamka",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "odberna_mista_interni_cislo_idx": {
+          "name": "odberna_mista_interni_cislo_idx",
+          "columns": [
+            {
+              "expression": "interni_cislo",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_zakaznik_text_idx": {
+          "name": "odberna_mista_zakaznik_text_idx",
+          "columns": [
+            {
+              "expression": "zakaznik_text",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_typ_idx": {
+          "name": "odberna_mista_typ_idx",
+          "columns": [
+            {
+              "expression": "typ",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_nakoupeno_do_idx": {
+          "name": "odberna_mista_nakoupeno_do_idx",
+          "columns": [
+            {
+              "expression": "nakoupeno_do",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_zalozil_idx": {
+          "name": "odberna_mista_zalozil_idx",
+          "columns": [
+            {
+              "expression": "zalozil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_upravil_idx": {
+          "name": "odberna_mista_upravil_idx",
+          "columns": [
+            {
+              "expression": "upravil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_komodita_idx": {
+          "name": "odberna_mista_komodita_idx",
+          "columns": [
+            {
+              "expression": "komodita",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_typ_odberu_idx": {
+          "name": "odberna_mista_typ_odberu_idx",
+          "columns": [
+            {
+              "expression": "typ_odberu",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_zakaznik_idx": {
+          "name": "odberna_mista_zakaznik_idx",
+          "columns": [
+            {
+              "expression": "zakaznik_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_soubor_o_m_idx": {
+          "name": "odberna_mista_soubor_o_m_idx",
+          "columns": [
+            {
+              "expression": "soubor_o_m_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_kod_idx": {
+          "name": "odberna_mista_kod_idx",
+          "columns": [
+            {
+              "expression": "kod",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_adresa_text_idx": {
+          "name": "odberna_mista_adresa_text_idx",
+          "columns": [
+            {
+              "expression": "adresa_text",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_smlouva_o_dodavce_idx": {
+          "name": "odberna_mista_smlouva_o_dodavce_idx",
+          "columns": [
+            {
+              "expression": "smlouva_o_dodavce_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_updated_at_idx": {
+          "name": "odberna_mista_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_created_at_idx": {
+          "name": "odberna_mista_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "komodita_stav_idx": {
+          "name": "komodita_stav_idx",
+          "columns": [
+            {
+              "expression": "komodita",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "stav",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "odberna_mista_zalozil_id_users_id_fk": {
+          "name": "odberna_mista_zalozil_id_users_id_fk",
+          "tableFrom": "odberna_mista",
+          "tableTo": "users",
+          "columnsFrom": ["zalozil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "odberna_mista_upravil_id_users_id_fk": {
+          "name": "odberna_mista_upravil_id_users_id_fk",
+          "tableFrom": "odberna_mista",
+          "tableTo": "users",
+          "columnsFrom": ["upravil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "odberna_mista_zakaznik_id_zakaznici_id_fk": {
+          "name": "odberna_mista_zakaznik_id_zakaznici_id_fk",
+          "tableFrom": "odberna_mista",
+          "tableTo": "zakaznici",
+          "columnsFrom": ["zakaznik_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "odberna_mista_soubor_o_m_id_soubory_om_id_fk": {
+          "name": "odberna_mista_soubor_o_m_id_soubory_om_id_fk",
+          "tableFrom": "odberna_mista",
+          "tableTo": "soubory_om",
+          "columnsFrom": ["soubor_o_m_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "odberna_mista_smlouva_o_dodavce_id_smlouvy_id_fk": {
+          "name": "odberna_mista_smlouva_o_dodavce_id_smlouvy_id_fk",
+          "tableFrom": "odberna_mista",
+          "tableTo": "smlouvy",
+          "columnsFrom": ["smlouva_o_dodavce_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.odberna_mista_rels": {
+      "name": "odberna_mista_rels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "smlouvy_id": {
+          "name": "smlouvy_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dokumenty_id": {
+          "name": "dokumenty_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "odberna_mista_rels_order_idx": {
+          "name": "odberna_mista_rels_order_idx",
+          "columns": [
+            {
+              "expression": "order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_rels_parent_idx": {
+          "name": "odberna_mista_rels_parent_idx",
+          "columns": [
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_rels_path_idx": {
+          "name": "odberna_mista_rels_path_idx",
+          "columns": [
+            {
+              "expression": "path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_rels_smlouvy_id_idx": {
+          "name": "odberna_mista_rels_smlouvy_id_idx",
+          "columns": [
+            {
+              "expression": "smlouvy_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "odberna_mista_rels_dokumenty_id_idx": {
+          "name": "odberna_mista_rels_dokumenty_id_idx",
+          "columns": [
+            {
+              "expression": "dokumenty_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "odberna_mista_rels_parent_fk": {
+          "name": "odberna_mista_rels_parent_fk",
+          "tableFrom": "odberna_mista_rels",
+          "tableTo": "odberna_mista",
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "odberna_mista_rels_smlouvy_fk": {
+          "name": "odberna_mista_rels_smlouvy_fk",
+          "tableFrom": "odberna_mista_rels",
+          "tableTo": "smlouvy",
+          "columnsFrom": ["smlouvy_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "odberna_mista_rels_dokumenty_fk": {
+          "name": "odberna_mista_rels_dokumenty_fk",
+          "tableFrom": "odberna_mista_rels",
+          "tableTo": "dokumenty",
+          "columnsFrom": ["dokumenty_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._odberna_mista_v_version_obchod_cenova_obdobi": {
+      "name": "_odberna_mista_v_version_obchod_cenova_obdobi",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "od": {
+          "name": "od",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "do": {
+          "name": "do",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "typ_ceny": {
+          "name": "typ_ceny",
+          "type": "om_typ_ceny",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'fixni'"
+        },
+        "dodavatel_nakupu": {
+          "name": "dodavatel_nakupu",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nakupni_cena": {
+          "name": "nakupni_cena",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "prodejni_cena": {
+          "name": "prodejni_cena",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "marze": {
+          "name": "marze",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stala_platba": {
+          "name": "stala_platba",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "poznamka": {
+          "name": "poznamka",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "_uuid": {
+          "name": "_uuid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "_odberna_mista_v_version_obchod_cenova_obdobi_order_idx": {
+          "name": "_odberna_mista_v_version_obchod_cenova_obdobi_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_version_obchod_cenova_obdobi_parent_id_idx": {
+          "name": "_odberna_mista_v_version_obchod_cenova_obdobi_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_odberna_mista_v_version_obchod_cenova_obdobi_parent_id_fk": {
+          "name": "_odberna_mista_v_version_obchod_cenova_obdobi_parent_id_fk",
+          "tableFrom": "_odberna_mista_v_version_obchod_cenova_obdobi",
+          "tableTo": "_odberna_mista_v",
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._odberna_mista_v": {
+      "name": "_odberna_mista_v",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_interni_cislo": {
+          "name": "version_interni_cislo",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_oznaceni": {
+          "name": "version_oznaceni",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_vyrobny": {
+          "name": "version_vyrobny",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_zakaznik_text": {
+          "name": "version_zakaznik_text",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_typ": {
+          "name": "version_typ",
+          "type": "om_typ",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_stav": {
+          "name": "version_stav",
+          "type": "enum__odberna_mista_v_version_stav",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pripravovane'"
+        },
+        "version_zahajeni_dodavky": {
+          "name": "version_zahajeni_dodavky",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_ukonceni_dodavky": {
+          "name": "version_ukonceni_dodavky",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_nakoupeno_do": {
+          "name": "version_nakoupeno_do",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_zalozil_id": {
+          "name": "version_zalozil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_upravil_id": {
+          "name": "version_upravil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_komodita": {
+          "name": "version_komodita",
+          "type": "enum__odberna_mista_v_version_komodita",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "version_typ_odberu": {
+          "name": "version_typ_odberu",
+          "type": "enum__odberna_mista_v_version_typ_odberu",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_typ_odberu_rucne": {
+          "name": "version_typ_odberu_rucne",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "version_obchodni_model": {
+          "name": "version_obchodni_model",
+          "type": "enum__odberna_mista_v_version_obchodni_model",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "version_typ_zakaznika": {
+          "name": "version_typ_zakaznika",
+          "type": "enum__odberna_mista_v_version_typ_zakaznika",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'bezny'"
+        },
+        "version_zakaznik_id": {
+          "name": "version_zakaznik_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_soubor_o_m_id": {
+          "name": "version_soubor_o_m_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_spotrebitel": {
+          "name": "version_spotrebitel",
+          "type": "enum__odberna_mista_v_version_spotrebitel",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'ne'"
+        },
+        "version_kod": {
+          "name": "version_kod",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "version_adresa_ulice": {
+          "name": "version_adresa_ulice",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_adresa_cislo_popisne": {
+          "name": "version_adresa_cislo_popisne",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_adresa_cislo_orientacni": {
+          "name": "version_adresa_cislo_orientacni",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_adresa_obec": {
+          "name": "version_adresa_obec",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_adresa_cast_obce": {
+          "name": "version_adresa_cast_obce",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_adresa_psc": {
+          "name": "version_adresa_psc",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_adresa_katastralni_uzemi": {
+          "name": "version_adresa_katastralni_uzemi",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_adresa_parcelni_cislo": {
+          "name": "version_adresa_parcelni_cislo",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_adresa_text": {
+          "name": "version_adresa_text",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_poznamka": {
+          "name": "version_poznamka",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_odhad_spotreby_rezim": {
+          "name": "version_odhad_spotreby_rezim",
+          "type": "om_odhad_rezim",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'rocni'"
+        },
+        "version_odhad_spotreby_rocni_mwh": {
+          "name": "version_odhad_spotreby_rocni_mwh",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_odhad_spotreby_mesicni_leden": {
+          "name": "version_odhad_spotreby_mesicni_leden",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_odhad_spotreby_mesicni_unor": {
+          "name": "version_odhad_spotreby_mesicni_unor",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_odhad_spotreby_mesicni_brezen": {
+          "name": "version_odhad_spotreby_mesicni_brezen",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_odhad_spotreby_mesicni_duben": {
+          "name": "version_odhad_spotreby_mesicni_duben",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_odhad_spotreby_mesicni_kveten": {
+          "name": "version_odhad_spotreby_mesicni_kveten",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_odhad_spotreby_mesicni_cerven": {
+          "name": "version_odhad_spotreby_mesicni_cerven",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_odhad_spotreby_mesicni_cervenec": {
+          "name": "version_odhad_spotreby_mesicni_cervenec",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_odhad_spotreby_mesicni_srpen": {
+          "name": "version_odhad_spotreby_mesicni_srpen",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_odhad_spotreby_mesicni_zari": {
+          "name": "version_odhad_spotreby_mesicni_zari",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_odhad_spotreby_mesicni_rijen": {
+          "name": "version_odhad_spotreby_mesicni_rijen",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_odhad_spotreby_mesicni_listopad": {
+          "name": "version_odhad_spotreby_mesicni_listopad",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_odhad_spotreby_mesicni_prosinec": {
+          "name": "version_odhad_spotreby_mesicni_prosinec",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_mereni_typ_mereni": {
+          "name": "version_mereni_typ_mereni",
+          "type": "om_typ_mereni",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_mereni_periodicita_odectu": {
+          "name": "version_mereni_periodicita_odectu",
+          "type": "om_periodicita",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_mereni_cislo_meridla": {
+          "name": "version_mereni_cislo_meridla",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_mereni_distributor": {
+          "name": "version_mereni_distributor",
+          "type": "om_distributor",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_mereni_nazev_l_d_s": {
+          "name": "version_mereni_nazev_l_d_s",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_parametry_n_n_hlavni_jistic": {
+          "name": "version_parametry_n_n_hlavni_jistic",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_parametry_n_n_pocet_fazi": {
+          "name": "version_parametry_n_n_pocet_fazi",
+          "type": "om_pocet_fazi",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_parametry_n_n_distribucni_sazba": {
+          "name": "version_parametry_n_n_distribucni_sazba",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_parametry_v_n_napetova_hladina": {
+          "name": "version_parametry_v_n_napetova_hladina",
+          "type": "om_napeti",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_parametry_v_n_rezervovany_prikon_kw": {
+          "name": "version_parametry_v_n_rezervovany_prikon_kw",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_parametry_v_n_mereni_na_strane": {
+          "name": "version_parametry_v_n_mereni_na_strane",
+          "type": "om_mereni_strana",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_parametry_v_n_trafostanice": {
+          "name": "version_parametry_v_n_trafostanice",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_parametry_v_n_vlastnik_trafostanice": {
+          "name": "version_parametry_v_n_vlastnik_trafostanice",
+          "type": "om_vlastnik_ts",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_parametry_plyn_denni_kapacita_m3": {
+          "name": "version_parametry_plyn_denni_kapacita_m3",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_parametry_plyn_typ_kapacity": {
+          "name": "version_parametry_plyn_typ_kapacity",
+          "type": "om_typ_kapacity",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_smlouva_o_dodavce_id": {
+          "name": "version_smlouva_o_dodavce_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_obchod_dodatek_stav": {
+          "name": "version_obchod_dodatek_stav",
+          "type": "om_stav_dodatku",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'nepotreba'"
+        },
+        "version_obchod_dodatek_termin": {
+          "name": "version_obchod_dodatek_termin",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_obchod_dodatek_poznamka": {
+          "name": "version_obchod_dodatek_poznamka",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_obchod_poznamka": {
+          "name": "version_obchod_poznamka",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_updated_at": {
+          "name": "version_updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_created_at": {
+          "name": "version_created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "_odberna_mista_v_parent_idx": {
+          "name": "_odberna_mista_v_parent_idx",
+          "columns": [
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_version_version_interni_cislo_idx": {
+          "name": "_odberna_mista_v_version_version_interni_cislo_idx",
+          "columns": [
+            {
+              "expression": "version_interni_cislo",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_version_version_zakaznik_text_idx": {
+          "name": "_odberna_mista_v_version_version_zakaznik_text_idx",
+          "columns": [
+            {
+              "expression": "version_zakaznik_text",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_version_version_typ_idx": {
+          "name": "_odberna_mista_v_version_version_typ_idx",
+          "columns": [
+            {
+              "expression": "version_typ",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_version_version_nakoupeno_do_idx": {
+          "name": "_odberna_mista_v_version_version_nakoupeno_do_idx",
+          "columns": [
+            {
+              "expression": "version_nakoupeno_do",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_version_version_zalozil_idx": {
+          "name": "_odberna_mista_v_version_version_zalozil_idx",
+          "columns": [
+            {
+              "expression": "version_zalozil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_version_version_upravil_idx": {
+          "name": "_odberna_mista_v_version_version_upravil_idx",
+          "columns": [
+            {
+              "expression": "version_upravil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_version_version_komodita_idx": {
+          "name": "_odberna_mista_v_version_version_komodita_idx",
+          "columns": [
+            {
+              "expression": "version_komodita",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_version_version_typ_odberu_idx": {
+          "name": "_odberna_mista_v_version_version_typ_odberu_idx",
+          "columns": [
+            {
+              "expression": "version_typ_odberu",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_version_version_zakaznik_idx": {
+          "name": "_odberna_mista_v_version_version_zakaznik_idx",
+          "columns": [
+            {
+              "expression": "version_zakaznik_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_version_version_soubor_o_m_idx": {
+          "name": "_odberna_mista_v_version_version_soubor_o_m_idx",
+          "columns": [
+            {
+              "expression": "version_soubor_o_m_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_version_version_kod_idx": {
+          "name": "_odberna_mista_v_version_version_kod_idx",
+          "columns": [
+            {
+              "expression": "version_kod",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_version_version_adresa_text_idx": {
+          "name": "_odberna_mista_v_version_version_adresa_text_idx",
+          "columns": [
+            {
+              "expression": "version_adresa_text",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_version_version_smlouva_o_dodavce_idx": {
+          "name": "_odberna_mista_v_version_version_smlouva_o_dodavce_idx",
+          "columns": [
+            {
+              "expression": "version_smlouva_o_dodavce_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_version_version_updated_at_idx": {
+          "name": "_odberna_mista_v_version_version_updated_at_idx",
+          "columns": [
+            {
+              "expression": "version_updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_version_version_created_at_idx": {
+          "name": "_odberna_mista_v_version_version_created_at_idx",
+          "columns": [
+            {
+              "expression": "version_created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_created_at_idx": {
+          "name": "_odberna_mista_v_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_updated_at_idx": {
+          "name": "_odberna_mista_v_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "version_komodita_version_stav_idx": {
+          "name": "version_komodita_version_stav_idx",
+          "columns": [
+            {
+              "expression": "version_komodita",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "version_stav",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_odberna_mista_v_parent_id_odberna_mista_id_fk": {
+          "name": "_odberna_mista_v_parent_id_odberna_mista_id_fk",
+          "tableFrom": "_odberna_mista_v",
+          "tableTo": "odberna_mista",
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_odberna_mista_v_version_zalozil_id_users_id_fk": {
+          "name": "_odberna_mista_v_version_zalozil_id_users_id_fk",
+          "tableFrom": "_odberna_mista_v",
+          "tableTo": "users",
+          "columnsFrom": ["version_zalozil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_odberna_mista_v_version_upravil_id_users_id_fk": {
+          "name": "_odberna_mista_v_version_upravil_id_users_id_fk",
+          "tableFrom": "_odberna_mista_v",
+          "tableTo": "users",
+          "columnsFrom": ["version_upravil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_odberna_mista_v_version_zakaznik_id_zakaznici_id_fk": {
+          "name": "_odberna_mista_v_version_zakaznik_id_zakaznici_id_fk",
+          "tableFrom": "_odberna_mista_v",
+          "tableTo": "zakaznici",
+          "columnsFrom": ["version_zakaznik_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_odberna_mista_v_version_soubor_o_m_id_soubory_om_id_fk": {
+          "name": "_odberna_mista_v_version_soubor_o_m_id_soubory_om_id_fk",
+          "tableFrom": "_odberna_mista_v",
+          "tableTo": "soubory_om",
+          "columnsFrom": ["version_soubor_o_m_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_odberna_mista_v_version_smlouva_o_dodavce_id_smlouvy_id_fk": {
+          "name": "_odberna_mista_v_version_smlouva_o_dodavce_id_smlouvy_id_fk",
+          "tableFrom": "_odberna_mista_v",
+          "tableTo": "smlouvy",
+          "columnsFrom": ["version_smlouva_o_dodavce_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._odberna_mista_v_rels": {
+      "name": "_odberna_mista_v_rels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "smlouvy_id": {
+          "name": "smlouvy_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dokumenty_id": {
+          "name": "dokumenty_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "_odberna_mista_v_rels_order_idx": {
+          "name": "_odberna_mista_v_rels_order_idx",
+          "columns": [
+            {
+              "expression": "order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_rels_parent_idx": {
+          "name": "_odberna_mista_v_rels_parent_idx",
+          "columns": [
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_rels_path_idx": {
+          "name": "_odberna_mista_v_rels_path_idx",
+          "columns": [
+            {
+              "expression": "path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_rels_smlouvy_id_idx": {
+          "name": "_odberna_mista_v_rels_smlouvy_id_idx",
+          "columns": [
+            {
+              "expression": "smlouvy_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_odberna_mista_v_rels_dokumenty_id_idx": {
+          "name": "_odberna_mista_v_rels_dokumenty_id_idx",
+          "columns": [
+            {
+              "expression": "dokumenty_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_odberna_mista_v_rels_parent_fk": {
+          "name": "_odberna_mista_v_rels_parent_fk",
+          "tableFrom": "_odberna_mista_v_rels",
+          "tableTo": "_odberna_mista_v",
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "_odberna_mista_v_rels_smlouvy_fk": {
+          "name": "_odberna_mista_v_rels_smlouvy_fk",
+          "tableFrom": "_odberna_mista_v_rels",
+          "tableTo": "smlouvy",
+          "columnsFrom": ["smlouvy_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "_odberna_mista_v_rels_dokumenty_fk": {
+          "name": "_odberna_mista_v_rels_dokumenty_fk",
+          "tableFrom": "_odberna_mista_v_rels",
+          "tableTo": "dokumenty",
+          "columnsFrom": ["dokumenty_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.vyrobny": {
+      "name": "vyrobny",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "oznaceni": {
+          "name": "oznaceni",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stav": {
+          "name": "stav",
+          "type": "vyr_stav",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'provoz'"
+        },
+        "uvedeni_do_provozu": {
+          "name": "uvedeni_do_provozu",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "zalozil_id": {
+          "name": "zalozil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "upravil_id": {
+          "name": "upravil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "odberne_misto_id": {
+          "name": "odberne_misto_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "druh": {
+          "name": "druh",
+          "type": "vyr_druh",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'fve'"
+        },
+        "kategorie": {
+          "name": "kategorie",
+          "type": "vyr_kategorie",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nazev": {
+          "name": "nazev",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ean": {
+          "name": "ean",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "instalovany_vykon_kwp": {
+          "name": "instalovany_vykon_kwp",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rezervovany_vykon_kw": {
+          "name": "rezervovany_vykon_kw",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "vykon_stridacu_kw": {
+          "name": "vykon_stridacu_kw",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "akumulace_kwh": {
+          "name": "akumulace_kwh",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "odhad_vyroby_mwh": {
+          "name": "odhad_vyroby_mwh",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "licence_eru": {
+          "name": "licence_eru",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rezim_pretoku": {
+          "name": "rezim_pretoku",
+          "type": "vyr_rezim",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "vykup_pretoku": {
+          "name": "vykup_pretoku",
+          "type": "vyr_vykup",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "vykupujici": {
+          "name": "vykupujici",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "vykupni_cena": {
+          "name": "vykupni_cena",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "poznamka": {
+          "name": "poznamka",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "vyrobny_zalozil_idx": {
+          "name": "vyrobny_zalozil_idx",
+          "columns": [
+            {
+              "expression": "zalozil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "vyrobny_upravil_idx": {
+          "name": "vyrobny_upravil_idx",
+          "columns": [
+            {
+              "expression": "upravil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "vyrobny_odberne_misto_idx": {
+          "name": "vyrobny_odberne_misto_idx",
+          "columns": [
+            {
+              "expression": "odberne_misto_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "vyrobny_ean_idx": {
+          "name": "vyrobny_ean_idx",
+          "columns": [
+            {
+              "expression": "ean",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "vyrobny_updated_at_idx": {
+          "name": "vyrobny_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "vyrobny_created_at_idx": {
+          "name": "vyrobny_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "vyrobny_zalozil_id_users_id_fk": {
+          "name": "vyrobny_zalozil_id_users_id_fk",
+          "tableFrom": "vyrobny",
+          "tableTo": "users",
+          "columnsFrom": ["zalozil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "vyrobny_upravil_id_users_id_fk": {
+          "name": "vyrobny_upravil_id_users_id_fk",
+          "tableFrom": "vyrobny",
+          "tableTo": "users",
+          "columnsFrom": ["upravil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "vyrobny_odberne_misto_id_odberna_mista_id_fk": {
+          "name": "vyrobny_odberne_misto_id_odberna_mista_id_fk",
+          "tableFrom": "vyrobny",
+          "tableTo": "odberna_mista",
+          "columnsFrom": ["odberne_misto_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.vyrobny_rels": {
+      "name": "vyrobny_rels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dokumenty_id": {
+          "name": "dokumenty_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "vyrobny_rels_order_idx": {
+          "name": "vyrobny_rels_order_idx",
+          "columns": [
+            {
+              "expression": "order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "vyrobny_rels_parent_idx": {
+          "name": "vyrobny_rels_parent_idx",
+          "columns": [
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "vyrobny_rels_path_idx": {
+          "name": "vyrobny_rels_path_idx",
+          "columns": [
+            {
+              "expression": "path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "vyrobny_rels_dokumenty_id_idx": {
+          "name": "vyrobny_rels_dokumenty_id_idx",
+          "columns": [
+            {
+              "expression": "dokumenty_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "vyrobny_rels_parent_fk": {
+          "name": "vyrobny_rels_parent_fk",
+          "tableFrom": "vyrobny_rels",
+          "tableTo": "vyrobny",
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "vyrobny_rels_dokumenty_fk": {
+          "name": "vyrobny_rels_dokumenty_fk",
+          "tableFrom": "vyrobny_rels",
+          "tableTo": "dokumenty",
+          "columnsFrom": ["dokumenty_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._vyrobny_v": {
+      "name": "_vyrobny_v",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_oznaceni": {
+          "name": "version_oznaceni",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_stav": {
+          "name": "version_stav",
+          "type": "vyr_stav",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'provoz'"
+        },
+        "version_uvedeni_do_provozu": {
+          "name": "version_uvedeni_do_provozu",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_zalozil_id": {
+          "name": "version_zalozil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_upravil_id": {
+          "name": "version_upravil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_odberne_misto_id": {
+          "name": "version_odberne_misto_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "version_druh": {
+          "name": "version_druh",
+          "type": "vyr_druh",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'fve'"
+        },
+        "version_kategorie": {
+          "name": "version_kategorie",
+          "type": "vyr_kategorie",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_nazev": {
+          "name": "version_nazev",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_ean": {
+          "name": "version_ean",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_instalovany_vykon_kwp": {
+          "name": "version_instalovany_vykon_kwp",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_rezervovany_vykon_kw": {
+          "name": "version_rezervovany_vykon_kw",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_vykon_stridacu_kw": {
+          "name": "version_vykon_stridacu_kw",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_akumulace_kwh": {
+          "name": "version_akumulace_kwh",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_odhad_vyroby_mwh": {
+          "name": "version_odhad_vyroby_mwh",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_licence_eru": {
+          "name": "version_licence_eru",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_rezim_pretoku": {
+          "name": "version_rezim_pretoku",
+          "type": "vyr_rezim",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_vykup_pretoku": {
+          "name": "version_vykup_pretoku",
+          "type": "vyr_vykup",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_vykupujici": {
+          "name": "version_vykupujici",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_vykupni_cena": {
+          "name": "version_vykupni_cena",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_poznamka": {
+          "name": "version_poznamka",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_updated_at": {
+          "name": "version_updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_created_at": {
+          "name": "version_created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "_vyrobny_v_parent_idx": {
+          "name": "_vyrobny_v_parent_idx",
+          "columns": [
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_vyrobny_v_version_version_zalozil_idx": {
+          "name": "_vyrobny_v_version_version_zalozil_idx",
+          "columns": [
+            {
+              "expression": "version_zalozil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_vyrobny_v_version_version_upravil_idx": {
+          "name": "_vyrobny_v_version_version_upravil_idx",
+          "columns": [
+            {
+              "expression": "version_upravil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_vyrobny_v_version_version_odberne_misto_idx": {
+          "name": "_vyrobny_v_version_version_odberne_misto_idx",
+          "columns": [
+            {
+              "expression": "version_odberne_misto_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_vyrobny_v_version_version_ean_idx": {
+          "name": "_vyrobny_v_version_version_ean_idx",
+          "columns": [
+            {
+              "expression": "version_ean",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_vyrobny_v_version_version_updated_at_idx": {
+          "name": "_vyrobny_v_version_version_updated_at_idx",
+          "columns": [
+            {
+              "expression": "version_updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_vyrobny_v_version_version_created_at_idx": {
+          "name": "_vyrobny_v_version_version_created_at_idx",
+          "columns": [
+            {
+              "expression": "version_created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_vyrobny_v_created_at_idx": {
+          "name": "_vyrobny_v_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_vyrobny_v_updated_at_idx": {
+          "name": "_vyrobny_v_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_vyrobny_v_parent_id_vyrobny_id_fk": {
+          "name": "_vyrobny_v_parent_id_vyrobny_id_fk",
+          "tableFrom": "_vyrobny_v",
+          "tableTo": "vyrobny",
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_vyrobny_v_version_zalozil_id_users_id_fk": {
+          "name": "_vyrobny_v_version_zalozil_id_users_id_fk",
+          "tableFrom": "_vyrobny_v",
+          "tableTo": "users",
+          "columnsFrom": ["version_zalozil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_vyrobny_v_version_upravil_id_users_id_fk": {
+          "name": "_vyrobny_v_version_upravil_id_users_id_fk",
+          "tableFrom": "_vyrobny_v",
+          "tableTo": "users",
+          "columnsFrom": ["version_upravil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_vyrobny_v_version_odberne_misto_id_odberna_mista_id_fk": {
+          "name": "_vyrobny_v_version_odberne_misto_id_odberna_mista_id_fk",
+          "tableFrom": "_vyrobny_v",
+          "tableTo": "odberna_mista",
+          "columnsFrom": ["version_odberne_misto_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._vyrobny_v_rels": {
+      "name": "_vyrobny_v_rels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dokumenty_id": {
+          "name": "dokumenty_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "_vyrobny_v_rels_order_idx": {
+          "name": "_vyrobny_v_rels_order_idx",
+          "columns": [
+            {
+              "expression": "order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_vyrobny_v_rels_parent_idx": {
+          "name": "_vyrobny_v_rels_parent_idx",
+          "columns": [
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_vyrobny_v_rels_path_idx": {
+          "name": "_vyrobny_v_rels_path_idx",
+          "columns": [
+            {
+              "expression": "path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_vyrobny_v_rels_dokumenty_id_idx": {
+          "name": "_vyrobny_v_rels_dokumenty_id_idx",
+          "columns": [
+            {
+              "expression": "dokumenty_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_vyrobny_v_rels_parent_fk": {
+          "name": "_vyrobny_v_rels_parent_fk",
+          "tableFrom": "_vyrobny_v_rels",
+          "tableTo": "_vyrobny_v",
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "_vyrobny_v_rels_dokumenty_fk": {
+          "name": "_vyrobny_v_rels_dokumenty_fk",
+          "tableFrom": "_vyrobny_v_rels",
+          "tableTo": "dokumenty",
+          "columnsFrom": ["dokumenty_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.zakaznici": {
+      "name": "zakaznici",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nazev": {
+          "name": "nazev",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "typ_subjektu": {
+          "name": "typ_subjektu",
+          "type": "enum_zakaznici_typ_subjektu",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'po'"
+        },
+        "ico": {
+          "name": "ico",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dic": {
+          "name": "dic",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sidlo_ulice": {
+          "name": "sidlo_ulice",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sidlo_cislo_popisne": {
+          "name": "sidlo_cislo_popisne",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sidlo_cislo_orientacni": {
+          "name": "sidlo_cislo_orientacni",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sidlo_obec": {
+          "name": "sidlo_obec",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sidlo_cast_obce": {
+          "name": "sidlo_cast_obce",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sidlo_psc": {
+          "name": "sidlo_psc",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sidlo_katastralni_uzemi": {
+          "name": "sidlo_katastralni_uzemi",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sidlo_parcelni_cislo": {
+          "name": "sidlo_parcelni_cislo",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kontakt_jmeno": {
+          "name": "kontakt_jmeno",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kontakt_email": {
+          "name": "kontakt_email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kontakt_telefon": {
+          "name": "kontakt_telefon",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "poznamka": {
+          "name": "poznamka",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "zalozil_id": {
+          "name": "zalozil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "upravil_id": {
+          "name": "upravil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "zakaznici_ico_idx": {
+          "name": "zakaznici_ico_idx",
+          "columns": [
+            {
+              "expression": "ico",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "zakaznici_zalozil_idx": {
+          "name": "zakaznici_zalozil_idx",
+          "columns": [
+            {
+              "expression": "zalozil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "zakaznici_upravil_idx": {
+          "name": "zakaznici_upravil_idx",
+          "columns": [
+            {
+              "expression": "upravil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "zakaznici_updated_at_idx": {
+          "name": "zakaznici_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "zakaznici_created_at_idx": {
+          "name": "zakaznici_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "zakaznici_zalozil_id_users_id_fk": {
+          "name": "zakaznici_zalozil_id_users_id_fk",
+          "tableFrom": "zakaznici",
+          "tableTo": "users",
+          "columnsFrom": ["zalozil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "zakaznici_upravil_id_users_id_fk": {
+          "name": "zakaznici_upravil_id_users_id_fk",
+          "tableFrom": "zakaznici",
+          "tableTo": "users",
+          "columnsFrom": ["upravil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._zakaznici_v": {
+      "name": "_zakaznici_v",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_nazev": {
+          "name": "version_nazev",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "version_typ_subjektu": {
+          "name": "version_typ_subjektu",
+          "type": "enum__zakaznici_v_version_typ_subjektu",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'po'"
+        },
+        "version_ico": {
+          "name": "version_ico",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_dic": {
+          "name": "version_dic",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_sidlo_ulice": {
+          "name": "version_sidlo_ulice",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_sidlo_cislo_popisne": {
+          "name": "version_sidlo_cislo_popisne",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_sidlo_cislo_orientacni": {
+          "name": "version_sidlo_cislo_orientacni",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_sidlo_obec": {
+          "name": "version_sidlo_obec",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_sidlo_cast_obce": {
+          "name": "version_sidlo_cast_obce",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_sidlo_psc": {
+          "name": "version_sidlo_psc",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_sidlo_katastralni_uzemi": {
+          "name": "version_sidlo_katastralni_uzemi",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_sidlo_parcelni_cislo": {
+          "name": "version_sidlo_parcelni_cislo",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_kontakt_jmeno": {
+          "name": "version_kontakt_jmeno",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_kontakt_email": {
+          "name": "version_kontakt_email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_kontakt_telefon": {
+          "name": "version_kontakt_telefon",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_poznamka": {
+          "name": "version_poznamka",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_zalozil_id": {
+          "name": "version_zalozil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_upravil_id": {
+          "name": "version_upravil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_updated_at": {
+          "name": "version_updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_created_at": {
+          "name": "version_created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "_zakaznici_v_parent_idx": {
+          "name": "_zakaznici_v_parent_idx",
+          "columns": [
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_zakaznici_v_version_version_ico_idx": {
+          "name": "_zakaznici_v_version_version_ico_idx",
+          "columns": [
+            {
+              "expression": "version_ico",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_zakaznici_v_version_version_zalozil_idx": {
+          "name": "_zakaznici_v_version_version_zalozil_idx",
+          "columns": [
+            {
+              "expression": "version_zalozil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_zakaznici_v_version_version_upravil_idx": {
+          "name": "_zakaznici_v_version_version_upravil_idx",
+          "columns": [
+            {
+              "expression": "version_upravil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_zakaznici_v_version_version_updated_at_idx": {
+          "name": "_zakaznici_v_version_version_updated_at_idx",
+          "columns": [
+            {
+              "expression": "version_updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_zakaznici_v_version_version_created_at_idx": {
+          "name": "_zakaznici_v_version_version_created_at_idx",
+          "columns": [
+            {
+              "expression": "version_created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_zakaznici_v_created_at_idx": {
+          "name": "_zakaznici_v_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_zakaznici_v_updated_at_idx": {
+          "name": "_zakaznici_v_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_zakaznici_v_parent_id_zakaznici_id_fk": {
+          "name": "_zakaznici_v_parent_id_zakaznici_id_fk",
+          "tableFrom": "_zakaznici_v",
+          "tableTo": "zakaznici",
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_zakaznici_v_version_zalozil_id_users_id_fk": {
+          "name": "_zakaznici_v_version_zalozil_id_users_id_fk",
+          "tableFrom": "_zakaznici_v",
+          "tableTo": "users",
+          "columnsFrom": ["version_zalozil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_zakaznici_v_version_upravil_id_users_id_fk": {
+          "name": "_zakaznici_v_version_upravil_id_users_id_fk",
+          "tableFrom": "_zakaznici_v",
+          "tableTo": "users",
+          "columnsFrom": ["version_upravil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.soubory_om": {
+      "name": "soubory_om",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nazev": {
+          "name": "nazev",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lokalita": {
+          "name": "lokalita",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "vlastnik_arealu_id": {
+          "name": "vlastnik_arealu_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "popis": {
+          "name": "popis",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "zalozil_id": {
+          "name": "zalozil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "upravil_id": {
+          "name": "upravil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "soubory_om_nazev_idx": {
+          "name": "soubory_om_nazev_idx",
+          "columns": [
+            {
+              "expression": "nazev",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "soubory_om_vlastnik_arealu_idx": {
+          "name": "soubory_om_vlastnik_arealu_idx",
+          "columns": [
+            {
+              "expression": "vlastnik_arealu_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "soubory_om_zalozil_idx": {
+          "name": "soubory_om_zalozil_idx",
+          "columns": [
+            {
+              "expression": "zalozil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "soubory_om_upravil_idx": {
+          "name": "soubory_om_upravil_idx",
+          "columns": [
+            {
+              "expression": "upravil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "soubory_om_updated_at_idx": {
+          "name": "soubory_om_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "soubory_om_created_at_idx": {
+          "name": "soubory_om_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "soubory_om_vlastnik_arealu_id_zakaznici_id_fk": {
+          "name": "soubory_om_vlastnik_arealu_id_zakaznici_id_fk",
+          "tableFrom": "soubory_om",
+          "tableTo": "zakaznici",
+          "columnsFrom": ["vlastnik_arealu_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "soubory_om_zalozil_id_users_id_fk": {
+          "name": "soubory_om_zalozil_id_users_id_fk",
+          "tableFrom": "soubory_om",
+          "tableTo": "users",
+          "columnsFrom": ["zalozil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "soubory_om_upravil_id_users_id_fk": {
+          "name": "soubory_om_upravil_id_users_id_fk",
+          "tableFrom": "soubory_om",
+          "tableTo": "users",
+          "columnsFrom": ["upravil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.smlouvy_dodatky": {
+      "name": "smlouvy_dodatky",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "cislo": {
+          "name": "cislo",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "datum": {
+          "name": "datum",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "predmet": {
+          "name": "predmet",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "soubor_id": {
+          "name": "soubor_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "smlouvy_dodatky_order_idx": {
+          "name": "smlouvy_dodatky_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "smlouvy_dodatky_parent_id_idx": {
+          "name": "smlouvy_dodatky_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "smlouvy_dodatky_soubor_idx": {
+          "name": "smlouvy_dodatky_soubor_idx",
+          "columns": [
+            {
+              "expression": "soubor_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "smlouvy_dodatky_soubor_id_dokumenty_id_fk": {
+          "name": "smlouvy_dodatky_soubor_id_dokumenty_id_fk",
+          "tableFrom": "smlouvy_dodatky",
+          "tableTo": "dokumenty",
+          "columnsFrom": ["soubor_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "smlouvy_dodatky_parent_id_fk": {
+          "name": "smlouvy_dodatky_parent_id_fk",
+          "tableFrom": "smlouvy_dodatky",
+          "tableTo": "smlouvy",
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.smlouvy": {
+      "name": "smlouvy",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "oznaceni": {
+          "name": "oznaceni",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cislo": {
+          "name": "cislo",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "typ": {
+          "name": "typ",
+          "type": "enum_smlouvy_typ",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "komodita": {
+          "name": "komodita",
+          "type": "enum_smlouvy_komodita",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "zakaznik_id": {
+          "name": "zakaznik_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "protistrana": {
+          "name": "protistrana",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "datum_uzavreni": {
+          "name": "datum_uzavreni",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "platnost_od": {
+          "name": "platnost_od",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "platnost_do": {
+          "name": "platnost_do",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "vypovedni_lhuta": {
+          "name": "vypovedni_lhuta",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stav": {
+          "name": "stav",
+          "type": "enum_smlouvy_stav",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'platna'"
+        },
+        "soubor_id": {
+          "name": "soubor_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "poznamka": {
+          "name": "poznamka",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "zalozil_id": {
+          "name": "zalozil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "upravil_id": {
+          "name": "upravil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "smlouvy_cislo_idx": {
+          "name": "smlouvy_cislo_idx",
+          "columns": [
+            {
+              "expression": "cislo",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "smlouvy_zakaznik_idx": {
+          "name": "smlouvy_zakaznik_idx",
+          "columns": [
+            {
+              "expression": "zakaznik_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "smlouvy_soubor_idx": {
+          "name": "smlouvy_soubor_idx",
+          "columns": [
+            {
+              "expression": "soubor_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "smlouvy_zalozil_idx": {
+          "name": "smlouvy_zalozil_idx",
+          "columns": [
+            {
+              "expression": "zalozil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "smlouvy_upravil_idx": {
+          "name": "smlouvy_upravil_idx",
+          "columns": [
+            {
+              "expression": "upravil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "smlouvy_updated_at_idx": {
+          "name": "smlouvy_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "smlouvy_created_at_idx": {
+          "name": "smlouvy_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "smlouvy_zakaznik_id_zakaznici_id_fk": {
+          "name": "smlouvy_zakaznik_id_zakaznici_id_fk",
+          "tableFrom": "smlouvy",
+          "tableTo": "zakaznici",
+          "columnsFrom": ["zakaznik_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "smlouvy_soubor_id_dokumenty_id_fk": {
+          "name": "smlouvy_soubor_id_dokumenty_id_fk",
+          "tableFrom": "smlouvy",
+          "tableTo": "dokumenty",
+          "columnsFrom": ["soubor_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "smlouvy_zalozil_id_users_id_fk": {
+          "name": "smlouvy_zalozil_id_users_id_fk",
+          "tableFrom": "smlouvy",
+          "tableTo": "users",
+          "columnsFrom": ["zalozil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "smlouvy_upravil_id_users_id_fk": {
+          "name": "smlouvy_upravil_id_users_id_fk",
+          "tableFrom": "smlouvy",
+          "tableTo": "users",
+          "columnsFrom": ["upravil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._smlouvy_v_version_dodatky": {
+      "name": "_smlouvy_v_version_dodatky",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "cislo": {
+          "name": "cislo",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "datum": {
+          "name": "datum",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "predmet": {
+          "name": "predmet",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "soubor_id": {
+          "name": "soubor_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "_uuid": {
+          "name": "_uuid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "_smlouvy_v_version_dodatky_order_idx": {
+          "name": "_smlouvy_v_version_dodatky_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_smlouvy_v_version_dodatky_parent_id_idx": {
+          "name": "_smlouvy_v_version_dodatky_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_smlouvy_v_version_dodatky_soubor_idx": {
+          "name": "_smlouvy_v_version_dodatky_soubor_idx",
+          "columns": [
+            {
+              "expression": "soubor_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_smlouvy_v_version_dodatky_soubor_id_dokumenty_id_fk": {
+          "name": "_smlouvy_v_version_dodatky_soubor_id_dokumenty_id_fk",
+          "tableFrom": "_smlouvy_v_version_dodatky",
+          "tableTo": "dokumenty",
+          "columnsFrom": ["soubor_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_smlouvy_v_version_dodatky_parent_id_fk": {
+          "name": "_smlouvy_v_version_dodatky_parent_id_fk",
+          "tableFrom": "_smlouvy_v_version_dodatky",
+          "tableTo": "_smlouvy_v",
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public._smlouvy_v": {
+      "name": "_smlouvy_v",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_oznaceni": {
+          "name": "version_oznaceni",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_cislo": {
+          "name": "version_cislo",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "version_typ": {
+          "name": "version_typ",
+          "type": "enum__smlouvy_v_version_typ",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "version_komodita": {
+          "name": "version_komodita",
+          "type": "enum__smlouvy_v_version_komodita",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_zakaznik_id": {
+          "name": "version_zakaznik_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_protistrana": {
+          "name": "version_protistrana",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_datum_uzavreni": {
+          "name": "version_datum_uzavreni",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_platnost_od": {
+          "name": "version_platnost_od",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_platnost_do": {
+          "name": "version_platnost_do",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_vypovedni_lhuta": {
+          "name": "version_vypovedni_lhuta",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_stav": {
+          "name": "version_stav",
+          "type": "enum__smlouvy_v_version_stav",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'platna'"
+        },
+        "version_soubor_id": {
+          "name": "version_soubor_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_poznamka": {
+          "name": "version_poznamka",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_zalozil_id": {
+          "name": "version_zalozil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_upravil_id": {
+          "name": "version_upravil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_updated_at": {
+          "name": "version_updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version_created_at": {
+          "name": "version_created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "_smlouvy_v_parent_idx": {
+          "name": "_smlouvy_v_parent_idx",
+          "columns": [
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_smlouvy_v_version_version_cislo_idx": {
+          "name": "_smlouvy_v_version_version_cislo_idx",
+          "columns": [
+            {
+              "expression": "version_cislo",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_smlouvy_v_version_version_zakaznik_idx": {
+          "name": "_smlouvy_v_version_version_zakaznik_idx",
+          "columns": [
+            {
+              "expression": "version_zakaznik_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_smlouvy_v_version_version_soubor_idx": {
+          "name": "_smlouvy_v_version_version_soubor_idx",
+          "columns": [
+            {
+              "expression": "version_soubor_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_smlouvy_v_version_version_zalozil_idx": {
+          "name": "_smlouvy_v_version_version_zalozil_idx",
+          "columns": [
+            {
+              "expression": "version_zalozil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_smlouvy_v_version_version_upravil_idx": {
+          "name": "_smlouvy_v_version_version_upravil_idx",
+          "columns": [
+            {
+              "expression": "version_upravil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_smlouvy_v_version_version_updated_at_idx": {
+          "name": "_smlouvy_v_version_version_updated_at_idx",
+          "columns": [
+            {
+              "expression": "version_updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_smlouvy_v_version_version_created_at_idx": {
+          "name": "_smlouvy_v_version_version_created_at_idx",
+          "columns": [
+            {
+              "expression": "version_created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_smlouvy_v_created_at_idx": {
+          "name": "_smlouvy_v_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_smlouvy_v_updated_at_idx": {
+          "name": "_smlouvy_v_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "_smlouvy_v_parent_id_smlouvy_id_fk": {
+          "name": "_smlouvy_v_parent_id_smlouvy_id_fk",
+          "tableFrom": "_smlouvy_v",
+          "tableTo": "smlouvy",
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_smlouvy_v_version_zakaznik_id_zakaznici_id_fk": {
+          "name": "_smlouvy_v_version_zakaznik_id_zakaznici_id_fk",
+          "tableFrom": "_smlouvy_v",
+          "tableTo": "zakaznici",
+          "columnsFrom": ["version_zakaznik_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_smlouvy_v_version_soubor_id_dokumenty_id_fk": {
+          "name": "_smlouvy_v_version_soubor_id_dokumenty_id_fk",
+          "tableFrom": "_smlouvy_v",
+          "tableTo": "dokumenty",
+          "columnsFrom": ["version_soubor_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_smlouvy_v_version_zalozil_id_users_id_fk": {
+          "name": "_smlouvy_v_version_zalozil_id_users_id_fk",
+          "tableFrom": "_smlouvy_v",
+          "tableTo": "users",
+          "columnsFrom": ["version_zalozil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "_smlouvy_v_version_upravil_id_users_id_fk": {
+          "name": "_smlouvy_v_version_upravil_id_users_id_fk",
+          "tableFrom": "_smlouvy_v",
+          "tableTo": "users",
+          "columnsFrom": ["version_upravil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.dokumenty": {
+      "name": "dokumenty",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nazev": {
+          "name": "nazev",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "typ": {
+          "name": "typ",
+          "type": "enum_dokumenty_typ",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "poznamka": {
+          "name": "poznamka",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "zalozil_id": {
+          "name": "zalozil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "upravil_id": {
+          "name": "upravil_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "url": {
+          "name": "url",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "thumbnail_u_r_l": {
+          "name": "thumbnail_u_r_l",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "filename": {
+          "name": "filename",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mime_type": {
+          "name": "mime_type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "filesize": {
+          "name": "filesize",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "width": {
+          "name": "width",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "height": {
+          "name": "height",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "focal_x": {
+          "name": "focal_x",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "focal_y": {
+          "name": "focal_y",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "dokumenty_zalozil_idx": {
+          "name": "dokumenty_zalozil_idx",
+          "columns": [
+            {
+              "expression": "zalozil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "dokumenty_upravil_idx": {
+          "name": "dokumenty_upravil_idx",
+          "columns": [
+            {
+              "expression": "upravil_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "dokumenty_updated_at_idx": {
+          "name": "dokumenty_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "dokumenty_created_at_idx": {
+          "name": "dokumenty_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "dokumenty_filename_idx": {
+          "name": "dokumenty_filename_idx",
+          "columns": [
+            {
+              "expression": "filename",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "dokumenty_zalozil_id_users_id_fk": {
+          "name": "dokumenty_zalozil_id_users_id_fk",
+          "tableFrom": "dokumenty",
+          "tableTo": "users",
+          "columnsFrom": ["zalozil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "dokumenty_upravil_id_users_id_fk": {
+          "name": "dokumenty_upravil_id_users_id_fk",
+          "tableFrom": "dokumenty",
+          "tableTo": "users",
+          "columnsFrom": ["upravil_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.users_roles": {
+      "name": "users_roles",
+      "schema": "",
+      "columns": {
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "value": {
+          "name": "value",
+          "type": "enum_users_roles",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "users_roles_order_idx": {
+          "name": "users_roles_order_idx",
+          "columns": [
+            {
+              "expression": "order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "users_roles_parent_idx": {
+          "name": "users_roles_parent_idx",
+          "columns": [
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "users_roles_parent_fk": {
+          "name": "users_roles_parent_fk",
+          "tableFrom": "users_roles",
+          "tableTo": "users",
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.users_sessions": {
+      "name": "users_sessions",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "users_sessions_order_idx": {
+          "name": "users_sessions_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "users_sessions_parent_id_idx": {
+          "name": "users_sessions_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "users_sessions_parent_id_fk": {
+          "name": "users_sessions_parent_id_fk",
+          "tableFrom": "users_sessions",
+          "tableTo": "users",
+          "columnsFrom": ["_parent_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "jmeno": {
+          "name": "jmeno",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reset_password_token": {
+          "name": "reset_password_token",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reset_password_expiration": {
+          "name": "reset_password_expiration",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "salt": {
+          "name": "salt",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hash": {
+          "name": "hash",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reset_password_requested_at": {
+          "name": "reset_password_requested_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "login_attempts": {
+          "name": "login_attempts",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "lock_until": {
+          "name": "lock_until",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "users_updated_at_idx": {
+          "name": "users_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "users_created_at_idx": {
+          "name": "users_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "users_email_idx": {
+          "name": "users_email_idx",
+          "columns": [
+            {
+              "expression": "email",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.payload_kv": {
+      "name": "payload_kv",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "key": {
+          "name": "key",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data": {
+          "name": "data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "payload_kv_key_idx": {
+          "name": "payload_kv_key_idx",
+          "columns": [
+            {
+              "expression": "key",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.payload_locked_documents": {
+      "name": "payload_locked_documents",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "global_slug": {
+          "name": "global_slug",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "payload_locked_documents_global_slug_idx": {
+          "name": "payload_locked_documents_global_slug_idx",
+          "columns": [
+            {
+              "expression": "global_slug",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_updated_at_idx": {
+          "name": "payload_locked_documents_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_created_at_idx": {
+          "name": "payload_locked_documents_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.payload_locked_documents_rels": {
+      "name": "payload_locked_documents_rels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "odberna_mista_id": {
+          "name": "odberna_mista_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "vyrobny_id": {
+          "name": "vyrobny_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "zakaznici_id": {
+          "name": "zakaznici_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "soubory_om_id": {
+          "name": "soubory_om_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "smlouvy_id": {
+          "name": "smlouvy_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dokumenty_id": {
+          "name": "dokumenty_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "users_id": {
+          "name": "users_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "payload_locked_documents_rels_order_idx": {
+          "name": "payload_locked_documents_rels_order_idx",
+          "columns": [
+            {
+              "expression": "order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_parent_idx": {
+          "name": "payload_locked_documents_rels_parent_idx",
+          "columns": [
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_path_idx": {
+          "name": "payload_locked_documents_rels_path_idx",
+          "columns": [
+            {
+              "expression": "path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_odberna_mista_id_idx": {
+          "name": "payload_locked_documents_rels_odberna_mista_id_idx",
+          "columns": [
+            {
+              "expression": "odberna_mista_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_vyrobny_id_idx": {
+          "name": "payload_locked_documents_rels_vyrobny_id_idx",
+          "columns": [
+            {
+              "expression": "vyrobny_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_zakaznici_id_idx": {
+          "name": "payload_locked_documents_rels_zakaznici_id_idx",
+          "columns": [
+            {
+              "expression": "zakaznici_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_soubory_om_id_idx": {
+          "name": "payload_locked_documents_rels_soubory_om_id_idx",
+          "columns": [
+            {
+              "expression": "soubory_om_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_smlouvy_id_idx": {
+          "name": "payload_locked_documents_rels_smlouvy_id_idx",
+          "columns": [
+            {
+              "expression": "smlouvy_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_dokumenty_id_idx": {
+          "name": "payload_locked_documents_rels_dokumenty_id_idx",
+          "columns": [
+            {
+              "expression": "dokumenty_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_users_id_idx": {
+          "name": "payload_locked_documents_rels_users_id_idx",
+          "columns": [
+            {
+              "expression": "users_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "payload_locked_documents_rels_parent_fk": {
+          "name": "payload_locked_documents_rels_parent_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "payload_locked_documents",
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_odberna_mista_fk": {
+          "name": "payload_locked_documents_rels_odberna_mista_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "odberna_mista",
+          "columnsFrom": ["odberna_mista_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_vyrobny_fk": {
+          "name": "payload_locked_documents_rels_vyrobny_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "vyrobny",
+          "columnsFrom": ["vyrobny_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_zakaznici_fk": {
+          "name": "payload_locked_documents_rels_zakaznici_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "zakaznici",
+          "columnsFrom": ["zakaznici_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_soubory_om_fk": {
+          "name": "payload_locked_documents_rels_soubory_om_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "soubory_om",
+          "columnsFrom": ["soubory_om_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_smlouvy_fk": {
+          "name": "payload_locked_documents_rels_smlouvy_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "smlouvy",
+          "columnsFrom": ["smlouvy_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_dokumenty_fk": {
+          "name": "payload_locked_documents_rels_dokumenty_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "dokumenty",
+          "columnsFrom": ["dokumenty_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_users_fk": {
+          "name": "payload_locked_documents_rels_users_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "users",
+          "columnsFrom": ["users_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.payload_preferences": {
+      "name": "payload_preferences",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "key": {
+          "name": "key",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "value": {
+          "name": "value",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "payload_preferences_key_idx": {
+          "name": "payload_preferences_key_idx",
+          "columns": [
+            {
+              "expression": "key",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_preferences_updated_at_idx": {
+          "name": "payload_preferences_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_preferences_created_at_idx": {
+          "name": "payload_preferences_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.payload_preferences_rels": {
+      "name": "payload_preferences_rels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "users_id": {
+          "name": "users_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "payload_preferences_rels_order_idx": {
+          "name": "payload_preferences_rels_order_idx",
+          "columns": [
+            {
+              "expression": "order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_preferences_rels_parent_idx": {
+          "name": "payload_preferences_rels_parent_idx",
+          "columns": [
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_preferences_rels_path_idx": {
+          "name": "payload_preferences_rels_path_idx",
+          "columns": [
+            {
+              "expression": "path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_preferences_rels_users_id_idx": {
+          "name": "payload_preferences_rels_users_id_idx",
+          "columns": [
+            {
+              "expression": "users_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "payload_preferences_rels_parent_fk": {
+          "name": "payload_preferences_rels_parent_fk",
+          "tableFrom": "payload_preferences_rels",
+          "tableTo": "payload_preferences",
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_preferences_rels_users_fk": {
+          "name": "payload_preferences_rels_users_fk",
+          "tableFrom": "payload_preferences_rels",
+          "tableTo": "users",
+          "columnsFrom": ["users_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.payload_migrations": {
+      "name": "payload_migrations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "batch": {
+          "name": "batch",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "payload_migrations_updated_at_idx": {
+          "name": "payload_migrations_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_migrations_created_at_idx": {
+          "name": "payload_migrations_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.om_typ_ceny": {
+      "name": "om_typ_ceny",
+      "schema": "public",
+      "values": ["fixni", "spot", "indexovana"]
+    },
+    "public.om_typ": {
+      "name": "om_typ",
+      "schema": "public",
+      "values": ["Z", "V", "Z-S", "V-S"]
+    },
+    "public.enum_odberna_mista_stav": {
+      "name": "enum_odberna_mista_stav",
+      "schema": "public",
+      "values": ["pripravovane", "aktivni", "ukoncene"]
+    },
+    "public.enum_odberna_mista_komodita": {
+      "name": "enum_odberna_mista_komodita",
+      "schema": "public",
+      "values": ["EE", "ZP"]
+    },
+    "public.enum_odberna_mista_typ_odberu": {
+      "name": "enum_odberna_mista_typ_odberu",
+      "schema": "public",
+      "values": ["NN", "VN", "MO", "SO", "VO"]
+    },
+    "public.enum_odberna_mista_obchodni_model": {
+      "name": "enum_odberna_mista_obchodni_model",
+      "schema": "public",
+      "values": ["zakaznik", "obchodnik"]
+    },
+    "public.enum_odberna_mista_typ_zakaznika": {
+      "name": "enum_odberna_mista_typ_zakaznika",
+      "schema": "public",
+      "values": ["bezny", "virtualni"]
+    },
+    "public.enum_odberna_mista_spotrebitel": {
+      "name": "enum_odberna_mista_spotrebitel",
+      "schema": "public",
+      "values": ["ano", "ne"]
+    },
+    "public.om_odhad_rezim": {
+      "name": "om_odhad_rezim",
+      "schema": "public",
+      "values": ["rocni", "mesicni"]
+    },
+    "public.om_typ_mereni": {
+      "name": "om_typ_mereni",
+      "schema": "public",
+      "values": ["A", "B", "C", "S", "CM"]
+    },
+    "public.om_periodicita": {
+      "name": "om_periodicita",
+      "schema": "public",
+      "values": ["mesicni", "ctvrtletni", "pololetni", "rocni"]
+    },
+    "public.om_distributor": {
+      "name": "om_distributor",
+      "schema": "public",
+      "values": [
+        "cez-distribuce",
+        "egd-ee",
+        "predistribuce",
+        "lds-ee",
+        "gasnet",
+        "egd-zp",
+        "ppd",
+        "lds-zp"
+      ]
+    },
+    "public.om_pocet_fazi": {
+      "name": "om_pocet_fazi",
+      "schema": "public",
+      "values": ["1", "3"]
+    },
+    "public.om_napeti": {
+      "name": "om_napeti",
+      "schema": "public",
+      "values": ["6", "10", "22", "35"]
+    },
+    "public.om_mereni_strana": {
+      "name": "om_mereni_strana",
+      "schema": "public",
+      "values": ["VN", "NN"]
+    },
+    "public.om_vlastnik_ts": {
+      "name": "om_vlastnik_ts",
+      "schema": "public",
+      "values": ["zakaznik", "distributor", "my", "jiny"]
+    },
+    "public.om_typ_kapacity": {
+      "name": "om_typ_kapacity",
+      "schema": "public",
+      "values": ["pevna", "klouzava"]
+    },
+    "public.om_stav_dodatku": {
+      "name": "om_stav_dodatku",
+      "schema": "public",
+      "values": ["nepotreba", "pripravit", "jednani", "podepsan"]
+    },
+    "public.enum__odberna_mista_v_version_stav": {
+      "name": "enum__odberna_mista_v_version_stav",
+      "schema": "public",
+      "values": ["pripravovane", "aktivni", "ukoncene"]
+    },
+    "public.enum__odberna_mista_v_version_komodita": {
+      "name": "enum__odberna_mista_v_version_komodita",
+      "schema": "public",
+      "values": ["EE", "ZP"]
+    },
+    "public.enum__odberna_mista_v_version_typ_odberu": {
+      "name": "enum__odberna_mista_v_version_typ_odberu",
+      "schema": "public",
+      "values": ["NN", "VN", "MO", "SO", "VO"]
+    },
+    "public.enum__odberna_mista_v_version_obchodni_model": {
+      "name": "enum__odberna_mista_v_version_obchodni_model",
+      "schema": "public",
+      "values": ["zakaznik", "obchodnik"]
+    },
+    "public.enum__odberna_mista_v_version_typ_zakaznika": {
+      "name": "enum__odberna_mista_v_version_typ_zakaznika",
+      "schema": "public",
+      "values": ["bezny", "virtualni"]
+    },
+    "public.enum__odberna_mista_v_version_spotrebitel": {
+      "name": "enum__odberna_mista_v_version_spotrebitel",
+      "schema": "public",
+      "values": ["ano", "ne"]
+    },
+    "public.vyr_stav": {
+      "name": "vyr_stav",
+      "schema": "public",
+      "values": ["provoz", "priprava", "mimo-provoz"]
+    },
+    "public.vyr_druh": {
+      "name": "vyr_druh",
+      "schema": "public",
+      "values": ["fve", "kgj", "mve", "jina"]
+    },
+    "public.vyr_kategorie": {
+      "name": "vyr_kategorie",
+      "schema": "public",
+      "values": ["1", "2"]
+    },
+    "public.vyr_rezim": {
+      "name": "vyr_rezim",
+      "schema": "public",
+      "values": ["pretoky", "bez-pretoku"]
+    },
+    "public.vyr_vykup": {
+      "name": "vyr_vykup",
+      "schema": "public",
+      "values": ["bse", "jiny", "zadny"]
+    },
+    "public.enum_zakaznici_typ_subjektu": {
+      "name": "enum_zakaznici_typ_subjektu",
+      "schema": "public",
+      "values": ["po", "fop", "fo"]
+    },
+    "public.enum__zakaznici_v_version_typ_subjektu": {
+      "name": "enum__zakaznici_v_version_typ_subjektu",
+      "schema": "public",
+      "values": ["po", "fop", "fo"]
+    },
+    "public.enum_smlouvy_typ": {
+      "name": "enum_smlouvy_typ",
+      "schema": "public",
+      "values": [
+        "dodavka",
+        "pripojeni",
+        "najemni",
+        "nakup-ee",
+        "vykup-ee",
+        "distribuce",
+        "ramcova",
+        "jina"
+      ]
+    },
+    "public.enum_smlouvy_komodita": {
+      "name": "enum_smlouvy_komodita",
+      "schema": "public",
+      "values": ["EE", "ZP"]
+    },
+    "public.enum_smlouvy_stav": {
+      "name": "enum_smlouvy_stav",
+      "schema": "public",
+      "values": ["koncept", "platna", "ukoncena"]
+    },
+    "public.enum__smlouvy_v_version_typ": {
+      "name": "enum__smlouvy_v_version_typ",
+      "schema": "public",
+      "values": [
+        "dodavka",
+        "pripojeni",
+        "najemni",
+        "nakup-ee",
+        "vykup-ee",
+        "distribuce",
+        "ramcova",
+        "jina"
+      ]
+    },
+    "public.enum__smlouvy_v_version_komodita": {
+      "name": "enum__smlouvy_v_version_komodita",
+      "schema": "public",
+      "values": ["EE", "ZP"]
+    },
+    "public.enum__smlouvy_v_version_stav": {
+      "name": "enum__smlouvy_v_version_stav",
+      "schema": "public",
+      "values": ["koncept", "platna", "ukoncena"]
+    },
+    "public.enum_dokumenty_typ": {
+      "name": "enum_dokumenty_typ",
+      "schema": "public",
+      "values": ["smlouva", "dodatek", "plna-moc", "revize", "technicka", "korespondence", "jiny"]
+    },
+    "public.enum_users_roles": {
+      "name": "enum_users_roles",
+      "schema": "public",
+      "values": ["admin", "obchod", "operativa", "cteni"]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "id": "d49edf05-0bf3-4916-956e-59c041ebac75",
+  "prevId": "00000000-0000-0000-0000-000000000000"
+}

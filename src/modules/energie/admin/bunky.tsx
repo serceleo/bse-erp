@@ -31,9 +31,6 @@ const Plamen = () => (
   </svg>
 )
 
-/** Zkratky druhů výroben pro přehled („VN + FVE“). */
-const ZKRATKY_VYROBEN: Record<string, string> = { fve: 'FVE', kgj: 'KGJ', jina: 'výrobna' }
-
 /**
  * Komodita jako ikona (oranžový blesk = elektřina, modrý plamínek = plyn) a vedle ní
  * zkratka typu odběru z téhož řádku, případně připojená výrobna – např. blesk + „VN + FVE“.
@@ -47,11 +44,9 @@ export const KomoditaBunka: React.FC<DefaultCellComponentProps> = ({
   if (cellData !== 'EE' && cellData !== 'ZP') return null
   const typOdberu = typeof rowData?.typOdberu === 'string' ? rowData.typOdberu : ''
   const popisOdberu = typOdberu ? labelPro(vsechnyTypyOdberu, typOdberu) : ''
-  const vyrobna = rowData?.vyrobna as { maVyrobnu?: boolean; druh?: string | null } | undefined
+  // Souhrn připojených výroben (např. „FVE“) udržuje server z evidence Výrobny.
   const zkratkaVyrobny =
-    cellData === 'EE' && vyrobna?.maVyrobnu
-      ? (ZKRATKY_VYROBEN[vyrobna.druh ?? ''] ?? 'výrobna')
-      : ''
+    cellData === 'EE' && typeof rowData?.vyrobny === 'string' ? rowData.vyrobny : ''
   const text = [typOdberu, zkratkaVyrobny].filter(Boolean).join(' + ')
   const nazev = [
     popisek(field, cellData),

@@ -117,6 +117,7 @@ const validujProKomoditu =
  * protože API smí poslat jen část dokumentu.
  */
 const odvozeneHodnoty: CollectionBeforeChangeHook = async ({
+  context,
   data,
   operation,
   originalDoc,
@@ -155,8 +156,13 @@ const odvozeneHodnoty: CollectionBeforeChangeHook = async ({
   if (!varianta.jeNN(d)) data.parametryNN = prazdnaSkupina('parametryNN')
   if (!varianta.jeVN(d)) data.parametryVN = prazdnaSkupina('parametryVN')
   if (!varianta.jePlynSOVO(d)) data.parametryPlyn = prazdnaSkupina('parametryPlyn')
-  if (!varianta.jeEE(d)) data.vyrobna = prazdnaSkupina('vyrobna')
-  else if (d.vyrobna && !d.vyrobna.maVyrobnu) data.vyrobna = prazdnaSkupina('vyrobna')
+  // Souhrn připojených výroben („FVE“) nastavuje výhradně evidence Výrobny přes context.
+  data.vyrobny =
+    context?.souhrnVyroben !== undefined
+      ? context.souhrnVyroben
+      : operation === 'create'
+        ? null
+        : (originalDoc?.vyrobny ?? null)
 
   // Konec nakoupeného období počítáme jen z obchodních údajů, které uživatel smí měnit
   // a skutečně poslal – jinak zůstává původní hodnota (nelze ji podvrhnout přes API).
@@ -617,52 +623,6 @@ const spotrebaAMereni: Field[] = [
       },
     ],
   },
-  {
-    name: 'vyrobna',
-    label: 'Výrobna v místě (FVE apod.)',
-    type: 'group',
-    admin: { condition: (d) => varianta.jeEE(d) },
-    fields: [
-      {
-        name: 'maVyrobnu',
-        label: 'V odběrném místě je výrobna',
-        type: 'checkbox',
-        defaultValue: false,
-      },
-      {
-        type: 'row',
-        admin: { condition: (_, s) => Boolean(s?.maVyrobnu) },
-        fields: [
-          {
-            name: 'druh',
-            enumName: 'om_druh_vyrobny',
-            label: 'Druh',
-            type: 'select',
-            options: [
-              { label: 'FVE', value: 'fve' },
-              { label: 'Kogenerace', value: 'kgj' },
-              { label: 'Jiná', value: 'jina' },
-            ],
-            admin: { width: '33%' },
-          },
-          {
-            name: 'instalovanyVykonKwp',
-            label: 'Instalovaný výkon [kWp]',
-            type: 'number',
-            min: 0,
-            admin: { width: '33%' },
-          },
-          {
-            name: 'rezervovanyVykonKw',
-            label: 'Rezervovaný výkon [kW]',
-            type: 'number',
-            min: 0,
-            admin: { width: '34%' },
-          },
-        ],
-      },
-    ],
-  },
 ]
 
 const smlouvyADokumenty: Field[] = [
@@ -881,6 +841,8 @@ export const OdbernaMista: CollectionConfig = {
       },
     },
     { name: 'oznaceni', type: 'text', admin: { hidden: true } },
+    // Souhrn druhů připojených výroben (např. „FVE“) – odvozeno z evidence Výrobny.
+    { name: 'vyrobny', label: 'Výrobny', type: 'text', admin: { hidden: true } },
     // Název a IČO zákazníka pro vyhledávání v přehledu (odvozeno serverem).
     { name: 'zakaznikText', label: 'Zákazník', type: 'text', index: true, admin: { hidden: true } },
     {
@@ -948,6 +910,30 @@ export const OdbernaMista: CollectionConfig = {
       tabs: [
         { label: 'Základní údaje', fields: zakladniUdaje },
         { label: 'Spotřeba a technické údaje', fields: spotrebaAMereni },
+        {
+          label: 'Výrobna (FVE)',
+          description: 'Výrobny připojené k tomuto OM. Spravují se v evidenci Výrobny (FVE).',
+          admin: { condition: (d) => varianta.jeEE(d) },
+          fields: [
+            {
+              name: 'vyrobnyOM',
+              label: 'Připojené výrobny',
+              type: 'join',
+              collection: 'vyrobny',
+              on: 'odberneMisto',
+              admin: {
+                defaultColumns: [
+                  'oznaceni',
+                  'druh',
+                  'ean',
+                  'instalovanyVykonKwp',
+                  'vykupPretoku',
+                  'stav',
+                ],
+              },
+            },
+          ],
+        },
         { label: 'Smlouvy a dokumenty', fields: smlouvyADokumenty },
         {
           label: 'Obchodní podmínky',

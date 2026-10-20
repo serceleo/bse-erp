@@ -5,6 +5,7 @@ import * as migration_20261020_001810_typ_odberu_plynu_dle_spotreby from './2026
 import * as migration_20261020_124428_zakaznik_nepovinny from './20261020_124428_zakaznik_nepovinny'
 import * as migration_20261020_173143_hledani_podle_zakaznika from './20261020_173143_hledani_podle_zakaznika'
 import * as migration_20261020_174031_rucni_kategorie_plynu from './20261020_174031_rucni_kategorie_plynu'
+import * as migration_20261020_184500_evidence_vyroben from './20261020_184500_evidence_vyroben'
 
 export const migrations = [
   {
@@ -41,5 +42,10 @@ export const migrations = [
     up: migration_20261020_174031_rucni_kategorie_plynu.up,
     down: migration_20261020_174031_rucni_kategorie_plynu.down,
     name: '20261020_174031_rucni_kategorie_plynu',
+  },
+  {
+    up: migration_20261020_184500_evidence_vyroben.up,
+    down: migration_20261020_184500_evidence_vyroben.down,
+    name: '20261020_184500_evidence_vyroben',
   },
 ]

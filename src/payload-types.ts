@@ -68,6 +68,7 @@ export interface Config {
   blocks: {};
   collections: {
     'odberna-mista': OdbernaMista;
+    vyrobny: Vyrobny;
     zakaznici: Zakaznici;
     'soubory-om': SouboryOm;
     smlouvy: Smlouvy;
@@ -79,6 +80,9 @@ export interface Config {
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {
+    'odberna-mista': {
+      vyrobnyOM: 'vyrobny';
+    };
     zakaznici: {
       odbernaMista: 'odberna-mista';
       smlouvy: 'smlouvy';
@@ -93,6 +97,7 @@ export interface Config {
   };
   collectionsSelect: {
     'odberna-mista': OdbernaMistaSelect<false> | OdbernaMistaSelect<true>;
+    vyrobny: VyrobnySelect<false> | VyrobnySelect<true>;
     zakaznici: ZakazniciSelect<false> | ZakazniciSelect<true>;
     'soubory-om': SouboryOmSelect<false> | SouboryOmSelect<true>;
     smlouvy: SmlouvySelect<false> | SmlouvySelect<true>;
@@ -148,6 +153,7 @@ export interface OdbernaMista {
    */
   interniCislo?: string | null;
   oznaceni?: string | null;
+  vyrobny?: string | null;
   zakaznikText?: string | null;
   /**
    * Odvozeno z typu zákazníka a spotřebitele.
@@ -244,11 +250,10 @@ export interface OdbernaMista {
     denniKapacitaM3?: number | null;
     typKapacity?: ('pevna' | 'klouzava') | null;
   };
-  vyrobna?: {
-    maVyrobnu?: boolean | null;
-    druh?: ('fve' | 'kgj' | 'jina') | null;
-    instalovanyVykonKwp?: number | null;
-    rezervovanyVykonKw?: number | null;
+  vyrobnyOM?: {
+    docs?: (number | Vyrobny)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
   };
   /**
    * Soubor smlouvy se nahrává v evidenci smluv; zde se smlouva jen vybere.
@@ -456,6 +461,43 @@ export interface SouboryOm {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "vyrobny".
+ */
+export interface Vyrobny {
+  id: number;
+  oznaceni?: string | null;
+  stav: 'provoz' | 'priprava' | 'mimo-provoz';
+  uvedeniDoProvozu?: string | null;
+  zalozil?: (number | null) | User;
+  upravil?: (number | null) | User;
+  odberneMisto: number | OdbernaMista;
+  druh: 'fve' | 'kgj' | 'mve' | 'jina';
+  kategorie?: ('1' | '2') | null;
+  /**
+   * Nepovinné – jinak se použije druh a adresa OM.
+   */
+  nazev?: string | null;
+  /**
+   * Výrobní EAN (18 číslic), odlišný od EAN odběru.
+   */
+  ean?: string | null;
+  instalovanyVykonKwp?: number | null;
+  rezervovanyVykonKw?: number | null;
+  vykonStridacuKw?: number | null;
+  akumulaceKwh?: number | null;
+  odhadVyrobyMwh?: number | null;
+  licenceEru?: string | null;
+  rezimPretoku?: ('pretoky' | 'bez-pretoku') | null;
+  vykupPretoku?: ('bse' | 'jiny' | 'zadny') | null;
+  vykupujici?: string | null;
+  vykupniCena?: number | null;
+  dokumenty?: (number | Dokumenty)[] | null;
+  poznamka?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -481,6 +523,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'odberna-mista';
         value: number | OdbernaMista;
+      } | null)
+    | ({
+        relationTo: 'vyrobny';
+        value: number | Vyrobny;
       } | null)
     | ({
         relationTo: 'zakaznici';
@@ -551,6 +597,7 @@ export interface PayloadMigration {
 export interface OdbernaMistaSelect<T extends boolean = true> {
   interniCislo?: T;
   oznaceni?: T;
+  vyrobny?: T;
   zakaznikText?: T;
   typ?: T;
   stav?: T;
@@ -636,14 +683,7 @@ export interface OdbernaMistaSelect<T extends boolean = true> {
         denniKapacitaM3?: T;
         typKapacity?: T;
       };
-  vyrobna?:
-    | T
-    | {
-        maVyrobnu?: T;
-        druh?: T;
-        instalovanyVykonKwp?: T;
-        rezervovanyVykonKw?: T;
-      };
+  vyrobnyOM?: T;
   smlouvaODodavce?: T;
   souvisejiciSmlouvy?: T;
   dalsiDokumenty?: T;
@@ -673,6 +713,36 @@ export interface OdbernaMistaSelect<T extends boolean = true> {
             };
         poznamka?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "vyrobny_select".
+ */
+export interface VyrobnySelect<T extends boolean = true> {
+  oznaceni?: T;
+  stav?: T;
+  uvedeniDoProvozu?: T;
+  zalozil?: T;
+  upravil?: T;
+  odberneMisto?: T;
+  druh?: T;
+  kategorie?: T;
+  nazev?: T;
+  ean?: T;
+  instalovanyVykonKwp?: T;
+  rezervovanyVykonKw?: T;
+  vykonStridacuKw?: T;
+  akumulaceKwh?: T;
+  odhadVyrobyMwh?: T;
+  licenceEru?: T;
+  rezimPretoku?: T;
+  vykupPretoku?: T;
+  vykupujici?: T;
+  vykupniCena?: T;
+  dokumenty?: T;
+  poznamka?: T;
   updatedAt?: T;
   createdAt?: T;
 }

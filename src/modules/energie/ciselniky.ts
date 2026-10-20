@@ -193,6 +193,39 @@ export const napetovaHladinaOptions: OptionObject[] = [
   { label: '35 kV', value: '35' },
 ]
 
+export const druhVyrobnyOptions: OptionObject[] = [
+  { label: 'FVE – fotovoltaická elektrárna', value: 'fve' },
+  { label: 'KGJ – kogenerační jednotka', value: 'kgj' },
+  { label: 'MVE – malá vodní elektrárna', value: 'mve' },
+  { label: 'Jiná', value: 'jina' },
+]
+
+/** Krátké označení druhu výrobny pro přehledy („VN + FVE“). */
+export const zkratkaVyrobny = (druh: unknown): string =>
+  ({ fve: 'FVE', kgj: 'KGJ', mve: 'MVE' })[String(druh)] ?? 'výrobna'
+
+export const kategorieVyrobnyOptions: OptionObject[] = [
+  { label: '1. kategorie (bez dodávky do sítě / do 10,8 kW)', value: '1' },
+  { label: '2. kategorie (s dodávkou do sítě)', value: '2' },
+]
+
+export const rezimPretokuOptions: OptionObject[] = [
+  { label: 'S přetoky do sítě', value: 'pretoky' },
+  { label: 'Bez přetoků (nulový přetok)', value: 'bez-pretoku' },
+]
+
+export const vykupPretokuOptions: OptionObject[] = [
+  { label: 'Vykupuje BSE', value: 'bse' },
+  { label: 'Vykupuje jiný obchodník', value: 'jiny' },
+  { label: 'Bez výkupu', value: 'zadny' },
+]
+
+export const stavVyrobnyOptions: OptionObject[] = [
+  { label: 'V provozu', value: 'provoz' },
+  { label: 'Ve výstavbě / připojování', value: 'priprava' },
+  { label: 'Mimo provoz', value: 'mimo-provoz' },
+]
+
 export const MESICE = [
   ['leden', 'Leden'],
   ['unor', 'Únor'],

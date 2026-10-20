@@ -168,7 +168,7 @@ const run = async () => {
     },
   })
 
-  await vytvor({
+  const omPekarna = await vytvor({
     collection: 'odberna-mista',
     data: {
       ...zaklad,
@@ -181,7 +181,22 @@ const run = async () => {
       odhadSpotreby: { rezim: 'rocni', rocniMwh: 38.5 },
       mereni: { typMereni: 'C', periodicitaOdectu: 'rocni', distributor: 'cez-distribuce' },
       parametryNN: { hlavniJistic: 80, pocetFazi: '3', distribucniSazba: 'C25d' },
-      vyrobna: { maVyrobnu: true, druh: 'fve', instalovanyVykonKwp: 29.9, rezervovanyVykonKw: 25 },
+    },
+  })
+
+  await vytvor({
+    collection: 'vyrobny',
+    data: {
+      odberneMisto: omPekarna.id,
+      druh: 'fve',
+      kategorie: '2',
+      stav: 'provoz',
+      uvedeniDoProvozu: '2023-05-15',
+      instalovanyVykonKwp: 29.9,
+      rezervovanyVykonKw: 25,
+      rezimPretoku: 'pretoky',
+      vykupPretoku: 'bse',
+      vykupniCena: 1200,
     },
   })
 
@@ -217,7 +232,7 @@ const run = async () => {
     },
   })
 
-  payload.logger.info('Ukázková data založena (3 zákazníci, 1 soubor OM, 2 smlouvy, 4 OM).')
+  payload.logger.info('Ukázková data založena (3 zákazníci, 1 soubor OM, 2 smlouvy, 4 OM, 1 FVE).')
   process.exit(0)
 }
 
