@@ -343,6 +343,32 @@ describe('Výrobny (FVE)', () => {
     expect(po.eanOdberu).toBe(ean(65))
   })
 
+  it('název vykupujícího se drží jen u volby „Jiný obchodník“', async () => {
+    const om = await vytvorOM(zakladOM({ kod: ean(66) }))
+    const v = await payload.create({
+      collection: 'vyrobny',
+      data: {
+        odberneMisto: om.id,
+        druh: 'fve',
+        stav: 'provoz',
+        vykupPretoku: 'jiny',
+        vykupujici: 'Obchodník X',
+      },
+      user: admin,
+      overrideAccess: false,
+    })
+    expect(v.vykupujici).toBe('Obchodník X')
+    const pp = await payload.update({
+      collection: 'vyrobny',
+      id: v.id,
+      data: { vykupPretoku: 'pp' },
+      user: admin,
+      overrideAccess: false,
+    })
+    expect(pp.vykupPretoku).toBe('pp')
+    expect(pp.vykupujici ?? null).toBeNull()
+  })
+
   it('souhrn výroben nejde podvrhnout přes API OM', async () => {
     const om = await vytvorOM(zakladOM({ kod: ean(62), vyrobny: 'FVE' }))
     expect(om.vyrobny ?? null).toBeNull()

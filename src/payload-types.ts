@@ -492,7 +492,7 @@ export interface Vyrobny {
   odhadVyrobyMwh?: number | null;
   licenceEru?: string | null;
   rezimPretoku?: ('pretoky' | 'bez-pretoku') | null;
-  vykupPretoku?: ('bse' | 'jiny' | 'zadny') | null;
+  vykupPretoku?: ('bse' | 'pp' | 'jiny' | 'zadny') | null;
   typMereni?: ('A' | 'B' | 'C' | 'S') | null;
   edcAkumulace?: boolean | null;
   edcFlexibilita?: boolean | null;

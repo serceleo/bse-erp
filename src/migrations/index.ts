@@ -8,6 +8,7 @@ import * as migration_20261020_174031_rucni_kategorie_plynu from './20261020_174
 import * as migration_20261020_184500_evidence_vyroben from './20261020_184500_evidence_vyroben';
 import * as migration_20261020_185133_vyrobny_edc_zadost from './20261020_185133_vyrobny_edc_zadost';
 import * as migration_20261020_204414_vyrobny_spotrebni_ean from './20261020_204414_vyrobny_spotrebni_ean';
+import * as migration_20261020_210703_vykup_pretoku_pp from './20261020_210703_vykup_pretoku_pp';
 
 export const migrations = [
   {
@@ -58,6 +59,11 @@ export const migrations = [
   {
     up: migration_20261020_204414_vyrobny_spotrebni_ean.up,
     down: migration_20261020_204414_vyrobny_spotrebni_ean.down,
-    name: '20261020_204414_vyrobny_spotrebni_ean'
+    name: '20261020_204414_vyrobny_spotrebni_ean',
+  },
+  {
+    up: migration_20261020_210703_vykup_pretoku_pp.up,
+    down: migration_20261020_210703_vykup_pretoku_pp.down,
+    name: '20261020_210703_vykup_pretoku_pp'
   },
 ];

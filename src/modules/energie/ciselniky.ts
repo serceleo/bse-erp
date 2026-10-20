@@ -215,9 +215,14 @@ export const rezimPretokuOptions: OptionObject[] = [
   { label: 'Bez přetoků (nulový přetok)', value: 'bez-pretoku' },
 ]
 
+/**
+ * Kdo vykupuje přetoky. Konkrétní obchodníci mají vlastní hodnotu (nové přidávat sem);
+ * „Jiný obchodník“ zůstává pro ojedinělé případy s názvem v poli „Vykupující obchodník“.
+ */
 export const vykupPretokuOptions: OptionObject[] = [
-  { label: 'Vykupuje BSE', value: 'bse' },
-  { label: 'Vykupuje jiný obchodník', value: 'jiny' },
+  { label: 'BSE', value: 'bse' },
+  { label: 'Pražská plynárenská, a.s.', value: 'pp' },
+  { label: 'Jiný obchodník', value: 'jiny' },
   { label: 'Bez výkupu', value: 'zadny' },
 ]
 

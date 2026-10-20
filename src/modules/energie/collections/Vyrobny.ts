@@ -44,6 +44,8 @@ const odvozeneZOM: CollectionBeforeChangeHook = async ({ data, originalDoc, req 
   const adresa = om ? adresaNaRadek(om.adresa as Adresa, { psc: false }) : ''
   data.oznaceni = d.nazev?.trim() || [zkratkaVyrobny(d.druh), adresa].filter(Boolean).join(' – ')
   data.eanOdberu = om?.kod ?? null
+  // Název obchodníka se vede jen u volby „Jiný obchodník“.
+  if (d.vykupPretoku !== 'jiny') data.vykupujici = null
   return data
 }
 
@@ -265,7 +267,7 @@ export const Vyrobny: CollectionConfig = {
         },
         {
           name: 'vykupPretoku',
-          label: 'Výkup přetoků',
+          label: 'Přetoky vykupuje',
           type: 'select',
           enumName: 'vyr_vykup',
           options: vykupPretokuOptions,
