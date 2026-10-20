@@ -134,9 +134,11 @@ const odvozeneHodnoty: CollectionBeforeChangeHook = async ({
   const d: Data = { ...(originalDoc ?? {}), ...data }
   d.odhadSpotreby = { ...(originalDoc?.odhadSpotreby ?? {}), ...(data.odhadSpotreby ?? {}) }
 
-  // Plyn: typ odběru (MO/SO/VO) určuje roční spotřeba, pokud je známá.
+  // Plyn: typ odběru (MO/SO/VO) určuje roční spotřeba, pokud je známá – ledaže uživatel
+  // zvolil ruční určení (např. OM na hranici, kde distributor vede jinou kategorii).
+  if (d.komodita !== 'ZP') data.typOdberuRucne = false
   const rocni = rocniSpotreba(d.odhadSpotreby)
-  if (d.komodita === 'ZP' && rocni !== null) {
+  if (d.komodita === 'ZP' && rocni !== null && !d.typOdberuRucne) {
     data.typOdberu = d.typOdberu = typOdberuPlynuDleSpotreby(rocni)
   }
 
@@ -254,17 +256,31 @@ const zakladniUdaje: Field[] = [
         index: true,
         options: vsechnyTypyOdberu,
         filterOptions: moznostiProKomoditu(typyOdberu),
-        // Povinný – kromě plynu se známou spotřebou, kde ho určí server sám (viz odvozeneHodnoty).
+        // Povinný – kromě plynu se známou spotřebou bez ručního určení, kde ho určí server sám.
         validate: (value: unknown, args: { data: Partial<Data> }) => {
-          const plynSeSpotrebou =
-            args.data?.komodita === 'ZP' && rocniSpotreba(args.data?.odhadSpotreby) !== null
-          if (plynSeSpotrebou) return true
+          const urciServer =
+            args.data?.komodita === 'ZP' &&
+            !args.data?.typOdberuRucne &&
+            rocniSpotreba(args.data?.odhadSpotreby) !== null
+          if (urciServer) return true
           return validujProKomoditu(typyOdberu, true)(value, args)
         },
         admin: {
           width: '25%',
-          description: `Plyn: určí se z roční spotřeby (MO do ${HRANICE_PLYN_MWH.MO} MWh, SO do ${HRANICE_PLYN_MWH.SO.toLocaleString('cs-CZ')} MWh, VO nad).`,
+          description: `Plyn: určí se z roční spotřeby (MO do ${HRANICE_PLYN_MWH.MO} MWh, SO do ${HRANICE_PLYN_MWH.SO.toLocaleString('cs-CZ')} MWh, VO nad), není-li zaškrtnuto ruční určení.`,
           components: { Cell: BUNKA_ZKRATKA },
+        },
+      },
+      {
+        name: 'typOdberuRucne',
+        label: 'Kategorii určit ručně',
+        type: 'checkbox',
+        defaultValue: false,
+        admin: {
+          width: '25%',
+          condition: (d) => d?.komodita === 'ZP',
+          description:
+            'Zaškrtněte, pokud se kategorie nemá řídit spotřebou (např. OM na hranici MO/SO).',
         },
       },
       {

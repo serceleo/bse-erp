@@ -183,6 +183,27 @@ describe('Plyn: typ odběru podle roční spotřeby', () => {
     expect(mensi.typOdberu).toBe('MO')
   })
 
+  it('ruční určení kategorie spotřeba nepřepíše', async () => {
+    const om = await vytvorOM(
+      zakladOM({
+        komodita: 'ZP',
+        typOdberu: 'MO',
+        typOdberuRucne: true,
+        kod: eic(113),
+        odhadSpotreby: { rezim: 'rocni', rocniMwh: 662.3 },
+      }),
+    )
+    expect(om.typOdberu).toBe('MO')
+    const auto = await payload.update({
+      collection: 'odberna-mista',
+      id: om.id,
+      data: { typOdberuRucne: false },
+      user: admin,
+      overrideAccess: false,
+    })
+    expect(auto.typOdberu).toBe('SO')
+  })
+
   it('bez odhadu spotřeby je typ odběru povinný', async () => {
     await expect(
       vytvorOM(zakladOM({ komodita: 'ZP', typOdberu: undefined, kod: eic(111) })),

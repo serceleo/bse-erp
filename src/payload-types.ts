@@ -59,808 +59,794 @@ export type SupportedTimezones =
   | 'Pacific/Guam'
   | 'Pacific/Noumea'
   | 'Pacific/Auckland'
-  | 'Pacific/Fiji'
+  | 'Pacific/Fiji';
 
 export interface Config {
   auth: {
-    users: UserAuthOperations
-  }
-  blocks: {}
+    users: UserAuthOperations;
+  };
+  blocks: {};
   collections: {
-    'odberna-mista': OdbernaMista
-    zakaznici: Zakaznici
-    'soubory-om': SouboryOm
-    smlouvy: Smlouvy
-    dokumenty: Dokumenty
-    users: User
-    'payload-kv': PayloadKv
-    'payload-locked-documents': PayloadLockedDocument
-    'payload-preferences': PayloadPreference
-    'payload-migrations': PayloadMigration
-  }
+    'odberna-mista': OdbernaMista;
+    zakaznici: Zakaznici;
+    'soubory-om': SouboryOm;
+    smlouvy: Smlouvy;
+    dokumenty: Dokumenty;
+    users: User;
+    'payload-kv': PayloadKv;
+    'payload-locked-documents': PayloadLockedDocument;
+    'payload-preferences': PayloadPreference;
+    'payload-migrations': PayloadMigration;
+  };
   collectionsJoins: {
     zakaznici: {
-      odbernaMista: 'odberna-mista'
-      smlouvy: 'smlouvy'
-    }
+      odbernaMista: 'odberna-mista';
+      smlouvy: 'smlouvy';
+    };
     'soubory-om': {
-      odbernaMista: 'odberna-mista'
-    }
+      odbernaMista: 'odberna-mista';
+    };
     smlouvy: {
-      omDodavka: 'odberna-mista'
-      omSouvisejici: 'odberna-mista'
-    }
-  }
+      omDodavka: 'odberna-mista';
+      omSouvisejici: 'odberna-mista';
+    };
+  };
   collectionsSelect: {
-    'odberna-mista': OdbernaMistaSelect<false> | OdbernaMistaSelect<true>
-    zakaznici: ZakazniciSelect<false> | ZakazniciSelect<true>
-    'soubory-om': SouboryOmSelect<false> | SouboryOmSelect<true>
-    smlouvy: SmlouvySelect<false> | SmlouvySelect<true>
-    dokumenty: DokumentySelect<false> | DokumentySelect<true>
-    users: UsersSelect<false> | UsersSelect<true>
-    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>
-    'payload-locked-documents':
-      PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>
-    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>
-    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>
-  }
+    'odberna-mista': OdbernaMistaSelect<false> | OdbernaMistaSelect<true>;
+    zakaznici: ZakazniciSelect<false> | ZakazniciSelect<true>;
+    'soubory-om': SouboryOmSelect<false> | SouboryOmSelect<true>;
+    smlouvy: SmlouvySelect<false> | SmlouvySelect<true>;
+    dokumenty: DokumentySelect<false> | DokumentySelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
+    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
+    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
+    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
+    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
+  };
   db: {
-    defaultIDType: number
-  }
-  fallbackLocale: null
-  globals: {}
-  globalsSelect: {}
-  locale: null
+    defaultIDType: number;
+  };
+  fallbackLocale: null;
+  globals: {};
+  globalsSelect: {};
+  locale: null;
   widgets: {
-    collections: CollectionsWidget
-  }
-  user: User
+    collections: CollectionsWidget;
+  };
+  user: User;
   jobs: {
-    tasks: unknown
-    workflows: unknown
-  }
+    tasks: unknown;
+    workflows: unknown;
+  };
 }
 export interface UserAuthOperations {
   forgotPassword: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
   login: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
   registerFirstUser: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
   unlock: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "odberna-mista".
  */
 export interface OdbernaMista {
-  id: number
+  id: number;
   /**
    * Přidělí se automaticky při založení (řada EE / ZP).
    */
-  interniCislo?: string | null
-  oznaceni?: string | null
-  zakaznikText?: string | null
+  interniCislo?: string | null;
+  oznaceni?: string | null;
+  zakaznikText?: string | null;
   /**
    * Odvozeno z typu zákazníka a spotřebitele.
    */
-  typ?: ('Z' | 'V' | 'Z-S' | 'V-S') | null
-  stav: 'pripravovane' | 'aktivni' | 'ukoncene'
-  zahajeniDodavky?: string | null
-  ukonceniDodavky?: string | null
+  typ?: ('Z' | 'V' | 'Z-S' | 'V-S') | null;
+  stav: 'pripravovane' | 'aktivni' | 'ukoncene';
+  zahajeniDodavky?: string | null;
+  ukonceniDodavky?: string | null;
   /**
    * Konec posledního nakoupeného období.
    */
-  nakoupenoDo?: string | null
-  upozorneni?: string | null
-  zalozil?: (number | null) | User
-  upravil?: (number | null) | User
+  nakoupenoDo?: string | null;
+  upozorneni?: string | null;
+  zalozil?: (number | null) | User;
+  upravil?: (number | null) | User;
   /**
    * Po uložení nelze změnit.
    */
-  komodita: 'EE' | 'ZP'
+  komodita: 'EE' | 'ZP';
   /**
-   * Plyn: určí se z roční spotřeby (MO do 630 MWh, SO do 4 200 MWh, VO nad).
+   * Plyn: určí se z roční spotřeby (MO do 630 MWh, SO do 4 200 MWh, VO nad), není-li zaškrtnuto ruční určení.
    */
-  typOdberu?: ('NN' | 'VN' | 'MO' | 'SO' | 'VO') | null
-  obchodniModel: 'zakaznik' | 'obchodnik'
-  typZakaznika: 'bezny' | 'virtualni'
-  zakaznik?: (number | null) | Zakaznici
-  souborOM?: (number | null) | SouboryOm
-  spotrebitel: 'ano' | 'ne'
+  typOdberu?: ('NN' | 'VN' | 'MO' | 'SO' | 'VO') | null;
+  /**
+   * Zaškrtněte, pokud se kategorie nemá řídit spotřebou (např. OM na hranici MO/SO).
+   */
+  typOdberuRucne?: boolean | null;
+  obchodniModel: 'zakaznik' | 'obchodnik';
+  typZakaznika: 'bezny' | 'virtualni';
+  zakaznik?: (number | null) | Zakaznici;
+  souborOM?: (number | null) | SouboryOm;
+  spotrebitel: 'ano' | 'ne';
   /**
    * Elektřina: EAN – 18 číslic (859182400…). Plyn: EIC – 16 znaků (27ZG…). Mezery se odstraní.
    */
-  kod: string
+  kod: string;
   adresa?: {
-    ulice?: string | null
-    cisloPopisne?: string | null
-    cisloOrientacni?: string | null
-    obec?: string | null
-    castObce?: string | null
-    psc?: string | null
+    ulice?: string | null;
+    cisloPopisne?: string | null;
+    cisloOrientacni?: string | null;
+    obec?: string | null;
+    castObce?: string | null;
+    psc?: string | null;
     /**
      * Vyplňte, pokud místo nemá číslo popisné.
      */
-    katastralniUzemi?: string | null
-    parcelniCislo?: string | null
-  }
-  adresaText?: string | null
-  poznamka?: string | null
+    katastralniUzemi?: string | null;
+    parcelniCislo?: string | null;
+  };
+  adresaText?: string | null;
+  poznamka?: string | null;
   odhadSpotreby: {
-    rezim: 'rocni' | 'mesicni'
+    rezim: 'rocni' | 'mesicni';
     /**
      * Při zadání všech 12 měsíců se dopočítá jako jejich součet; u neúplného profilu zadejte roční odhad ručně.
      */
-    rocniMwh?: number | null
+    rocniMwh?: number | null;
     mesicni?: {
-      leden?: number | null
-      unor?: number | null
-      brezen?: number | null
-      duben?: number | null
-      kveten?: number | null
-      cerven?: number | null
-      cervenec?: number | null
-      srpen?: number | null
-      zari?: number | null
-      rijen?: number | null
-      listopad?: number | null
-      prosinec?: number | null
-    }
-  }
+      leden?: number | null;
+      unor?: number | null;
+      brezen?: number | null;
+      duben?: number | null;
+      kveten?: number | null;
+      cerven?: number | null;
+      cervenec?: number | null;
+      srpen?: number | null;
+      zari?: number | null;
+      rijen?: number | null;
+      listopad?: number | null;
+      prosinec?: number | null;
+    };
+  };
   mereni?: {
-    typMereni?: ('A' | 'B' | 'C' | 'S' | 'CM') | null
-    periodicitaOdectu?: ('mesicni' | 'ctvrtletni' | 'pololetni' | 'rocni') | null
-    cisloMeridla?: string | null
+    typMereni?: ('A' | 'B' | 'C' | 'S' | 'CM') | null;
+    periodicitaOdectu?: ('mesicni' | 'ctvrtletni' | 'pololetni' | 'rocni') | null;
+    cisloMeridla?: string | null;
     distributor?:
-      | (
-          | 'cez-distribuce'
-          | 'egd-ee'
-          | 'predistribuce'
-          | 'lds-ee'
-          | 'gasnet'
-          | 'egd-zp'
-          | 'ppd'
-          | 'lds-zp'
-        )
-      | null
-    nazevLDS?: string | null
-  }
+      ('cez-distribuce' | 'egd-ee' | 'predistribuce' | 'lds-ee' | 'gasnet' | 'egd-zp' | 'ppd' | 'lds-zp') | null;
+    nazevLDS?: string | null;
+  };
   parametryNN?: {
-    hlavniJistic?: number | null
-    pocetFazi?: ('1' | '3') | null
-    distribucniSazba?: string | null
-  }
+    hlavniJistic?: number | null;
+    pocetFazi?: ('1' | '3') | null;
+    distribucniSazba?: string | null;
+  };
   parametryVN?: {
-    napetovaHladina?: ('6' | '10' | '22' | '35') | null
-    rezervovanyPrikonKw?: number | null
-    mereniNaStrane?: ('VN' | 'NN') | null
-    trafostanice?: string | null
-    vlastnikTrafostanice?: ('zakaznik' | 'distributor' | 'my' | 'jiny') | null
-  }
+    napetovaHladina?: ('6' | '10' | '22' | '35') | null;
+    rezervovanyPrikonKw?: number | null;
+    mereniNaStrane?: ('VN' | 'NN') | null;
+    trafostanice?: string | null;
+    vlastnikTrafostanice?: ('zakaznik' | 'distributor' | 'my' | 'jiny') | null;
+  };
   parametryPlyn?: {
-    denniKapacitaM3?: number | null
-    typKapacity?: ('pevna' | 'klouzava') | null
-  }
+    denniKapacitaM3?: number | null;
+    typKapacity?: ('pevna' | 'klouzava') | null;
+  };
   vyrobna?: {
-    maVyrobnu?: boolean | null
-    druh?: ('fve' | 'kgj' | 'jina') | null
-    instalovanyVykonKwp?: number | null
-    rezervovanyVykonKw?: number | null
-  }
+    maVyrobnu?: boolean | null;
+    druh?: ('fve' | 'kgj' | 'jina') | null;
+    instalovanyVykonKwp?: number | null;
+    rezervovanyVykonKw?: number | null;
+  };
   /**
    * Soubor smlouvy se nahrává v evidenci smluv; zde se smlouva jen vybere.
    */
-  smlouvaODodavce?: (number | null) | Smlouvy
-  souvisejiciSmlouvy?: (number | Smlouvy)[] | null
-  dalsiDokumenty?: (number | Dokumenty)[] | null
+  smlouvaODodavce?: (number | null) | Smlouvy;
+  souvisejiciSmlouvy?: (number | Smlouvy)[] | null;
+  dalsiDokumenty?: (number | Dokumenty)[] | null;
   obchod?: {
     cenovaObdobi?:
       | {
-          od: string
-          do: string
-          typCeny: 'fixni' | 'spot' | 'indexovana'
-          dodavatelNakupu?: string | null
-          nakupniCena?: number | null
-          prodejniCena?: number | null
+          od: string;
+          do: string;
+          typCeny: 'fixni' | 'spot' | 'indexovana';
+          dodavatelNakupu?: string | null;
+          nakupniCena?: number | null;
+          prodejniCena?: number | null;
           /**
            * Dopočítá se při uložení.
            */
-          marze?: number | null
-          stalaPlatba?: number | null
-          poznamka?: string | null
-          id?: string | null
+          marze?: number | null;
+          stalaPlatba?: number | null;
+          poznamka?: string | null;
+          id?: string | null;
         }[]
-      | null
+      | null;
     dodatek?: {
-      stav?: ('nepotreba' | 'pripravit' | 'jednani' | 'podepsan') | null
-      termin?: string | null
-      poznamka?: string | null
-    }
-    poznamka?: string | null
-  }
-  updatedAt: string
-  createdAt: string
+      stav?: ('nepotreba' | 'pripravit' | 'jednani' | 'podepsan') | null;
+      termin?: string | null;
+      poznamka?: string | null;
+    };
+    poznamka?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
-  id: number
-  jmeno: string
+  id: number;
+  jmeno: string;
   /**
    * Uživatel může mít více rolí. Ceny a marže vidí jen Administrátor a Obchod.
    */
-  roles: ('admin' | 'obchod' | 'operativa' | 'cteni')[]
-  updatedAt: string
-  createdAt: string
-  email: string
-  resetPasswordToken?: string | null
-  resetPasswordExpiration?: string | null
-  salt?: string | null
-  hash?: string | null
-  resetPasswordRequestedAt?: string | null
-  loginAttempts?: number | null
-  lockUntil?: string | null
+  roles: ('admin' | 'obchod' | 'operativa' | 'cteni')[];
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
   sessions?:
     | {
-        id: string
-        createdAt?: string | null
-        expiresAt: string
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
       }[]
-    | null
-  password?: string | null
-  collection: 'users'
+    | null;
+  password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "zakaznici".
  */
 export interface Zakaznici {
-  id: number
-  nazev: string
-  typSubjektu: 'po' | 'fop' | 'fo'
-  ico?: string | null
-  dic?: string | null
+  id: number;
+  nazev: string;
+  typSubjektu: 'po' | 'fop' | 'fo';
+  ico?: string | null;
+  dic?: string | null;
   sidlo?: {
-    ulice?: string | null
-    cisloPopisne?: string | null
-    cisloOrientacni?: string | null
-    obec?: string | null
-    castObce?: string | null
-    psc?: string | null
+    ulice?: string | null;
+    cisloPopisne?: string | null;
+    cisloOrientacni?: string | null;
+    obec?: string | null;
+    castObce?: string | null;
+    psc?: string | null;
     /**
      * Vyplňte, pokud místo nemá číslo popisné.
      */
-    katastralniUzemi?: string | null
-    parcelniCislo?: string | null
-  }
+    katastralniUzemi?: string | null;
+    parcelniCislo?: string | null;
+  };
   kontakt?: {
-    jmeno?: string | null
-    email?: string | null
-    telefon?: string | null
-  }
-  poznamka?: string | null
+    jmeno?: string | null;
+    email?: string | null;
+    telefon?: string | null;
+  };
+  poznamka?: string | null;
   odbernaMista?: {
-    docs?: (number | OdbernaMista)[]
-    hasNextPage?: boolean
-    totalDocs?: number
-  }
+    docs?: (number | OdbernaMista)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   smlouvy?: {
-    docs?: (number | Smlouvy)[]
-    hasNextPage?: boolean
-    totalDocs?: number
-  }
-  zalozil?: (number | null) | User
-  upravil?: (number | null) | User
-  updatedAt: string
-  createdAt: string
+    docs?: (number | Smlouvy)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  zalozil?: (number | null) | User;
+  upravil?: (number | null) | User;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "smlouvy".
  */
 export interface Smlouvy {
-  id: number
-  oznaceni?: string | null
-  cislo: string
-  typ:
-    | 'dodavka'
-    | 'pripojeni'
-    | 'najemni'
-    | 'nakup-ee'
-    | 'vykup-ee'
-    | 'distribuce'
-    | 'ramcova'
-    | 'jina'
-  komodita?: ('EE' | 'ZP') | null
-  zakaznik?: (number | null) | Zakaznici
+  id: number;
+  oznaceni?: string | null;
+  cislo: string;
+  typ: 'dodavka' | 'pripojeni' | 'najemni' | 'nakup-ee' | 'vykup-ee' | 'distribuce' | 'ramcova' | 'jina';
+  komodita?: ('EE' | 'ZP') | null;
+  zakaznik?: (number | null) | Zakaznici;
   /**
    * Např. distributor, dodavatel silové elektřiny, pronajímatel.
    */
-  protistrana?: string | null
-  datumUzavreni?: string | null
-  platnostOd?: string | null
+  protistrana?: string | null;
+  datumUzavreni?: string | null;
+  platnostOd?: string | null;
   /**
    * Prázdné = doba neurčitá.
    */
-  platnostDo?: string | null
-  vypovedniLhuta?: string | null
-  stav: 'koncept' | 'platna' | 'ukoncena'
-  soubor?: (number | null) | Dokumenty
+  platnostDo?: string | null;
+  vypovedniLhuta?: string | null;
+  stav: 'koncept' | 'platna' | 'ukoncena';
+  soubor?: (number | null) | Dokumenty;
   dodatky?:
     | {
-        cislo: string
-        datum?: string | null
-        predmet?: string | null
-        soubor?: (number | null) | Dokumenty
-        id?: string | null
+        cislo: string;
+        datum?: string | null;
+        predmet?: string | null;
+        soubor?: (number | null) | Dokumenty;
+        id?: string | null;
       }[]
-    | null
-  poznamka?: string | null
+    | null;
+  poznamka?: string | null;
   omDodavka?: {
-    docs?: (number | OdbernaMista)[]
-    hasNextPage?: boolean
-    totalDocs?: number
-  }
+    docs?: (number | OdbernaMista)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   omSouvisejici?: {
-    docs?: (number | OdbernaMista)[]
-    hasNextPage?: boolean
-    totalDocs?: number
-  }
-  zalozil?: (number | null) | User
-  upravil?: (number | null) | User
-  updatedAt: string
-  createdAt: string
+    docs?: (number | OdbernaMista)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  zalozil?: (number | null) | User;
+  upravil?: (number | null) | User;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "dokumenty".
  */
 export interface Dokumenty {
-  id: number
-  nazev: string
-  typ: 'smlouva' | 'dodatek' | 'plna-moc' | 'revize' | 'technicka' | 'korespondence' | 'jiny'
-  poznamka?: string | null
-  zalozil?: (number | null) | User
-  upravil?: (number | null) | User
-  updatedAt: string
-  createdAt: string
-  url?: string | null
-  thumbnailURL?: string | null
-  filename?: string | null
-  mimeType?: string | null
-  filesize?: number | null
-  width?: number | null
-  height?: number | null
-  focalX?: number | null
-  focalY?: number | null
+  id: number;
+  nazev: string;
+  typ: 'smlouva' | 'dodatek' | 'plna-moc' | 'revize' | 'technicka' | 'korespondence' | 'jiny';
+  poznamka?: string | null;
+  zalozil?: (number | null) | User;
+  upravil?: (number | null) | User;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "soubory-om".
  */
 export interface SouboryOm {
-  id: number
-  nazev: string
-  lokalita?: string | null
+  id: number;
+  nazev: string;
+  lokalita?: string | null;
   /**
    * Pokud je vlastník areálu zároveň v adresáři zákazníků.
    */
-  vlastnikArealu?: (number | null) | Zakaznici
-  popis?: string | null
+  vlastnikArealu?: (number | null) | Zakaznici;
+  popis?: string | null;
   odbernaMista?: {
-    docs?: (number | OdbernaMista)[]
-    hasNextPage?: boolean
-    totalDocs?: number
-  }
-  zalozil?: (number | null) | User
-  upravil?: (number | null) | User
-  updatedAt: string
-  createdAt: string
+    docs?: (number | OdbernaMista)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  zalozil?: (number | null) | User;
+  upravil?: (number | null) | User;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: number
-  key: string
+  id: number;
+  key: string;
   data:
     | {
-        [k: string]: unknown
+        [k: string]: unknown;
       }
     | unknown[]
     | string
     | number
     | boolean
-    | null
+    | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number
+  id: number;
   document?:
     | ({
-        relationTo: 'odberna-mista'
-        value: number | OdbernaMista
+        relationTo: 'odberna-mista';
+        value: number | OdbernaMista;
       } | null)
     | ({
-        relationTo: 'zakaznici'
-        value: number | Zakaznici
+        relationTo: 'zakaznici';
+        value: number | Zakaznici;
       } | null)
     | ({
-        relationTo: 'soubory-om'
-        value: number | SouboryOm
+        relationTo: 'soubory-om';
+        value: number | SouboryOm;
       } | null)
     | ({
-        relationTo: 'smlouvy'
-        value: number | Smlouvy
+        relationTo: 'smlouvy';
+        value: number | Smlouvy;
       } | null)
     | ({
-        relationTo: 'dokumenty'
-        value: number | Dokumenty
+        relationTo: 'dokumenty';
+        value: number | Dokumenty;
       } | null)
     | ({
-        relationTo: 'users'
-        value: number | User
-      } | null)
-  globalSlug?: string | null
+        relationTo: 'users';
+        value: number | User;
+      } | null);
+  globalSlug?: string | null;
   user: {
-    relationTo: 'users'
-    value: number | User
-  }
-  updatedAt: string
-  createdAt: string
+    relationTo: 'users';
+    value: number | User;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number
+  id: number;
   user: {
-    relationTo: 'users'
-    value: number | User
-  }
-  key?: string | null
+    relationTo: 'users';
+    value: number | User;
+  };
+  key?: string | null;
   value?:
     | {
-        [k: string]: unknown
+        [k: string]: unknown;
       }
     | unknown[]
     | string
     | number
     | boolean
-    | null
-  updatedAt: string
-  createdAt: string
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number
-  name?: string | null
-  batch?: number | null
-  updatedAt: string
-  createdAt: string
+  id: number;
+  name?: string | null;
+  batch?: number | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "odberna-mista_select".
  */
 export interface OdbernaMistaSelect<T extends boolean = true> {
-  interniCislo?: T
-  oznaceni?: T
-  zakaznikText?: T
-  typ?: T
-  stav?: T
-  zahajeniDodavky?: T
-  ukonceniDodavky?: T
-  nakoupenoDo?: T
-  upozorneni?: T
-  zalozil?: T
-  upravil?: T
-  komodita?: T
-  typOdberu?: T
-  obchodniModel?: T
-  typZakaznika?: T
-  zakaznik?: T
-  souborOM?: T
-  spotrebitel?: T
-  kod?: T
+  interniCislo?: T;
+  oznaceni?: T;
+  zakaznikText?: T;
+  typ?: T;
+  stav?: T;
+  zahajeniDodavky?: T;
+  ukonceniDodavky?: T;
+  nakoupenoDo?: T;
+  upozorneni?: T;
+  zalozil?: T;
+  upravil?: T;
+  komodita?: T;
+  typOdberu?: T;
+  typOdberuRucne?: T;
+  obchodniModel?: T;
+  typZakaznika?: T;
+  zakaznik?: T;
+  souborOM?: T;
+  spotrebitel?: T;
+  kod?: T;
   adresa?:
     | T
     | {
-        ulice?: T
-        cisloPopisne?: T
-        cisloOrientacni?: T
-        obec?: T
-        castObce?: T
-        psc?: T
-        katastralniUzemi?: T
-        parcelniCislo?: T
-      }
-  adresaText?: T
-  poznamka?: T
+        ulice?: T;
+        cisloPopisne?: T;
+        cisloOrientacni?: T;
+        obec?: T;
+        castObce?: T;
+        psc?: T;
+        katastralniUzemi?: T;
+        parcelniCislo?: T;
+      };
+  adresaText?: T;
+  poznamka?: T;
   odhadSpotreby?:
     | T
     | {
-        rezim?: T
-        rocniMwh?: T
+        rezim?: T;
+        rocniMwh?: T;
         mesicni?:
           | T
           | {
-              leden?: T
-              unor?: T
-              brezen?: T
-              duben?: T
-              kveten?: T
-              cerven?: T
-              cervenec?: T
-              srpen?: T
-              zari?: T
-              rijen?: T
-              listopad?: T
-              prosinec?: T
-            }
-      }
+              leden?: T;
+              unor?: T;
+              brezen?: T;
+              duben?: T;
+              kveten?: T;
+              cerven?: T;
+              cervenec?: T;
+              srpen?: T;
+              zari?: T;
+              rijen?: T;
+              listopad?: T;
+              prosinec?: T;
+            };
+      };
   mereni?:
     | T
     | {
-        typMereni?: T
-        periodicitaOdectu?: T
-        cisloMeridla?: T
-        distributor?: T
-        nazevLDS?: T
-      }
+        typMereni?: T;
+        periodicitaOdectu?: T;
+        cisloMeridla?: T;
+        distributor?: T;
+        nazevLDS?: T;
+      };
   parametryNN?:
     | T
     | {
-        hlavniJistic?: T
-        pocetFazi?: T
-        distribucniSazba?: T
-      }
+        hlavniJistic?: T;
+        pocetFazi?: T;
+        distribucniSazba?: T;
+      };
   parametryVN?:
     | T
     | {
-        napetovaHladina?: T
-        rezervovanyPrikonKw?: T
-        mereniNaStrane?: T
-        trafostanice?: T
-        vlastnikTrafostanice?: T
-      }
+        napetovaHladina?: T;
+        rezervovanyPrikonKw?: T;
+        mereniNaStrane?: T;
+        trafostanice?: T;
+        vlastnikTrafostanice?: T;
+      };
   parametryPlyn?:
     | T
     | {
-        denniKapacitaM3?: T
-        typKapacity?: T
-      }
+        denniKapacitaM3?: T;
+        typKapacity?: T;
+      };
   vyrobna?:
     | T
     | {
-        maVyrobnu?: T
-        druh?: T
-        instalovanyVykonKwp?: T
-        rezervovanyVykonKw?: T
-      }
-  smlouvaODodavce?: T
-  souvisejiciSmlouvy?: T
-  dalsiDokumenty?: T
+        maVyrobnu?: T;
+        druh?: T;
+        instalovanyVykonKwp?: T;
+        rezervovanyVykonKw?: T;
+      };
+  smlouvaODodavce?: T;
+  souvisejiciSmlouvy?: T;
+  dalsiDokumenty?: T;
   obchod?:
     | T
     | {
         cenovaObdobi?:
           | T
           | {
-              od?: T
-              do?: T
-              typCeny?: T
-              dodavatelNakupu?: T
-              nakupniCena?: T
-              prodejniCena?: T
-              marze?: T
-              stalaPlatba?: T
-              poznamka?: T
-              id?: T
-            }
+              od?: T;
+              do?: T;
+              typCeny?: T;
+              dodavatelNakupu?: T;
+              nakupniCena?: T;
+              prodejniCena?: T;
+              marze?: T;
+              stalaPlatba?: T;
+              poznamka?: T;
+              id?: T;
+            };
         dodatek?:
           | T
           | {
-              stav?: T
-              termin?: T
-              poznamka?: T
-            }
-        poznamka?: T
-      }
-  updatedAt?: T
-  createdAt?: T
+              stav?: T;
+              termin?: T;
+              poznamka?: T;
+            };
+        poznamka?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "zakaznici_select".
  */
 export interface ZakazniciSelect<T extends boolean = true> {
-  nazev?: T
-  typSubjektu?: T
-  ico?: T
-  dic?: T
+  nazev?: T;
+  typSubjektu?: T;
+  ico?: T;
+  dic?: T;
   sidlo?:
     | T
     | {
-        ulice?: T
-        cisloPopisne?: T
-        cisloOrientacni?: T
-        obec?: T
-        castObce?: T
-        psc?: T
-        katastralniUzemi?: T
-        parcelniCislo?: T
-      }
+        ulice?: T;
+        cisloPopisne?: T;
+        cisloOrientacni?: T;
+        obec?: T;
+        castObce?: T;
+        psc?: T;
+        katastralniUzemi?: T;
+        parcelniCislo?: T;
+      };
   kontakt?:
     | T
     | {
-        jmeno?: T
-        email?: T
-        telefon?: T
-      }
-  poznamka?: T
-  odbernaMista?: T
-  smlouvy?: T
-  zalozil?: T
-  upravil?: T
-  updatedAt?: T
-  createdAt?: T
+        jmeno?: T;
+        email?: T;
+        telefon?: T;
+      };
+  poznamka?: T;
+  odbernaMista?: T;
+  smlouvy?: T;
+  zalozil?: T;
+  upravil?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "soubory-om_select".
  */
 export interface SouboryOmSelect<T extends boolean = true> {
-  nazev?: T
-  lokalita?: T
-  vlastnikArealu?: T
-  popis?: T
-  odbernaMista?: T
-  zalozil?: T
-  upravil?: T
-  updatedAt?: T
-  createdAt?: T
+  nazev?: T;
+  lokalita?: T;
+  vlastnikArealu?: T;
+  popis?: T;
+  odbernaMista?: T;
+  zalozil?: T;
+  upravil?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "smlouvy_select".
  */
 export interface SmlouvySelect<T extends boolean = true> {
-  oznaceni?: T
-  cislo?: T
-  typ?: T
-  komodita?: T
-  zakaznik?: T
-  protistrana?: T
-  datumUzavreni?: T
-  platnostOd?: T
-  platnostDo?: T
-  vypovedniLhuta?: T
-  stav?: T
-  soubor?: T
+  oznaceni?: T;
+  cislo?: T;
+  typ?: T;
+  komodita?: T;
+  zakaznik?: T;
+  protistrana?: T;
+  datumUzavreni?: T;
+  platnostOd?: T;
+  platnostDo?: T;
+  vypovedniLhuta?: T;
+  stav?: T;
+  soubor?: T;
   dodatky?:
     | T
     | {
-        cislo?: T
-        datum?: T
-        predmet?: T
-        soubor?: T
-        id?: T
-      }
-  poznamka?: T
-  omDodavka?: T
-  omSouvisejici?: T
-  zalozil?: T
-  upravil?: T
-  updatedAt?: T
-  createdAt?: T
+        cislo?: T;
+        datum?: T;
+        predmet?: T;
+        soubor?: T;
+        id?: T;
+      };
+  poznamka?: T;
+  omDodavka?: T;
+  omSouvisejici?: T;
+  zalozil?: T;
+  upravil?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "dokumenty_select".
  */
 export interface DokumentySelect<T extends boolean = true> {
-  nazev?: T
-  typ?: T
-  poznamka?: T
-  zalozil?: T
-  upravil?: T
-  updatedAt?: T
-  createdAt?: T
-  url?: T
-  thumbnailURL?: T
-  filename?: T
-  mimeType?: T
-  filesize?: T
-  width?: T
-  height?: T
-  focalX?: T
-  focalY?: T
+  nazev?: T;
+  typ?: T;
+  poznamka?: T;
+  zalozil?: T;
+  upravil?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  jmeno?: T
-  roles?: T
-  updatedAt?: T
-  createdAt?: T
-  email?: T
-  resetPasswordToken?: T
-  resetPasswordExpiration?: T
-  salt?: T
-  hash?: T
-  resetPasswordRequestedAt?: T
-  loginAttempts?: T
-  lockUntil?: T
+  jmeno?: T;
+  roles?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  resetPasswordRequestedAt?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
   sessions?:
     | T
     | {
-        id?: T
-        createdAt?: T
-        expiresAt?: T
-      }
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
-  key?: T
-  data?: T
+  key?: T;
+  data?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
-  document?: T
-  globalSlug?: T
-  user?: T
-  updatedAt?: T
-  createdAt?: T
+  document?: T;
+  globalSlug?: T;
+  user?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences_select".
  */
 export interface PayloadPreferencesSelect<T extends boolean = true> {
-  user?: T
-  key?: T
-  value?: T
-  updatedAt?: T
-  createdAt?: T
+  user?: T;
+  key?: T;
+  value?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations_select".
  */
 export interface PayloadMigrationsSelect<T extends boolean = true> {
-  name?: T
-  batch?: T
-  updatedAt?: T
-  createdAt?: T
+  name?: T;
+  batch?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -868,17 +854,18 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface CollectionsWidget {
   data?: {
-    [k: string]: unknown
-  }
-  width: 'full'
+    [k: string]: unknown;
+  };
+  width: 'full';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {
-  [k: string]: unknown
+  [k: string]: unknown;
 }
+
 
 declare module 'payload' {
   export interface GeneratedTypes extends Config {}
